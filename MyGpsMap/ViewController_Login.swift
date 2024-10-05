@@ -21,12 +21,12 @@ class ViewController_Config: UIViewController {
     }
 
     // LOGINボタン押下時の挙動
-    @IBAction func logIn(_ sender: Any) {
+    @IBAction func login(_ sender: Any) {
         let username = usernameTextField.text!
         let password = passwordTextField.text!
         signIn(username: username, password: password)
     }
-
+    
     // ユーザーログイン機能
     func signIn(username: String, password: String) {
         Amplify.Auth.signIn(username: username, password: password) { result in
