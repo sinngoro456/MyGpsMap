@@ -1,19 +1,13 @@
 import UIKit
 
-protocol UserProfileManagerDelegate: AnyObject {
-    func didTapProfileButton()
-}
-
 class UserProfileManager {
-    weak var delegate: UserProfileManagerDelegate?
-    
-    func setupProfileButton(in view: UIView) -> UIButton {
+    func setupProfileButton(in view: UIView, target: Any, action: Selector) -> UIButton {
         let profileButton = UIButton(type: .system)
         profileButton.setImage(UIImage(systemName: "person.circle"), for: .normal)
         profileButton.backgroundColor = .white
         profileButton.tintColor = .systemBlue
         profileButton.layer.cornerRadius = 8
-        profileButton.addTarget(self, action: #selector(profileButtonTapped), for: .touchUpInside)
+        profileButton.addTarget(target, action: action, for: .touchUpInside)
         
         view.addSubview(profileButton)
         profileButton.translatesAutoresizingMaskIntoConstraints = false
@@ -25,10 +19,5 @@ class UserProfileManager {
         ])
         
         return profileButton
-    }
-    
-    @objc private func profileButtonTapped() {
-        print("プロフィールボタンがタップされました")
-        delegate?.didTapProfileButton()
     }
 }

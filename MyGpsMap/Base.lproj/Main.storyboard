@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uIh-NQ-2XG">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
@@ -17,47 +17,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pitchEnabled="NO" showsUserLocation="YES" showsCompass="NO" showsScale="YES" id="shB-sd-bvM">
-                                <rect key="frame" x="0.0" y="0.0" width="377" height="722"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="ViewController" pitchEnabled="NO" showsUserLocation="YES" showsCompass="NO" showsScale="YES" id="shB-sd-bvM">
+                                <rect key="frame" x="0.0" y="-15" width="377" height="722"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <standardMapConfiguration key="preferredConfiguration" elevationStyle="realistic" showsTraffic="YES"/>
                             </mapView>
-<!--                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spotifyButton">-->
-<!--                                <rect key="frame" x="10" y="10" width="40" height="40"/>-->
-<!--                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>-->
-<!--                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>-->
-<!--                                <color key="tintColor" systemColor="systemGreenColor"/>-->
-<!--                                <state key="normal" image="play.circle"/>-->
-<!--                            </button>-->
-<!--                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="profileButton">-->
-<!--                                <rect key="frame" x="10" y="600" width="40" height="40"/>-->
-<!--                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>-->
-<!--                                <state key="normal" title="Profile"/>-->
-<!--                                <buttonConfiguration key="configuration" style="plain"/>-->
-<!--                                <color key="backgroundColor" systemColor="whiteColor"/>-->
-<!--                                <color key="tintColor" systemColor="systemBlueColor"/>-->
-<!--                                <image key="image" name="person.circle"/>-->
-<!--                            </button>-->
-<!--                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="radikoButton">-->
-<!--                                <rect key="frame" x="10" y="650" width="40" height="40"/>-->
-<!--                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>-->
-<!--                                <state key="normal" title="Radiko"/>-->
-<!--                                <buttonConfiguration key="configuration" style="plain"/>-->
-<!--                                <color key="backgroundColor" systemColor="whiteColor"/>-->
-<!--                                <color key="tintColor" systemColor="systemRedColor"/>-->
-<!--                                <image key="image" name="radio"/>-->
-<!--                            </button>-->
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Llk-mF-Wbj"/>
                     <connections>
                         <outlet property="mapView" destination="shB-sd-bvM" id="e9L-Wv-dS3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.824427480916029" y="-28.169014084507044"/>
+            <point key="canvasLocation" x="944.27480916030527" y="-31.690140845070424"/>
+        </scene>
+        <!--View Controller Login-->
+        <scene sceneID="ExC-lu-jiF">
+            <objects>
+                <viewController storyboardIdentifier="ViewControllerLogin" id="ikO-VP-PGo" userLabel="View Controller Login" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" restorationIdentifier="Login" id="Ctp-i7-V81" customClass="Login">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pux-jT-DGA">
+                                <rect key="frame" x="175" y="416" width="75" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kIc-k7-Wem"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8rU-NE-tAX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1785.4961832061067" y="-18.30985915492958"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Vcp-Kv-RwD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uIh-NQ-2XG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8MU-gi-K7S">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="yit-WV-kGU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XHE-zx-ZQl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="17.557251908396946" y="-31.690140845070424"/>
         </scene>
     </scenes>
     <resources>

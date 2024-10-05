@@ -26,8 +26,11 @@
 		CA68F1B82CAC23060060B8BB /* MyGpsMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */; };
 		CA68F1BA2CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */; };
 		CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA68F1C72CAC25500060B8BB /* MapKit.framework */; };
-		CA9E23A62CAEF5F7004842EC /* ViewController_Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9E23A52CAEF5F7004842EC /* ViewController_Config.swift */; };
+		CA9E23A62CAEF5F7004842EC /* ViewController_Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9E23A52CAEF5F7004842EC /* ViewController_Login.swift */; };
 		CA9E23A82CAEF7DE004842EC /* ViewController_Config.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA9E23A72CAEF7DE004842EC /* ViewController_Config.storyboard */; };
+		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
+		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
+		CAE89DF32CB1BB6D001F9DA3 /* UISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF22CB1BB6D001F9DA3 /* UISetUpManager.swift */; };
 		F7D1C511ABDE25F2DE1E8116 /* Pods_MyGpsMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC74D552C6514F92E126CEA9 /* Pods_MyGpsMapTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,8 +81,11 @@
 		CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITests.swift; sourceTree = "<group>"; };
 		CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CA68F1C72CAC25500060B8BB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		CA9E23A52CAEF5F7004842EC /* ViewController_Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_Config.swift; sourceTree = "<group>"; };
+		CA9E23A52CAEF5F7004842EC /* ViewController_Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_Login.swift; sourceTree = "<group>"; };
 		CA9E23A72CAEF7DE004842EC /* ViewController_Config.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ViewController_Config.storyboard; sourceTree = "<group>"; };
+		CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Design.swift; sourceTree = "<group>"; };
+		CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Main.swift; sourceTree = "<group>"; };
+		CAE89DF22CB1BB6D001F9DA3 /* UISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISetUpManager.swift; sourceTree = "<group>"; };
 		DEBBCC96568A13679E716D0A /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		F843D1AAABE39DEB10FD9471 /* Pods-MyGpsMapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapUITests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapUITests/Pods-MyGpsMapUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		FB6ADD9C33AD1A710E40DF53 /* Pods-MyGpsMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMap.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap.debug.xcconfig"; sourceTree = "<group>"; };
@@ -196,14 +202,16 @@
 		CA68F1922CAC23030060B8BB /* MyGpsMap */ = {
 			isa = PBXGroup;
 			children = (
+				CAE89DED2CB1B1A2001F9DA3 /* Constant */,
 				CA06CE1D2CAED7E30073950D /* UserProfile */,
 				CA06CE1C2CAED7D80073950D /* Radiko */,
 				CA06CE1B2CAED7CA0073950D /* Spotify */,
 				CA06CE1A2CAED7B90073950D /* Map */,
 				CA68F1932CAC23030060B8BB /* AppDelegate.swift */,
 				CA68F1952CAC23030060B8BB /* SceneDelegate.swift */,
+				CAE89DF22CB1BB6D001F9DA3 /* UISetUpManager.swift */,
 				CA68F1972CAC23030060B8BB /* ViewController.swift */,
-				CA9E23A52CAEF5F7004842EC /* ViewController_Config.swift */,
+				CA9E23A52CAEF5F7004842EC /* ViewController_Login.swift */,
 				CA68F1992CAC23030060B8BB /* Main.storyboard */,
 				CA9E23A72CAEF7DE004842EC /* ViewController_Config.storyboard */,
 				CA68F19F2CAC23050060B8BB /* Assets.xcassets */,
@@ -240,6 +248,15 @@
 				A1C94E52FBE5A92F1D964308 /* Pods_MyGpsMapUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CAE89DED2CB1B1A2001F9DA3 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */,
+				CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */,
+			);
+			path = Constant;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,14 +484,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA06CE232CAED8FA0073950D /* RadikoManager.swift in Sources */,
+				CAE89DF32CB1BB6D001F9DA3 /* UISetUpManager.swift in Sources */,
 				CA68F1982CAC23030060B8BB /* ViewController.swift in Sources */,
 				CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */,
 				CA06CE1F2CAED8240073950D /* SpotifyManager.swift in Sources */,
 				CA06CE252CAED9BF0073950D /* MapManager.swift in Sources */,
 				CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */,
 				CA06CE212CAED8DA0073950D /* UserProfileManager.swift in Sources */,
-				CA9E23A62CAEF5F7004842EC /* ViewController_Config.swift in Sources */,
+				CA9E23A62CAEF5F7004842EC /* ViewController_Login.swift in Sources */,
+				CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */,
 				CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */,
+				CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

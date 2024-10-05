@@ -2,15 +2,44 @@ import UIKit
 import MapKit
 
 class UISetupManager {
+    func setupButtonConstraints(_ button: UIView, in view: UIView, top: CGFloat?, bottom: CGFloat?, leading: CGFloat?, trailing: CGFloat?) {
+        var constraints = [NSLayoutConstraint]()
+        
+        if let top = top {
+            constraints.append(button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: top))
+        }
+        if let bottom = bottom {
+            constraints.append(button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -bottom))
+        }
+        if let leading = leading {
+            constraints.append(button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: leading))
+        }
+        if let trailing = trailing {
+            constraints.append(button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: trailing))
+        }
+        
+        if !(button is MKCompassButton) {
+            constraints.append(contentsOf: [
+                button.widthAnchor.constraint(equalToConstant: Constants_Design.buttonWidth),
+                button.heightAnchor.constraint(equalToConstant: Constants_Design.buttonHeight)
+            ])
+        }
+        
+        NSLayoutConstraint.activate(constraints)
+    }
+
     func setupCompassButton(in view: UIView, mapView: MKMapView) -> MKCompassButton {
         let compassButton = MKCompassButton(mapView: mapView)
         compassButton.compassVisibility = .visible
         view.addSubview(compassButton)
         compassButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            compassButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants_Design.compassButtonTopOffset),
-            compassButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants_Design.compassButtonTrailingOffset)
-        ])
+        
+        setupButtonConstraints(compassButton, in: view,
+                               top: Constants_Design.compassButtonTop,
+                               bottom: Constants_Design.compassButtonBottom,
+                               leading: Constants_Design.compassButtonLeading,
+                               trailing: Constants_Design.compassButtonTrailing)
+        
         return compassButton
     }
 
@@ -23,12 +52,13 @@ class UISetupManager {
         userTrackingButton.addTarget(target, action: action, for: .touchUpInside)
         view.addSubview(userTrackingButton)
         userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            userTrackingButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants_Design.userTrackingButtonTopOffset),
-            userTrackingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants_Design.userTrackingButtonTrailingOffset),
-            userTrackingButton.widthAnchor.constraint(equalToConstant: Constants_Design.buttonWidth),
-            userTrackingButton.heightAnchor.constraint(equalToConstant: Constants_Design.buttonHeight)
-        ])
+        
+        setupButtonConstraints(userTrackingButton, in: view,
+                               top: Constants_Design.userTrackingButtonTop,
+                               bottom: Constants_Design.userTrackingButtonBottom,
+                               leading: Constants_Design.userTrackingButtonLeading,
+                               trailing: Constants_Design.userTrackingButtonTrailing)
+        
         return userTrackingButton
     }
 
@@ -41,12 +71,13 @@ class UISetupManager {
         spotifyButton.addTarget(target, action: action, for: .touchUpInside)
         view.addSubview(spotifyButton)
         spotifyButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            spotifyButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants_Design.spotifyButtonTopOffset),
-            spotifyButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants_Design.spotifyButtonTrailingOffset),
-            spotifyButton.widthAnchor.constraint(equalToConstant: Constants_Design.buttonWidth),
-            spotifyButton.heightAnchor.constraint(equalToConstant: Constants_Design.buttonHeight)
-        ])
+        
+        setupButtonConstraints(spotifyButton, in: view,
+                               top: Constants_Design.spotifyButtonTop,
+                               bottom: Constants_Design.spotifyButtonBottom,
+                               leading: Constants_Design.spotifyButtonLeading,
+                               trailing: Constants_Design.spotifyButtonTrailing)
+        
         return spotifyButton
     }
 
@@ -59,12 +90,13 @@ class UISetupManager {
         profileButton.addTarget(target, action: action, for: .touchUpInside)
         view.addSubview(profileButton)
         profileButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            profileButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants_Design.profileButtonbottomOffset),
-            profileButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: Constants_Design.profileButtonTrailingOffset),
-            profileButton.widthAnchor.constraint(equalToConstant: Constants_Design.buttonWidth),
-            profileButton.heightAnchor.constraint(equalToConstant: Constants_Design.buttonHeight)
-        ])
+        
+        setupButtonConstraints(profileButton, in: view,
+                               top: Constants_Design.profileButtonTop,
+                               bottom: Constants_Design.profileButtonBottom,
+                               leading: Constants_Design.profileButtonLeading,
+                               trailing: Constants_Design.profileButtonTrailing)
+        
         return profileButton
     }
 
@@ -77,12 +109,13 @@ class UISetupManager {
         radikoButton.addTarget(target, action: action, for: .touchUpInside)
         view.addSubview(radikoButton)
         radikoButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            radikoButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants_Design.radikoButtonTopOffset),
-            radikoButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Constants_Design.radikoButtonLeadingOffset),
-            radikoButton.widthAnchor.constraint(equalToConstant: Constants_Design.buttonWidth),
-            radikoButton.heightAnchor.constraint(equalToConstant: Constants_Design.buttonHeight)
-        ])
+        
+        setupButtonConstraints(radikoButton, in: view,
+                               top: Constants_Design.radikoButtonTop,
+                               bottom: Constants_Design.radikoButtonBottom,
+                               leading: Constants_Design.radikoButtonLeading,
+                               trailing: Constants_Design.radikoButtonTrailing)
+        
         return radikoButton
     }
 
@@ -94,12 +127,14 @@ class UISetupManager {
         destinationTextField.delegate = delegate
         view.addSubview(destinationTextField)
         destinationTextField.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             destinationTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            destinationTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Constants_Design.destinationTextFieldBottomOffset),
+            destinationTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Constants_Design.destinationTextFieldBottom),
             destinationTextField.widthAnchor.constraint(equalToConstant: Constants_Design.destinationTextFieldWidth),
             destinationTextField.heightAnchor.constraint(equalToConstant: Constants_Design.destinationTextFieldHeight)
         ])
+        
         return destinationTextField
     }
 }
