@@ -22,6 +22,31 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <standardMapConfiguration key="preferredConfiguration" elevationStyle="realistic" showsTraffic="YES"/>
                             </mapView>
+<!--                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spotifyButton">-->
+<!--                                <rect key="frame" x="10" y="10" width="40" height="40"/>-->
+<!--                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>-->
+<!--                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>-->
+<!--                                <color key="tintColor" systemColor="systemGreenColor"/>-->
+<!--                                <state key="normal" image="play.circle"/>-->
+<!--                            </button>-->
+<!--                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="profileButton">-->
+<!--                                <rect key="frame" x="10" y="600" width="40" height="40"/>-->
+<!--                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>-->
+<!--                                <state key="normal" title="Profile"/>-->
+<!--                                <buttonConfiguration key="configuration" style="plain"/>-->
+<!--                                <color key="backgroundColor" systemColor="whiteColor"/>-->
+<!--                                <color key="tintColor" systemColor="systemBlueColor"/>-->
+<!--                                <image key="image" name="person.circle"/>-->
+<!--                            </button>-->
+<!--                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="radikoButton">-->
+<!--                                <rect key="frame" x="10" y="650" width="40" height="40"/>-->
+<!--                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>-->
+<!--                                <state key="normal" title="Radiko"/>-->
+<!--                                <buttonConfiguration key="configuration" style="plain"/>-->
+<!--                                <color key="backgroundColor" systemColor="whiteColor"/>-->
+<!--                                <color key="tintColor" systemColor="systemRedColor"/>-->
+<!--                                <image key="image" name="radio"/>-->
+<!--                            </button>-->
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

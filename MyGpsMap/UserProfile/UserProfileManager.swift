@@ -1,6 +1,12 @@
 import UIKit
 
+protocol UserProfileManagerDelegate: AnyObject {
+    func didTapProfileButton()
+}
+
 class UserProfileManager {
+    weak var delegate: UserProfileManagerDelegate?
+    
     func setupProfileButton(in view: UIView) -> UIButton {
         let profileButton = UIButton(type: .system)
         profileButton.setImage(UIImage(systemName: "person.circle"), for: .normal)
@@ -22,7 +28,7 @@ class UserProfileManager {
     }
     
     @objc private func profileButtonTapped() {
-        // プロフィール情報を表示する処理をここに追加
         print("プロフィールボタンがタップされました")
+        delegate?.didTapProfileButton()
     }
 }

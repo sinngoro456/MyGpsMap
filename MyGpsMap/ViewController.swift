@@ -3,7 +3,7 @@ import MapKit
 import Amplify
 import AmplifyPlugins
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UserProfileManagerDelegate {
     @IBOutlet var mapView: MKMapView!
     
     
@@ -17,7 +17,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     private var profileButton: UIButton!
     private var radikoButton: UIButton!
     private var destinationTextField: UITextField!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +32,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         setupProfileButton()
         setupRadikoButton()
         setupDestinationTextField()
+        
+        userProfileManager.delegate = self
+        let _ = userProfileManager.setupProfileButton(in: view)
         
         let coordinate = CLLocationCoordinate2D(latitude: 35.6895, longitude: 139.6917) // 東京の座標
         mapManager.addPin(at: coordinate, title: "東京", subtitle: "日本の首都")
@@ -110,5 +113,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             destinationTextField.widthAnchor.constraint(equalToConstant: 250),
             destinationTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
+    }
+    
+    func didTapProfileButton() {
+        let profileVC = ViewController_Config()
+        navigationController?.pushViewController(profileVC, animated: true)
     }
 }
