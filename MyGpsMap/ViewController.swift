@@ -15,9 +15,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     private var radikoButton: UIButton!
     private var destinationTextField: UITextField!
     
+    // 最初はナビゲーションバー(戻るボタンがつく上部のバー)を非表示に
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+      }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         mapManager = MapManager(mapView: mapView)
         uiSetupManager = UISetupManager()
         
@@ -33,6 +38,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc private func userTrackingButtonTapped() {
+        print("ユーザートラッキングボタンがタップされました")
         switch mapView.userTrackingMode {
         case .none:
             mapView.setUserTrackingMode(.follow, animated: true)
@@ -53,6 +59,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewControllerLogin = storyboard.instantiateViewController(withIdentifier: "Login")
         self.navigationController?.pushViewController(viewControllerLogin, animated: true)
+        print("プロフィールボタンがタップされました")
     }
     
     @objc private func spotifyButtonTapped() {

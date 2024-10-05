@@ -130,7 +130,7 @@ class UISetupManager {
         
         NSLayoutConstraint.activate([
             destinationTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            destinationTextField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Constants_Design.destinationTextFieldBottom),
+            destinationTextField.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants_Design.destinationTextFieldBottom),
             destinationTextField.widthAnchor.constraint(equalToConstant: Constants_Design.destinationTextFieldWidth),
             destinationTextField.heightAnchor.constraint(equalToConstant: Constants_Design.destinationTextFieldHeight)
         ])
