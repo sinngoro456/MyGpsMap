@@ -1,12 +1,15 @@
 import UIKit
 import CoreLocation
 
-class ViewController_NewPin: UIViewController, UITextFieldDelegate {
+class ViewController_NewPin: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     weak var delegate: ViewController_NewPinDelegate?
     private var titleTextField: UITextField!
     private var descriptionTextField: UITextField!
+    private var imageScrollView: UIScrollView!
+    private var imageStackView: UIStackView!
     var tappedCoordinate: CLLocationCoordinate2D?
+    private var selectedImages: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,12 +56,32 @@ class ViewController_NewPin: UIViewController, UITextFieldDelegate {
         descriptionTextField.delegate = self
         view.addSubview(descriptionTextField)
         
+        // 画像追加ボタンの追加
+        let addImageButton = UIButton(type: .system)
+        addImageButton.setTitle("画像を追加", for: .normal)
+        addImageButton.addTarget(self, action: #selector(addImageButtonTapped), for: .touchUpInside)
+        view.addSubview(addImageButton)
+        
+        // 画像スクロールビューの追加
+        imageScrollView = UIScrollView()
+        imageScrollView.showsHorizontalScrollIndicator = false
+        view.addSubview(imageScrollView)
+        
+        // 画像スタックビューの追加
+        imageStackView = UIStackView()
+        imageStackView.axis = .horizontal
+        imageStackView.spacing = 10
+        imageScrollView.addSubview(imageStackView)
+        
         // Auto Layout の設定
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         plusButton.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextField.translatesAutoresizingMaskIntoConstraints = false
+        addImageButton.translatesAutoresizingMaskIntoConstraints = false
+        imageScrollView.translatesAutoresizingMaskIntoConstraints = false
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -82,8 +105,51 @@ class ViewController_NewPin: UIViewController, UITextFieldDelegate {
             descriptionTextField.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: 16),
             descriptionTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             descriptionTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            descriptionTextField.heightAnchor.constraint(equalToConstant: 60)
+            descriptionTextField.heightAnchor.constraint(equalToConstant: 60),
+            
+            addImageButton.topAnchor.constraint(equalTo: descriptionTextField.bottomAnchor, constant: 16),
+            addImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            imageScrollView.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 16),
+            imageScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            imageScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            imageScrollView.heightAnchor.constraint(equalToConstant: 100),
+            
+            imageStackView.topAnchor.constraint(equalTo: imageScrollView.topAnchor),
+            imageStackView.leadingAnchor.constraint(equalTo: imageScrollView.leadingAnchor, constant: 16),
+            imageStackView.trailingAnchor.constraint(equalTo: imageScrollView.trailingAnchor, constant: -16),
+            imageStackView.bottomAnchor.constraint(equalTo: imageScrollView.bottomAnchor)
         ])
+    }
+    
+    @objc func addImageButtonTapped() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            selectedImages.append(selectedImage)
+            updateImageScrollView()
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func updateImageScrollView() {
+        // 既存の画像ビューをすべて削除
+        imageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        // 新しい画像ビューを追加
+        for image in selectedImages {
+            let imageView = UIImageView(image: image)
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+            imageStackView.addArrangedSubview(imageView)
+        }
     }
     
     @objc func plusButtonTapped() {
@@ -98,7 +164,7 @@ class ViewController_NewPin: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    // UITextFieldDelegate method to dismiss keyboard when return is tapped
+    // UITextFieldDelegate メソッド：リターンキーが押されたときにキーボードを閉じる
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

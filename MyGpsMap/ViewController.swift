@@ -30,7 +30,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         setupUI()
         setupMapView()
         setupGestures()
-        addInitialPin()
     }
     
     func viewController_NewPinDidTapPlus(_ controller: ViewController_NewPin, title: String?, description: String?) {
@@ -158,12 +157,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         
         present(viewController_NewPin, animated: true, completion: nil)
     }
-
-    private func addInitialPin() {
-        let coordinate = CLLocationCoordinate2D(latitude: 35.6895, longitude: 139.6917) // 東京の座標
-        mapManager.addPin(at: coordinate, title: "東京", subtitle: "日本の首都")
-    }
-
     @objc private func userTrackingButtonTapped() {
         print("ユーザートラッキングボタンがタップされました")
         switch mapView.userTrackingMode {
