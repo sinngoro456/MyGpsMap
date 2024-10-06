@@ -3,15 +3,63 @@ import MapKit
 import Amplify
 import AmplifyPlugins
 
-class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate, MapManagerDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate, MapManagerDelegate,UIAdaptivePresentationControllerDelegate  {
     // MapManagerDelegate メソッド
     func mapManager(_ manager: MapManager, didTapNewPinAt coordinate: CLLocationCoordinate2D) {
         print("モーダル遷移に入った")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewControllerNewPin = storyboard.instantiateViewController(withIdentifier: "NewPin")
-            print("viewcontroller")
+        print("viewcontroller")
+        
+        // Xボタンの追加
+        let closeButton = UIButton(type: .system)
+        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        viewControllerNewPin.view.addSubview(closeButton)
+        
+        // ＋ボタンの追加
+        let plusButton = UIButton(type: .system)
+        let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold, scale: .large)
+        let largeImage = UIImage(systemName: "plus.circle.fill", withConfiguration: config)
+        plusButton.setImage(largeImage, for: .normal)
+        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+        viewControllerNewPin.view.addSubview(plusButton)
+        
+        // ボタンの位置設定
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        plusButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: viewControllerNewPin.view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            closeButton.leadingAnchor.constraint(equalTo: viewControllerNewPin.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            closeButton.widthAnchor.constraint(equalToConstant: 30),
+            closeButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            plusButton.topAnchor.constraint(equalTo: viewControllerNewPin.view.safeAreaLayoutGuide.topAnchor, constant: 70),
+            plusButton.trailingAnchor.constraint(equalTo: viewControllerNewPin.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            plusButton.widthAnchor.constraint(equalToConstant: 30),
+            plusButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
         viewControllerNewPin.modalPresentationStyle = .pageSheet // または .overFullScreen
+        viewControllerNewPin.presentationController?.delegate = self // デリゲートを設定
         present(viewControllerNewPin, animated: true, completion: nil)
+    }
+
+    @objc func plusButtonTapped() {
+        print("+")
+        dismiss(animated: true, completion: nil)
+    }
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        print("モーダルが閉じられました")
+        view.endEditing(true) // キーボードを閉じる
+    }
+    
+    @objc func closeButtonTapped() {
+        print("ピンを削除しました")
+        mapManager.removeAllNewPins()
+        dismiss(animated: true, completion: nil)
     }
 
     @IBOutlet var mapView: MKMapView!
