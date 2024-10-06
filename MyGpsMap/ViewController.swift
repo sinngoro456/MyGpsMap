@@ -10,7 +10,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewControllerNewPin = storyboard.instantiateViewController(withIdentifier: "NewPin")
             print("viewcontroller")
-        viewControllerNewPin.modalPresentationStyle = .fullScreen // または .overFullScreen
+        viewControllerNewPin.modalPresentationStyle = .pageSheet // または .overFullScreen
         present(viewControllerNewPin, animated: true, completion: nil)
     }
 
