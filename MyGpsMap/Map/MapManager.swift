@@ -33,11 +33,14 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures]
     }
 
-    func addPin(at coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?) {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        annotation.title = title
-        annotation.subtitle = subtitle
+    func addPin(with pinData: Data_Pin) {
+        print("Pin Data:")
+        print("Coordinate: \(pinData.coordinate)")
+        print("Title: \(pinData.title ?? "nil")")
+        print("Description: \(pinData.description ?? "nil")")
+        print("Images Count: \(pinData.images.count)")
+        
+        let annotation = CustomAnnotation(coordinate: pinData.coordinate, title: pinData.title ?? "", subtitle: pinData.description ?? "", image: pinData.images.first ?? UIImage())
         mapView.addAnnotation(annotation)
     }
 
@@ -65,14 +68,33 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
     func addNewPin(at coordinate: CLLocationCoordinate2D) {
         print("新しいピンが追加されました")
         removeAllNewPins()
-        addPin(at: coordinate, title: "新しいピン", subtitle: nil)
+        
+        // iOSデフォルトのピンを追加
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = "新しいピン"
+        
+        mapView.addAnnotation(annotation)
     }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let customAnnotation = annotation as? CustomAnnotation {
+            let identifier = "CustomAnnotationView"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView
+            
+            if annotationView == nil {
+                annotationView = CustomAnnotationView(annotation: customAnnotation, reuseIdentifier: identifier)
+            } else {
+                annotationView?.annotation = customAnnotation
+            }
+            
+            return annotationView
+        }
+        return nil
+    }
+
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("annotationがタップされました")
-        if let annotation = view.annotation as? MKPointAnnotation,
-           annotation.title == "新しいピン" {
-            print("新しいピンがタップされました")
+        if let annotation = view.annotation as? MKPointAnnotation, annotation.title == "新しいピン" {
             delegate?.mapManager(self, didTapNewPinAt: annotation.coordinate)
         }
     }

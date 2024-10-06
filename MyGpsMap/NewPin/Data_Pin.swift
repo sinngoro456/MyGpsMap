@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 import UIKit
 
-class PinData {
+class Data_Pin {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var description: String?

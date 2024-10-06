@@ -3,8 +3,9 @@ import MapKit
 import Amplify
 import AmplifyPlugins
 
-class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate, MapManagerDelegate,UIAdaptivePresentationControllerDelegate, ViewController_NewPinDelegate{
+class ViewController: UIViewController {
     
+    // MARK: - Properties
     @IBOutlet var mapView: MKMapView!
     
     private var mapManager: MapManager!
@@ -19,6 +20,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
     private var customPanGesture: UIPanGestureRecognizer!
     private var customPinchGesture: UIPinchGestureRecognizer!
     
+    // MARK: - Lifecycle Methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -32,77 +34,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         setupGestures()
     }
     
-    func viewController_NewPinDidTapPlus(_ controller: ViewController_NewPin, title: String?, description: String?) {
-        print("Plus button tapped with title: \(title ?? "") and description: \(description ?? "")")
-        
-        if let title = title, !title.isEmpty, let coordinate = controller.tappedCoordinate {
-            // 既存のピンを探す
-            if let existingAnnotation = mapView.annotations.first(where: {
-                $0.coordinate.latitude == coordinate.latitude &&
-                $0.coordinate.longitude == coordinate.longitude &&
-                ((($0.title ?? "")?.contains("新しいピン")) != nil)
-            }) as? MKPointAnnotation {
-                // 既存の"新しいピン"の名前を更新
-                existingAnnotation.title = title
-                existingAnnotation.subtitle = description
-                
-                // アノテーションビューを更新
-                if mapView.view(for: existingAnnotation) != nil {
-                    mapView.removeAnnotation(existingAnnotation)
-                    mapView.addAnnotation(existingAnnotation)
-                }
-                
-                print("既存の新しいピンの名前を更新しました: \(title)")
-            } else {
-                // 新しいピンを作成
-                let newPin = MKPointAnnotation()
-                newPin.coordinate = coordinate
-                newPin.title = "新しいピン: \(title)"
-                newPin.subtitle = description
-                
-                // マップにピンを追加
-                mapView.addAnnotation(newPin)
-                
-                print("新しいピンを作成しました: \(title)")
-            }
-            
-            // オプション: ピンにズームイン
-            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-            mapView.setRegion(region, animated: true)
-            deselectAllAnnotations()
-        } else {
-            print("タイトルが空のため、ピンを作成または更新しませんでした。")
-        }
-    }
-    
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("モーダルが閉じられました")
-        view.endEditing(true) // キーボードを閉じる
-        
-        // 全てのピンの選択を解除
-        deselectAllAnnotations()
-    }
-
-    // 全てのピンの選択を解除するメソッド
-    private func deselectAllAnnotations() {
-        for annotation in mapView.annotations {
-            mapView.deselectAnnotation(annotation, animated: false)
-        }
-    }
-    
-    // ViewController_NewPinDelegate methods
-    func viewController_NewPinDidTapPlus(_ controller: ViewController_NewPin) {
-        print("+ button tapped in ViewController_NewPin")
-        mapManager.removeAllNewPins()
-        // 必要な処理を追加
-    }
-
-    func viewController_NewPinDidTapClose(_ controller: ViewController_NewPin) {
-        print("Close button tapped")
-        mapManager.removeAllNewPins()
-        // 必要に応じて、一時的なピンを削除するなどの処理を行う
-    }
-    
+    // MARK: - Setup Methods
     private func setupManagers() {
         mapManager = MapManager(mapView: mapView)
         mapManager.delegate = self
@@ -110,9 +42,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
     }
     
     private func setupMapView() {
-            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "featureAnnotation")
-            mapView.delegate = mapManager
-        }
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "featureAnnotation")
+        mapView.delegate = mapManager
+    }
     
     private func setupUI() {
         compassButton = uiSetupManager.setupCompassButton(in: view, mapView: mapView)
@@ -134,29 +66,16 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         customPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         mapView.addGestureRecognizer(customPanGesture)
         
-        // MKMapViewのジェスチャー認識器の設定
         if let panGesture = mapView.gestureRecognizers?.first(where: { $0 is UIPanGestureRecognizer }) {
             panGesture.require(toFail: customPanGesture)
         }
         
-        // ジェスチャー認識器のデリゲートを設定
         longPressGesture.delegate = self
         customPinchGesture.delegate = self
         customPanGesture.delegate = self
     }
     
-    // MapManagerDelegate メソッド
-    func mapManager(_ manager: MapManager, didTapNewPinAt coordinate: CLLocationCoordinate2D) {
-        print("モーダル遷移に入った")
-        let viewController_NewPin = ViewController_NewPin()
-        viewController_NewPin.delegate = self
-        viewController_NewPin.modalPresentationStyle = .pageSheet
-        
-        // タップされた座標を保存
-        viewController_NewPin.tappedCoordinate = coordinate
-        
-        present(viewController_NewPin, animated: true, completion: nil)
-    }
+    // MARK: - Button Actions
     @objc private func userTrackingButtonTapped() {
         print("ユーザートラッキングボタンがタップされました")
         switch mapView.userTrackingMode {
@@ -190,6 +109,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         print("Radikoボタンがタップされました")
     }
     
+    // MARK: - Gesture Handlers
     @objc private func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
             let touchPoint = gestureRecognizer.location(in: mapView)
@@ -209,12 +129,28 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonNone), for: .normal)
     }
     
-    // UIGestureRecognizerDelegate メソッド
+    // MARK: - Helper Methods
+    private func deselectAllAnnotations() {
+        for annotation in mapView.annotations {
+            mapView.deselectAnnotation(annotation, animated: false)
+        }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension ViewController: UITextFieldDelegate {
+    // Implement UITextFieldDelegate methods here
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension ViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
-    
-    // MKMapViewDelegate メソッド
+}
+
+// MARK: - MKMapViewDelegate
+extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let annotation = annotation as? MKMapFeatureAnnotation {
             let markerAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "featureAnnotation", for: annotation) as? MKMarkerAnnotationView
@@ -234,5 +170,44 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         } else {
             return nil
         }
+    }
+}
+
+// MARK: - MapManagerDelegate
+extension ViewController: MapManagerDelegate {
+    func mapManager(_ manager: MapManager, didTapNewPinAt coordinate: CLLocationCoordinate2D) {
+        print("モーダル遷移に入った")
+        let newPinManager = NewPinManager()
+        newPinManager.delegate = self
+        newPinManager.modalPresentationStyle = .pageSheet
+        
+        newPinManager.tappedCoordinate = coordinate
+        
+        present(newPinManager, animated: true, completion: nil)
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+extension ViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        print("モーダルが閉じられました")
+        view.endEditing(true)
+        deselectAllAnnotations()
+    }
+}
+
+// MARK: - NewPinManagerDelegate
+extension ViewController: NewPinManagerDelegate {
+    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin) {
+        print("Plus button tapped with title: \(pinData.title ?? "") and description: \(pinData.description ?? "")")
+        
+        mapManager.addPin(with: pinData) // Data_Pinを使用してアノテーションを追加
+        print("アノテーションが追加されました")
+        mapManager.removeAllNewPins()
+    }
+    
+    func newPinManagerDidTapClose(_ controller: NewPinManager) {
+        print("Close button tapped")
+        mapManager.removeAllNewPins()
     }
 }

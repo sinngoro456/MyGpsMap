@@ -1,11 +1,6 @@
 import UIKit
 import CoreLocation
 
-protocol NewPinManagerDelegate: AnyObject {
-    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin)
-    func newPinManagerDidTapClose(_ controller: NewPinManager)
-}
-
 class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     weak var delegate: NewPinManagerDelegate?
@@ -63,8 +58,10 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     }
     
     private func updateImageScrollView() {
+        // 既存の画像ビューをすべて削除
         imageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
+        // 新しい画像ビューを追加
         for image in selectedImages {
             let imageView = UIImageView(image: image)
             imageView.contentMode = .scaleAspectFill
@@ -100,8 +97,14 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         dismiss(animated: true, completion: nil)
     }
     
+    // UITextFieldDelegate メソッド：リターンキーが押されたときにキーボードを閉じる
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+}
+
+protocol NewPinManagerDelegate: AnyObject {
+    func newPinManagerDidTapPlus(_ controller: NewPinManager, title: String?, description: String?)
+    func newPinManagerDidTapClose(_ controller: NewPinManager)
 }

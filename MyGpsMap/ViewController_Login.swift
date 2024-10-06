@@ -1,34 +1,41 @@
-//
-//  ViewController_login.swift
-//  MyGpsMap
-//
-//  Created by 川渕悟郎 on 2024/10/04.
-//
-
+import UIKit
 import Amplify
 
 class ViewController_Config: UIViewController {
 
-    // 各々のオブジェクトとコードを紐付け
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var messageLabel: UILabel!
+    private var usernameTextField: UITextField!
+    private var passwordTextField: UITextField!
+    private var messageLabel: UILabel!
+    private var loginButton: UIButton!
 
-    // 画面がロードされた際の初期化
     override func viewDidLoad() {
         super.viewDidLoad()
-        messageLabel.text = "ログインしてください"
+        setupUI()
     }
 
-    // LOGINボタン押下時の挙動
-    @IBAction func login(_ sender: Any) {
-        let username = usernameTextField.text!
-        let password = passwordTextField.text!
+    private func setupUI() {
+        view.backgroundColor = .white
+
+        usernameTextField = LoginSetUpManager.createTextField(placeholder: "Username")
+        passwordTextField = LoginSetUpManager.createTextField(placeholder: "Password", isSecure: true)
+        messageLabel = LoginSetUpManager.createLabel(text: "ログインしてください")
+        loginButton = LoginSetUpManager.createButton(title: "LOGIN", target: self, action: #selector(loginButtonTapped))
+
+        [usernameTextField, passwordTextField, messageLabel, loginButton].forEach { view.addSubview($0) }
+
+        LoginSetUpManager.setupConstraints(view: view, usernameTextField: usernameTextField, passwordTextField: passwordTextField, loginButton: loginButton, messageLabel: messageLabel)
+    }
+
+    @objc private func loginButtonTapped() {
+        guard let username = usernameTextField.text, !username.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            changeMessage(message: "ユーザー名とパスワードを入力してください")
+            return
+        }
         signIn(username: username, password: password)
     }
-    
-    // ユーザーログイン機能
-    func signIn(username: String, password: String) {
+
+    private func signIn(username: String, password: String) {
         Amplify.Auth.signIn(username: username, password: password) { result in
             switch result {
             case .success:
@@ -41,11 +48,9 @@ class ViewController_Config: UIViewController {
         }
     }
 
-    // messageLabelのテキストを変更
-    func changeMessage(message: String) {
+    private func changeMessage(message: String) {
         DispatchQueue.main.async {
             self.messageLabel.text = message
         }
     }
 }
-
