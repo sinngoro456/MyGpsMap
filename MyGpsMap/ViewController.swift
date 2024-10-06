@@ -3,7 +3,17 @@ import MapKit
 import Amplify
 import AmplifyPlugins
 
-class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate, MapManagerDelegate {
+    // MapManagerDelegate メソッド
+    func mapManager(_ manager: MapManager, didTapNewPinAt coordinate: CLLocationCoordinate2D) {
+        print("モーダル遷移に入った")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewControllerNewPin = storyboard.instantiateViewController(withIdentifier: "NewPin")
+            print("viewcontroller")
+        viewControllerNewPin.modalPresentationStyle = .fullScreen // または .overFullScreen
+        present(viewControllerNewPin, animated: true, completion: nil)
+    }
+
     @IBOutlet var mapView: MKMapView!
     
     private var mapManager: MapManager!
@@ -34,13 +44,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
     
     private func setupManagers() {
         mapManager = MapManager(mapView: mapView)
+        mapManager.delegate = self
         uiSetupManager = UISetupManager()
     }
     
     private func setupMapView() {
-        mapView.delegate = self
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "featureAnnotation")
-    }
+            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "featureAnnotation")
+            mapView.delegate = mapManager
+        }
     
     private func setupUI() {
         compassButton = uiSetupManager.setupCompassButton(in: view, mapView: mapView)
@@ -151,7 +162,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
                 imageView.bounds = CGRect(origin: .zero, size: CGSize(width: 50, height: 50))
                 markerAnnotationView?.leftCalloutAccessoryView = imageView
             }
-            
             return markerAnnotationView
         } else {
             return nil

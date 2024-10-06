@@ -1,7 +1,13 @@
 import UIKit
 import MapKit
 
-class MapManager: NSObject, CLLocationManagerDelegate {
+protocol MapManagerDelegate: AnyObject {
+    func mapManager(_ manager: MapManager, didTapNewPinAt coordinate: CLLocationCoordinate2D)
+}
+
+class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
+    weak var delegate: MapManagerDelegate?
+    
     private var mapView: MKMapView
     private var locationManager: CLLocationManager
     private var isInitialLocationSet = false
@@ -22,6 +28,7 @@ class MapManager: NSObject, CLLocationManagerDelegate {
     }
 
     private func setupMapView() {
+        mapView.delegate = self
         mapView.showsUserLocation = true
         mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures]
     }
@@ -56,7 +63,17 @@ class MapManager: NSObject, CLLocationManagerDelegate {
     }
 
     func addNewPin(at coordinate: CLLocationCoordinate2D) {
+        print("新しいピンが追加されました")
         removeAllNewPins()
         addPin(at: coordinate, title: "新しいピン", subtitle: nil)
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("annotationがタップされました")
+        if let annotation = view.annotation as? MKPointAnnotation,
+           annotation.title == "新しいピン" {
+            print("新しいピンがタップされました")
+            delegate?.mapManager(self, didTapNewPinAt: annotation.coordinate)
+        }
     }
 }
