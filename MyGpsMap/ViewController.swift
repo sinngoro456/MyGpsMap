@@ -3,65 +3,8 @@ import MapKit
 import Amplify
 import AmplifyPlugins
 
-class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate, MapManagerDelegate,UIAdaptivePresentationControllerDelegate  {
-    // MapManagerDelegate メソッド
-    func mapManager(_ manager: MapManager, didTapNewPinAt coordinate: CLLocationCoordinate2D) {
-        print("モーダル遷移に入った")
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewControllerNewPin = storyboard.instantiateViewController(withIdentifier: "NewPin")
-        print("viewcontroller")
-        
-        // Xボタンの追加
-        let closeButton = UIButton(type: .system)
-        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-        viewControllerNewPin.view.addSubview(closeButton)
-        
-        // ＋ボタンの追加
-        let plusButton = UIButton(type: .system)
-        let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold, scale: .large)
-        let largeImage = UIImage(systemName: "plus.circle.fill", withConfiguration: config)
-        plusButton.setImage(largeImage, for: .normal)
-        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
-        viewControllerNewPin.view.addSubview(plusButton)
-        
-        // ボタンの位置設定
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        plusButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: viewControllerNewPin.view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            closeButton.leadingAnchor.constraint(equalTo: viewControllerNewPin.view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            closeButton.widthAnchor.constraint(equalToConstant: 30),
-            closeButton.heightAnchor.constraint(equalToConstant: 30),
-            
-            plusButton.topAnchor.constraint(equalTo: viewControllerNewPin.view.safeAreaLayoutGuide.topAnchor, constant: 70),
-            plusButton.trailingAnchor.constraint(equalTo: viewControllerNewPin.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            plusButton.widthAnchor.constraint(equalToConstant: 30),
-            plusButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        viewControllerNewPin.modalPresentationStyle = .pageSheet // または .overFullScreen
-        viewControllerNewPin.presentationController?.delegate = self // デリゲートを設定
-        present(viewControllerNewPin, animated: true, completion: nil)
-    }
-
-    @objc func plusButtonTapped() {
-        print("+")
-        dismiss(animated: true, completion: nil)
-    }
-
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("モーダルが閉じられました")
-        view.endEditing(true) // キーボードを閉じる
-    }
+class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate, MapManagerDelegate,UIAdaptivePresentationControllerDelegate, ViewController_NewPinDelegate{
     
-    @objc func closeButtonTapped() {
-        print("ピンを削除しました")
-        mapManager.removeAllNewPins()
-        dismiss(animated: true, completion: nil)
-    }
-
     @IBOutlet var mapView: MKMapView!
     
     private var mapManager: MapManager!
@@ -88,6 +31,77 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         setupMapView()
         setupGestures()
         addInitialPin()
+    }
+    
+    func viewController_NewPinDidTapPlus(_ controller: ViewController_NewPin, title: String?, description: String?) {
+        print("Plus button tapped with title: \(title ?? "") and description: \(description ?? "")")
+        
+        if let title = title, !title.isEmpty, let coordinate = controller.tappedCoordinate {
+            // 既存のピンを探す
+            if let existingAnnotation = mapView.annotations.first(where: {
+                $0.coordinate.latitude == coordinate.latitude &&
+                $0.coordinate.longitude == coordinate.longitude &&
+                ((($0.title ?? "")?.contains("新しいピン")) != nil)
+            }) as? MKPointAnnotation {
+                // 既存の"新しいピン"の名前を更新
+                existingAnnotation.title = title
+                existingAnnotation.subtitle = description
+                
+                // アノテーションビューを更新
+                if mapView.view(for: existingAnnotation) != nil {
+                    mapView.removeAnnotation(existingAnnotation)
+                    mapView.addAnnotation(existingAnnotation)
+                }
+                
+                print("既存の新しいピンの名前を更新しました: \(title)")
+            } else {
+                // 新しいピンを作成
+                let newPin = MKPointAnnotation()
+                newPin.coordinate = coordinate
+                newPin.title = "新しいピン: \(title)"
+                newPin.subtitle = description
+                
+                // マップにピンを追加
+                mapView.addAnnotation(newPin)
+                
+                print("新しいピンを作成しました: \(title)")
+            }
+            
+            // オプション: ピンにズームイン
+            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+            mapView.setRegion(region, animated: true)
+            deselectAllAnnotations()
+        } else {
+            print("タイトルが空のため、ピンを作成または更新しませんでした。")
+        }
+    }
+    
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        print("モーダルが閉じられました")
+        view.endEditing(true) // キーボードを閉じる
+        
+        // 全てのピンの選択を解除
+        deselectAllAnnotations()
+    }
+
+    // 全てのピンの選択を解除するメソッド
+    private func deselectAllAnnotations() {
+        for annotation in mapView.annotations {
+            mapView.deselectAnnotation(annotation, animated: false)
+        }
+    }
+    
+    // ViewController_NewPinDelegate methods
+    func viewController_NewPinDidTapPlus(_ controller: ViewController_NewPin) {
+        print("+ button tapped in ViewController_NewPin")
+        mapManager.removeAllNewPins()
+        // 必要な処理を追加
+    }
+
+    func viewController_NewPinDidTapClose(_ controller: ViewController_NewPin) {
+        print("Close button tapped")
+        mapManager.removeAllNewPins()
+        // 必要に応じて、一時的なピンを削除するなどの処理を行う
     }
     
     private func setupManagers() {
@@ -130,6 +144,19 @@ class ViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         longPressGesture.delegate = self
         customPinchGesture.delegate = self
         customPanGesture.delegate = self
+    }
+    
+    // MapManagerDelegate メソッド
+    func mapManager(_ manager: MapManager, didTapNewPinAt coordinate: CLLocationCoordinate2D) {
+        print("モーダル遷移に入った")
+        let viewController_NewPin = ViewController_NewPin()
+        viewController_NewPin.delegate = self
+        viewController_NewPin.modalPresentationStyle = .pageSheet
+        
+        // タップされた座標を保存
+        viewController_NewPin.tappedCoordinate = coordinate
+        
+        present(viewController_NewPin, animated: true, completion: nil)
     }
 
     private func addInitialPin() {
