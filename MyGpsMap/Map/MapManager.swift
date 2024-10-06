@@ -1,7 +1,7 @@
 import UIKit
 import MapKit
 
-class MapManager: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
+class MapManager: NSObject, CLLocationManagerDelegate {
     private var mapView: MKMapView
     private var locationManager: CLLocationManager
     private var isInitialLocationSet = false
@@ -22,8 +22,8 @@ class MapManager: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
     }
 
     private func setupMapView() {
-        mapView.delegate = self
         mapView.showsUserLocation = true
+        mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures]
     }
 
     func addPin(at coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?) {
@@ -42,5 +42,21 @@ class MapManager: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         isInitialLocationSet = true
         
         mapView.setUserTrackingMode(.follow, animated: true)
+    }
+    
+    func removeAllNewPins() {
+        let newPinsToRemove = mapView.annotations.filter { annotation in
+            if let pointAnnotation = annotation as? MKPointAnnotation,
+               pointAnnotation.title == "新しいピン" {
+                return true
+            }
+            return false
+        }
+        mapView.removeAnnotations(newPinsToRemove)
+    }
+
+    func addNewPin(at coordinate: CLLocationCoordinate2D) {
+        removeAllNewPins()
+        addPin(at: coordinate, title: "新しいピン", subtitle: nil)
     }
 }

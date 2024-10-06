@@ -51,7 +51,7 @@ class Constants_Design {
     static let spotifyButtonImageName = "play.circle"
     static let profileButtonImageName = "person.circle"
     static let radikoButtonImageName = "radio"
-    static let userTrackingButtonNone = "location"
-    static let userTrackingButtonFollow = "location.fill"
-    static let userTrackingButtonFollowWithHeading = "location.slash"
+    static let userTrackingButtonNone = "location.slash"
+    static let userTrackingButtonFollow = "location"
+    static let userTrackingButtonFollowWithHeading = "location.north.fill"
 }
