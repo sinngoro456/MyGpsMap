@@ -60,8 +60,14 @@ class UISetUpManager_NewPin {
         stackView.spacing = 10
         return stackView
     }
+    static func setupDatePicker() -> UIDatePicker {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .compact
+        return datePicker
+    }
     
-    static func setupConstraints(for view: UIView, titleLabel: UILabel, closeButton: UIButton, plusButton: UIButton, titleTextField: UITextField, descriptionTextField: UITextField, addImageButton: UIButton, imageScrollView: UIScrollView, imageStackView: UIStackView) {
+    static func setupConstraints(for view: UIView, titleLabel: UILabel, closeButton: UIButton, plusButton: UIButton, titleTextField: UITextField, descriptionTextField: UITextField, addImageButton: UIButton, datePicker: UIDatePicker, imageScrollView: UIScrollView, imageStackView: UIStackView) {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -89,7 +95,10 @@ class UISetUpManager_NewPin {
             addImageButton.topAnchor.constraint(equalTo: descriptionTextField.bottomAnchor, constant: 16),
             addImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            imageScrollView.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 16),
+            datePicker.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 16),
+            datePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            imageScrollView.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 16),
             imageScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             imageScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             imageScrollView.heightAnchor.constraint(equalToConstant: 100),

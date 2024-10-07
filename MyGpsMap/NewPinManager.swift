@@ -1,5 +1,6 @@
 import UIKit
 import CoreLocation
+import EventKit
 
 protocol NewPinManagerDelegate: AnyObject {
     func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin)
@@ -9,24 +10,27 @@ protocol NewPinManagerDelegate: AnyObject {
 class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     weak var delegate: NewPinManagerDelegate?
-    private var titleTextField: UITextField!
-    private var descriptionTextField: UITextField!
     private var imageScrollView: UIScrollView!
     private var imageStackView: UIStackView!
+    private let eventStore = EKEventStore()
+    private var selectedDate: Date?
+    private var datePicker: UIDatePicker!
+    var titleTextField: UITextField!
+    var descriptionTextField: UITextField!
     var tappedCoordinate: CLLocationCoordinate2D?
-    private var selectedImages: [UIImage] = []
+    var selectedImages: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-    
     private func setupUI() {
         view.backgroundColor = .white
         
         let titleLabel = UISetUpManager_NewPin.setupTitleLabel()
         let closeButton = UISetUpManager_NewPin.setupCloseButton(target: self, action: #selector(closeButtonTapped))
         let plusButton = UISetUpManager_NewPin.setupPlusButton(target: self, action: #selector(plusButtonTapped))
+        let addImageButton = UISetUpManager_NewPin.setupAddImageButton(target: self, action: #selector(addImageButtonTapped))
         
         titleTextField = UISetUpManager_NewPin.setupTextField(placeholder: "タイトル", autocapitalizationType: .allCharacters)
         titleTextField.delegate = self
@@ -34,20 +38,20 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         descriptionTextField = UISetUpManager_NewPin.setupTextField(placeholder: "説明")
         descriptionTextField.delegate = self
         
-        let addImageButton = UISetUpManager_NewPin.setupAddImageButton(target: self, action: #selector(addImageButtonTapped))
-        
         imageScrollView = UISetUpManager_NewPin.setupImageScrollView()
         imageStackView = UISetUpManager_NewPin.setupImageStackView()
         
-        [titleLabel, closeButton, plusButton, titleTextField, descriptionTextField, addImageButton, imageScrollView].forEach { view.addSubview($0) }
+        datePicker = UISetUpManager_NewPin.setupDatePicker()
+                
+        [titleLabel, closeButton, plusButton, titleTextField, descriptionTextField, addImageButton, imageScrollView, datePicker].forEach { view.addSubview($0) }
         imageScrollView.addSubview(imageStackView)
         
-        [titleLabel, closeButton, plusButton, titleTextField, descriptionTextField, addImageButton, imageScrollView, imageStackView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [titleLabel, closeButton, plusButton, titleTextField, descriptionTextField, addImageButton, imageScrollView, imageStackView, datePicker].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
-        UISetUpManager_NewPin.setupConstraints(for: view, titleLabel: titleLabel, closeButton: closeButton, plusButton: plusButton, titleTextField: titleTextField, descriptionTextField: descriptionTextField, addImageButton: addImageButton, imageScrollView: imageScrollView, imageStackView: imageStackView)
+        UISetUpManager_NewPin.setupConstraints(for: view, titleLabel: titleLabel, closeButton: closeButton, plusButton: plusButton, titleTextField: titleTextField, descriptionTextField: descriptionTextField, addImageButton: addImageButton, datePicker: datePicker, imageScrollView: imageScrollView, imageStackView: imageStackView)
     }
-    
     @objc func addImageButtonTapped() {
+        print("image")
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
