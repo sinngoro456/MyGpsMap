@@ -33,13 +33,16 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         mapView.selectableMapFeatures = [.pointsOfInterest, .physicalFeatures]
     }
 
-    func addPin(with pinData: Data_Pin) {
-        print("Pin Data:")
-        print("Coordinate: \(pinData.coordinate)")
-        print("Title: \(pinData.title ?? "nil")")
-        print("Description: \(pinData.description ?? "nil")")
-        print("Images Count: \(pinData.images.count)")
+    func addPin_NoImage(with pinData: Data_Pin) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = pinData.coordinate
+        annotation.title = pinData.title
+        annotation.subtitle = pinData.description
         
+        mapView.addAnnotation(annotation)
+    }
+    
+    func addPin(with pinData: Data_Pin) {
         let annotation = CustomAnnotation(coordinate: pinData.coordinate, title: pinData.title ?? "", subtitle: pinData.description ?? "", image: pinData.images.first ?? UIImage())
         mapView.addAnnotation(annotation)
     }
@@ -69,16 +72,28 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         print("新しいピンが追加されました")
         removeAllNewPins()
         
-        // iOSデフォルトのピンを追加
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = "新しいピン"
         
         mapView.addAnnotation(annotation)
     }
-    
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if let customAnnotation = annotation as? CustomAnnotation {
+        if let pointAnnotation = annotation as? MKPointAnnotation {
+            let identifier = "defaultPin"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+            
+            if annotationView == nil {
+                annotationView = MKMarkerAnnotationView(annotation: pointAnnotation, reuseIdentifier: identifier)
+                annotationView?.markerTintColor = .orange
+                annotationView?.glyphText = nil // 星のマークを削除
+            } else {
+                annotationView?.annotation = pointAnnotation
+            }
+            
+            return annotationView
+        } else if let customAnnotation = annotation as? CustomAnnotation {
             let identifier = "CustomAnnotationView"
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView
             
