@@ -8,10 +8,9 @@
 import UIKit
 
 class UISetUpManager_NewPin {
-    
     static func setupTitleLabel() -> UILabel {
         let titleLabel = UILabel()
-        titleLabel.text = "お気に入りの場所を登録"
+        titleLabel.text = NewPinManager.titleLabelText
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         titleLabel.textAlignment = .center
         return titleLabel

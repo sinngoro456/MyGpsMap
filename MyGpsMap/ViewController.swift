@@ -3,6 +3,9 @@ import MapKit
 import Amplify
 import AmplifyPlugins
 
+protocol ViewControllerDelegate: AnyObject {
+    var isNewPin: Bool { get }
+}
 class ViewController: UIViewController {
     
     // MARK: - Properties
@@ -175,14 +178,21 @@ extension ViewController: MKMapViewDelegate {
 
 // MARK: - MapManagerDelegate
 extension ViewController: MapManagerDelegate {
-    func mapManager(_ manager: MapManager, didTapNewPinAt coordinate: CLLocationCoordinate2D) {
+    
+    func mapManager(_ manager: MapManager, didTapNewPinAt pinData: Data_Pin) {
         print("モーダル遷移に入った")
-        let newPinManager = NewPinManager()
+        let newPinManager = NewPinManager(pinData: pinData)
         newPinManager.delegate = self
         newPinManager.modalPresentationStyle = .pageSheet
-        
-        newPinManager.tappedCoordinate = coordinate
-        
+        newPinManager.tappedCoordinate = pinData.coordinate
+        present(newPinManager, animated: true, completion: nil)
+    }
+    
+    func mapManager(_ manager: MapManager, didTapExistingPin pinData: Data_Pin) {
+        print("didTapExistingPin")
+        let newPinManager = NewPinManager(pinData: pinData)
+        newPinManager.delegate = self
+        newPinManager.modalPresentationStyle = .pageSheet
         present(newPinManager, animated: true, completion: nil)
     }
 }
@@ -198,7 +208,7 @@ extension ViewController: UIAdaptivePresentationControllerDelegate {
 
 // MARK: - NewPinManagerDelegate
 extension ViewController: NewPinManagerDelegate {
-    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin) {
+    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin, isValid: Bool) {
         print("Plus button tapped with title: \(pinData.title ?? "") and description: \(pinData.description ?? "")")
         if pinData.images.isEmpty {
             mapManager.addPin_NoImage(with: pinData)
@@ -206,7 +216,7 @@ extension ViewController: NewPinManagerDelegate {
             mapManager.addPin(with: pinData) // Data_Pinを使用してアノテーションを追加
         }
         print("アノテーションが追加されました")
-         mapManager.removeAllNewPins()
+        mapManager.removeAllNewPins()
     }
     
     func newPinManagerDidTapClose(_ controller: NewPinManager) {
