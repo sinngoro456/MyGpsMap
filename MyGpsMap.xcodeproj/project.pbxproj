@@ -223,7 +223,6 @@
 				CA68F1952CAC23030060B8BB /* SceneDelegate.swift */,
 				CAE89DF22CB1BB6D001F9DA3 /* UISetUpManager.swift */,
 				CA68F1972CAC23030060B8BB /* ViewController.swift */,
-				CAE89DF42CB254E0001F9DA3 /* NewPinManager.swift */,
 				CA9E23A52CAEF5F7004842EC /* ViewController_Login.swift */,
 				CA68F1992CAC23030060B8BB /* Main.storyboard */,
 				CA68F19F2CAC23050060B8BB /* Assets.xcassets */,
@@ -277,6 +276,7 @@
 				CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */,
 				CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */,
 				CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */,
+				CAE89DF42CB254E0001F9DA3 /* NewPinManager.swift */,
 				CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */,
 			);
 			path = NewPin;
