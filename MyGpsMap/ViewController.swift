@@ -1,7 +1,7 @@
 import UIKit
 import MapKit
 import Amplify
-import AmplifyPlugins
+import AWSCognitoAuthPlugin
 
 protocol ViewControllerDelegate: AnyObject {
     var isNewPin: Bool { get }
@@ -98,10 +98,19 @@ class ViewController: UIViewController {
     
     @objc private func profileButtonTapped() {
         print("プロフィールボタンがタップされました")
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewControllerLogin = storyboard.instantiateViewController(withIdentifier: "Login")
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.pushViewController(viewControllerLogin, animated: true)
+        configureAmplify()
+        let authService = AuthService()
+        authService.checkSessionStatus()
+        authService.observeAuthEvents()
+    }
+    
+    private func configureAmplify() {
+        do {
+            try Amplify.add(plugin: AWSCognitoAuthPlugin())
+            try Amplify.configure()
+        } catch {
+            print("Could not initialize Amplify -", error)
+        }
     }
     
     @objc private func spotifyButtonTapped() {
@@ -222,5 +231,16 @@ extension ViewController: NewPinManagerDelegate {
     func newPinManagerDidTapClose(_ controller: NewPinManager) {
         print("Close button tapped")
         mapManager.removeAllNewPins()
+    }
+}
+
+// MARK: - AuthServiceDelegate
+extension ViewController: AuthServiceDelegate {
+    func signIn() {
+        print("ユーザーがサインインしました")
+        // サインイン後の処理をここに記述
+        // 例: ホーム画面に遷移する
+        let ViewController = ViewController()
+        navigationController?.pushViewController(ViewController, animated: true)
     }
 }

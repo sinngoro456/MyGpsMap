@@ -26,13 +26,15 @@
 		CA68F1B82CAC23060060B8BB /* MyGpsMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */; };
 		CA68F1BA2CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */; };
 		CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA68F1C72CAC25500060B8BB /* MapKit.framework */; };
-		CA9E23A62CAEF5F7004842EC /* ViewController_Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9E23A52CAEF5F7004842EC /* ViewController_Login.swift */; };
+		CADB0BE42D0AA427001C175D /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = CADB0BE32D0AA427001C175D /* AWSCognitoAuthPlugin */; };
+		CADB0BE62D0AA427001C175D /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = CADB0BE52D0AA427001C175D /* Amplify */; };
+		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
+		CADB0BEA2D0AA8EF001C175D /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE92D0AA8EF001C175D /* SignInView.swift */; };
 		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
 		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
 		CAE89DF32CB1BB6D001F9DA3 /* UISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF22CB1BB6D001F9DA3 /* UISetUpManager.swift */; };
 		CAE89DF52CB254E0001F9DA3 /* NewPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF42CB254E0001F9DA3 /* NewPinManager.swift */; };
 		CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */; };
-		CAE89DFA2CB2D8EA001F9DA3 /* LogInSetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF92CB2D8EA001F9DA3 /* LogInSetUpManager.swift */; };
 		CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */; };
 		CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */; };
 		CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */; };
@@ -86,13 +88,13 @@
 		CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITests.swift; sourceTree = "<group>"; };
 		CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CA68F1C72CAC25500060B8BB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		CA9E23A52CAEF5F7004842EC /* ViewController_Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_Login.swift; sourceTree = "<group>"; };
+		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		CADB0BE92D0AA8EF001C175D /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Design.swift; sourceTree = "<group>"; };
 		CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Main.swift; sourceTree = "<group>"; };
 		CAE89DF22CB1BB6D001F9DA3 /* UISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISetUpManager.swift; sourceTree = "<group>"; };
 		CAE89DF42CB254E0001F9DA3 /* NewPinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPinManager.swift; sourceTree = "<group>"; };
 		CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISetUpManager_NewPin.swift; sourceTree = "<group>"; };
-		CAE89DF92CB2D8EA001F9DA3 /* LogInSetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInSetUpManager.swift; sourceTree = "<group>"; };
 		CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_Pin.swift; sourceTree = "<group>"; };
 		CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
@@ -107,7 +109,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */,
+				CADB0BE62D0AA427001C175D /* Amplify in Frameworks */,
 				6F386C837480EE3DC9CA3DBD /* Pods_MyGpsMap.framework in Frameworks */,
+				CADB0BE42D0AA427001C175D /* AWSCognitoAuthPlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,8 +185,8 @@
 		CA06CE1D2CAED7E30073950D /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
+				CADB0BE72D0AA7C9001C175D /* AuthService.swift */,
 				CA06CE202CAED8DA0073950D /* UserProfileManager.swift */,
-				CAE89DF92CB2D8EA001F9DA3 /* LogInSetUpManager.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -223,7 +227,7 @@
 				CA68F1952CAC23030060B8BB /* SceneDelegate.swift */,
 				CAE89DF22CB1BB6D001F9DA3 /* UISetUpManager.swift */,
 				CA68F1972CAC23030060B8BB /* ViewController.swift */,
-				CA9E23A52CAEF5F7004842EC /* ViewController_Login.swift */,
+				CADB0BE92D0AA8EF001C175D /* SignInView.swift */,
 				CA68F1992CAC23030060B8BB /* Main.storyboard */,
 				CA68F19F2CAC23050060B8BB /* Assets.xcassets */,
 				CA68F1A12CAC23050060B8BB /* LaunchScreen.storyboard */,
@@ -300,6 +304,10 @@
 			dependencies = (
 			);
 			name = MyGpsMap;
+			packageProductDependencies = (
+				CADB0BE32D0AA427001C175D /* AWSCognitoAuthPlugin */,
+				CADB0BE52D0AA427001C175D /* Amplify */,
+			);
 			productName = MyGpsMap;
 			productReference = CA68F1902CAC23030060B8BB /* MyGpsMap.app */;
 			productType = "com.apple.product-type.application";
@@ -374,6 +382,9 @@
 				Base,
 			);
 			mainGroup = CA68F1872CAC23030060B8BB;
+			packageReferences = (
+				CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */,
+			);
 			productRefGroup = CA68F1912CAC23030060B8BB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -505,9 +516,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CADB0BEA2D0AA8EF001C175D /* SignInView.swift in Sources */,
 				CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */,
 				CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */,
 				CA06CE232CAED8FA0073950D /* RadikoManager.swift in Sources */,
+				CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */,
 				CAE89DF32CB1BB6D001F9DA3 /* UISetUpManager.swift in Sources */,
 				CA68F1982CAC23030060B8BB /* ViewController.swift in Sources */,
 				CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */,
@@ -517,9 +530,7 @@
 				CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */,
 				CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */,
 				CA06CE212CAED8DA0073950D /* UserProfileManager.swift in Sources */,
-				CA9E23A62CAEF5F7004842EC /* ViewController_Login.swift in Sources */,
 				CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */,
-				CAE89DFA2CB2D8EA001F9DA3 /* LogInSetUpManager.swift in Sources */,
 				CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */,
 				CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */,
 				CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */,
@@ -883,6 +894,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.45.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CADB0BE32D0AA427001C175D /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		CADB0BE52D0AA427001C175D /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = Amplify;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */ = {

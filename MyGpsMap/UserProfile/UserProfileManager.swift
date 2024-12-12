@@ -1,5 +1,6 @@
 import UIKit
 
+//地図画面上でのUserProfileボタンのデザイン
 class UserProfileManager {
     func setupProfileButton(in view: UIView, target: Any, action: Selector) -> UIButton {
         let profileButton = UIButton(type: .system)
