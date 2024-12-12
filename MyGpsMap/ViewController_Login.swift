@@ -1,3 +1,4 @@
+import Foundation
 import UIKit
 import Amplify
 
@@ -40,7 +41,7 @@ class ViewController_Config: UIViewController {
         Amplify.Auth.signIn(username: username, password: password) { result in
             switch result {
             case .success:
-                self.changeMessage(message: "ログイン成功！")
+                self.changeMessage(message: "ログイン成功！")import Foundation
                 print("Sign in succeeded")
             case .failure(let error):
                 self.changeMessage(message: "ログイン失敗…")
