@@ -6,6 +6,7 @@ HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AWSAuthCore/
 LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift '@executable_path/Frameworks' '@loader_path/Frameworks'
 LIBRARY_SEARCH_PATHS = $(inherited) "${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
 OTHER_LDFLAGS = $(inherited) -l"sqlite3" -l"z" -framework "AWSAuthCore" -framework "AWSCognitoIdentityProvider" -framework "AWSCognitoIdentityProviderASF" -framework "AWSCore" -framework "AWSMobileClient" -framework "AWSPluginsCore" -framework "Amplify" -framework "AmplifyPlugins" -framework "CoreGraphics" -framework "Foundation" -framework "Security" -framework "SystemConfiguration" -framework "UIKit" -weak_framework "SwiftUI"
+OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/AWSAuthCore" "-F${PODS_CONFIGURATION_BUILD_DIR}/AWSCognitoIdentityProvider" "-F${PODS_CONFIGURATION_BUILD_DIR}/AWSCognitoIdentityProviderASF" "-F${PODS_CONFIGURATION_BUILD_DIR}/AWSCore" "-F${PODS_CONFIGURATION_BUILD_DIR}/AWSMobileClient" "-F${PODS_CONFIGURATION_BUILD_DIR}/AWSPluginsCore" "-F${PODS_CONFIGURATION_BUILD_DIR}/Amplify" "-F${PODS_CONFIGURATION_BUILD_DIR}/AmplifyPlugins"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

@@ -9,6 +9,7 @@ class ViewController_Config: UIViewController {
     private var loginButton: UIButton!
 
     override func viewDidLoad() {
+        print("hi")
         super.viewDidLoad()
         setupUI()
     }
