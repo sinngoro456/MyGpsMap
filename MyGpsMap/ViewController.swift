@@ -98,10 +98,15 @@ class ViewController: UIViewController {
     
     @objc private func profileButtonTapped() {
         print("プロフィールボタンがタップされました")
-        configureAmplify()
-        let authService = AuthService()
-        authService.checkSessionStatus()
-        authService.observeAuthEvents()
+//        configureAmplify()
+//        let authService = AuthService()
+//        authService.checkSessionStatus()
+//        authService.observeAuthEvents()
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewControllerLogin = storyboard.instantiateViewController(withIdentifier: "Login")
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.pushViewController(viewControllerLogin, animated: true)
     }
     
     private func configureAmplify() {
@@ -231,16 +236,5 @@ extension ViewController: NewPinManagerDelegate {
     func newPinManagerDidTapClose(_ controller: NewPinManager) {
         print("Close button tapped")
         mapManager.removeAllNewPins()
-    }
-}
-
-// MARK: - AuthServiceDelegate
-extension ViewController: AuthServiceDelegate {
-    func signIn() {
-        print("ユーザーがサインインしました")
-        // サインイン後の処理をここに記述
-        // 例: ホーム画面に遷移する
-        let ViewController = ViewController()
-        navigationController?.pushViewController(ViewController, animated: true)
     }
 }

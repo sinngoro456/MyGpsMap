@@ -5,18 +5,35 @@
 //  Created by 川渕悟郎 on 2024/12/12.
 //
 
-import SwiftUI
+import UIKit
 
-struct SignInView: View {
-    @EnvironmentObject var auth: AuthService
+class SignInView: UIViewController {
+    var auth: AuthService?
 
-    var body: some View {
-        Button("ログイン", action: auth.signIn)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // 背景色の設定
+        view.backgroundColor = .white
+        
+        // ログインボタンの作成
+        let signInButton = UIButton(type: .system)
+        signInButton.setTitle("ログイン", for: .normal)
+        signInButton.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
+        
+        // ボタンのレイアウト
+        signInButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(signInButton)
+        
+        NSLayoutConstraint.activate([
+            signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            signInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
-}
-
-struct SignInView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignInView()
+    
+    @objc private func signInTapped() {
+        Task {
+            await auth?.signIn()
+        }
     }
 }
