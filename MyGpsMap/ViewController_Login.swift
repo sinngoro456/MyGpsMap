@@ -7,7 +7,6 @@ class ViewController_Config: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        print("hi1")
         configureAmplify()
         
         // 非同期メソッドを呼び出すためにTaskを使用します。
@@ -16,6 +15,7 @@ class ViewController_Config: UIViewController {
             auth.observeAuthEvents()
             showSignInView() // サインインビューを表示
         }
+        print("hi1")
     }
 
     override func viewDidLoad() {
@@ -34,6 +34,7 @@ class ViewController_Config: UIViewController {
         
         signInView.view.frame = self.view.bounds
         signInView.didMove(toParent: self)
+        print("hi4")
     }
 }
 
