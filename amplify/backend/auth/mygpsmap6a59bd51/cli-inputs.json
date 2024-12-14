@@ -37,10 +37,12 @@
     "resourceName": "mygpsmap6a59bd51",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "defaultSocial",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+      "newuserpool"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true,
+    "useEnabledMfas": false,
     "authRoleArn": {
       "Fn::GetAtt": [
         "AuthRole",
@@ -53,13 +55,13 @@
         "Arn"
       ]
     },
-    "breakCircularDependency": true,
+    "breakCircularDependency": false,
     "dependsOn": [],
     "hostedUI": true,
     "hostedUIDomainName": "mygpsmapdomain",
     "authProvidersUserPool": [],
     "hostedUIProviderMeta": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://example.com/cb/\"],\"LogoutURLs\":[\"https://example.com/sighout/\"]}",
-    "authProviders": []
+    "authProviders": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://example.com/cb/\"],\"LogoutURLs\":[\"https://example.com/sighout/\"]}"
   }
 }
