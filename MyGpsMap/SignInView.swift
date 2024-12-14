@@ -5,8 +5,8 @@
 //  Created by 川渕悟郎 on 2024/12/12.
 //
 
-// サインインURI : https://mygpsmapdomain.example.com/cb/
-// サインインURI : https://mygpsmapdomain.example.com/sighout/
+// サインインURI : https://mygpsmapdomain-kawa.auth.ap-northeast-3.amazoncognito.com/auth/callback
+// サインインURI : https://mygpsmapdomain-kawa.auth.ap-northeast-3.amazoncognito.com/auth/sighout
 //Hosted UI Endpoint: https://mygpsmapdomain-kawa.auth.ap-northeast-3.amazoncognito.com/
 //Test Your Hosted UI Endpoint: https://mygpsmapdomain-kawa.auth.ap-northeast-3.amazoncognito.com/login?response_type=code&client_id=7memoka5fbgdd3oum0uca3t8ch&redirect_uri=https://example.com/cb/
 
