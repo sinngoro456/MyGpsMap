@@ -1,5 +1,15 @@
 {
   "dependencies": {
-    "aws-amplify": "^6.6.3"
+    "aws-amplify": "^6.10.3"
+  },
+  "devDependencies": {
+    "@aws-amplify/backend": "^1.9.0",
+    "@aws-amplify/backend-cli": "^1.4.3",
+    "aws-cdk": "^2.173.1",
+    "aws-cdk-lib": "^2.173.1",
+    "constructs": "^10.4.2",
+    "esbuild": "^0.24.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   }
 }

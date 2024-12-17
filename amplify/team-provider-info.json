@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mygpsmap-dev-ea98e-authRole",
+      "UnauthRoleArn": "arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-ea98e-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-ea98e-authRole",
+      "Region": "ap-northeast-3",
+      "DeploymentBucketName": "amplify-mygpsmap-dev-ea98e-deployment",
+      "UnauthRoleName": "amplify-mygpsmap-dev-ea98e-unauthRole",
+      "StackName": "amplify-mygpsmap-dev-ea98e",
+      "StackId": "arn:aws:cloudformation:ap-northeast-3:975050242324:stack/amplify-mygpsmap-dev-ea98e/47594600-bab3-11ef-a28e-0e70df39c969",
+      "AmplifyAppId": "d1ybvy66hvn4k5"
+    },
+    "categories": {
+      "auth": {
+        "mygpsmap": {}
+      }
+    }
+  }
+}

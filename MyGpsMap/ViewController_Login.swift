@@ -1,5 +1,3 @@
-//VieCOntroller_Login.swift
-
 import UIKit
 import Amplify
 import AWSCognitoAuthPlugin
@@ -9,7 +7,6 @@ class ViewController_Config: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        configureAmplify()
         
         // 非同期メソッドを呼び出すためにTaskを使用します。
         Task {
@@ -37,14 +34,5 @@ class ViewController_Config: UIViewController {
         signInView.view.frame = self.view.bounds
         signInView.didMove(toParent: self)
         print("hi4")
-    }
-}
-
-func configureAmplify() {
-    do {
-        try Amplify.add(plugin: AWSCognitoAuthPlugin())
-        try Amplify.configure()
-    } catch {
-        print("Could not initialize Amplify -", error)
     }
 }
