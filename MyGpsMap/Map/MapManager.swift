@@ -47,25 +47,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         mapView.addAnnotation(annotation)
     }
     
-    func addPin(with pinData: Data_Pin) {
-        removePinsAtCoordinate(pinData.coordinate)
-        let annotation = CustomAnnotation(coordinate: pinData.coordinate,
-                                          title: pinData.title ?? "",
-                                          subtitle: pinData.description ?? "",
-                                          image: pinData.images.first ?? UIImage(),
-                                          category: pinData.category ?? "",
-                                          tags: pinData.tags ?? [])
-        mapView.addAnnotation(annotation)
-    }
-    
-    func addPin_NoImage(with pinData: Data_Pin) {
-        print("NoImage")
-        removePinsAtCoordinate(pinData.coordinate)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = pinData.coordinate
-        annotation.title = pinData.title
-        mapView.addAnnotation(annotation)
-    }
+    あ
     
     func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
         // 既存のアノテーションをフィルタリングして削除対象を見つける

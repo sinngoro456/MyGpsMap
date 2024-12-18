@@ -7,7 +7,25 @@
 		<key>MyGpsMap.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>25</integer>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>CA68F18F2CAC23030060B8BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA68F1A82CAC23060060B8BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA68F1B22CAC23060060B8BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

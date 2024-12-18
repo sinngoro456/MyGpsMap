@@ -62,21 +62,24 @@ class ViewController: UIViewController {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.5
         mapView.addGestureRecognizer(longPressGesture)
-        
+
         customPinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         mapView.addGestureRecognizer(customPinchGesture)
-        
+
         customPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         mapView.addGestureRecognizer(customPanGesture)
-        
-        if let panGesture = mapView.gestureRecognizers?.first(where: { $0 is UIPanGestureRecognizer }) {
-            panGesture.require(toFail: customPanGesture)
+
+        // 既存のUIPanGestureRecognizerを見つけて、カスタムのものと区別する
+        if let existingPanGesture = mapView.gestureRecognizers?.first(where: { $0 is UIPanGestureRecognizer && $0 != customPanGesture }) {
+            existingPanGesture.require(toFail: customPanGesture)
         }
-        
+
         longPressGesture.delegate = self
         customPinchGesture.delegate = self
         customPanGesture.delegate = self
     }
+
+
     
     // MARK: - Button Actions
     @objc private func userTrackingButtonTapped() {
@@ -98,24 +101,11 @@ class ViewController: UIViewController {
     
     @objc private func profileButtonTapped() {
         print("プロフィールボタンがタップされました")
-//        configureAmplify()
-//        let authService = AuthService()
-//        authService.checkSessionStatus()
-//        authService.observeAuthEvents()
 
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewControllerLogin = storyboard.instantiateViewController(withIdentifier: "Login")
         navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.pushViewController(viewControllerLogin, animated: true)
-    }
-    
-    private func configureAmplify() {
-        do {
-            try Amplify.add(plugin: AWSCognitoAuthPlugin())
-            try Amplify.configure()
-        } catch {
-            print("Could not initialize Amplify -", error)
-        }
     }
     
     @objc private func spotifyButtonTapped() {

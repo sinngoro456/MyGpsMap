@@ -23,6 +23,7 @@ class AuthService: ObservableObject {
         }
     }
     
+    @MainActor
     private var window: UIWindow {
         guard
             let scene = UIApplication.shared.connectedScenes.first,
@@ -33,12 +34,14 @@ class AuthService: ObservableObject {
         return window
     }
     
+    @MainActor
     func signIn() async {
         print("hi")
         do {
             let signInResult = try await Amplify.Auth.signInWithWebUI(presentationAnchor: window)
             if signInResult.isSignedIn {
                 print("ログイン成功")
+                isSignedIn = true
             }
         } catch {
             print("ログイン失敗: \(error)")

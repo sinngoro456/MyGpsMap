@@ -2,11 +2,10 @@ platform :ios, '17.5'
 
 target 'MyGpsMap' do
   use_frameworks!
-
+  
   # Pods for MyGpsMap
-  pod 'Amplify'
-  pod 'AmplifyPlugins/AWSCognitoAuthPlugin'
-
+  pod 'AWSDynamoDB'
+  
   target 'MyGpsMapTests' do
     inherit! :search_paths
     # Pods for testing
@@ -16,5 +15,4 @@ target 'MyGpsMap' do
     inherit! :search_paths
     # Pods for testing
   end
-
 end

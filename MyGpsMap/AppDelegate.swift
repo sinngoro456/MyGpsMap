@@ -8,14 +8,17 @@
 import UIKit
 import CoreData
 import Amplify
-import AmplifyPlugins
+import AWSCognitoAuthPlugin
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        configureAmplify()
+        return true
+    }
+    
+    private func configureAmplify() {
         do {
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
             try Amplify.configure()
@@ -23,11 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print("Failed to initialize Amplify with \(error)")
         }
-        return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
