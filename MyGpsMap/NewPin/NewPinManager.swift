@@ -3,8 +3,8 @@ import CoreLocation
 import EventKit
 
 protocol NewPinManagerDelegate: AnyObject {
-    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin, isValid: Bool)
-    func newPinManagerDidTapClose(_ controller: NewPinManager)
+    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin)
+    func newPinManagerDidTapClose(_ controller: NewPinManager, pinData: Data_Pin)
 }
 
 class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -130,14 +130,22 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
             return
         }
         
-        // 画像の確認
-        if selectedImages.isEmpty {
-            print("選択された画像はありません")
-        } else {
-            print("選択された画像の数: \(selectedImages.count)")
-            for (index, image) in selectedImages.enumerated() {
-                print("画像 \(index + 1): \(image)")
-            }
+        let pinData = Data_Pin(coordinate: coordinate,
+                               title: titleTextField.text,
+                               description: descriptionTextField.text,
+                               images: selectedImages,
+                               category: tappedCategory,
+                               tags: tappedTags)
+        
+        delegate?.newPinManagerDidTapPlus(self, pinData: pinData)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func closeButtonTapped() {
+        print("ピンを削除しました")
+        guard let coordinate = tappedCoordinate else {
+            print("tappedCoordinateがnilです")
+            return
         }
         
         let pinData = Data_Pin(coordinate: coordinate,
@@ -147,17 +155,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
                                category: tappedCategory,
                                tags: tappedTags)
         
-        delegate?.newPinManagerDidTapPlus(self, pinData: pinData,isValid: !(titleTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) &&
-                                          !(descriptionTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) &&
-                                          !(selectedImages.isEmpty ? tappedImages.isEmpty : false) &&
-                                          !(tappedCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) &&
-                                          !tappedTags.isEmpty)
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func closeButtonTapped() {
-        print("ピンを削除しました")
-        delegate?.newPinManagerDidTapClose(self)
+        delegate?.newPinManagerDidTapClose(self,pinData: pinData)
         dismiss(animated: true, completion: nil)
     }
     

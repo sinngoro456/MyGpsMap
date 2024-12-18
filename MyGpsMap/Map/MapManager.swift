@@ -10,13 +10,16 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
     weak var delegate: MapManagerDelegate?
     
     private var mapView: MKMapView
+    private var pins: [Data_Pin] = []  // Data_Pin オブジェクトの配列
     private var locationManager: CLLocationManager
     private var isInitialLocationSet = false
     var isNewPin: Bool = true
+    private var pincolor : UIColor
 
     init(mapView: MKMapView) {
         self.mapView = mapView
         self.locationManager = CLLocationManager()
+        self.pincolor = UIColor.white
         super.init()
         setupLocationManager()
         setupMapView()
@@ -43,25 +46,51 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = "新しいピン"
+        self.pincolor = UIColor.white
         
         mapView.addAnnotation(annotation)
     }
     
-    あ
+    func addPin(with pinData: Data_Pin) {
+        // 指定された座標に既存のピンを削除
+        removePinsAtCoordinate(pinData.coordinate)
+        self.pincolor = UIColor.orange
+        // 画像が存在する場合はカスタムアノテーションを作成
+        if let image = pinData.images.first {
+            let annotation = CustomAnnotation(coordinate: pinData.coordinate,
+                                              title: pinData.title ?? "",
+                                              subtitle: pinData.description ?? "",
+                                              image: image,
+                                              category: pinData.category ?? "",
+                                              tags: pinData.tags ?? [])
+            mapView.addAnnotation(annotation)
+        } else {
+            // 画像が存在しない場合は通常のMKPointAnnotationを作成
+            print("NoImage")
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = pinData.coordinate
+            annotation.title = pinData.title ?? ""
+            mapView.addAnnotation(annotation)
+        }
+        pins.append(pinData)  // pins 配列に追加
+        printPins()
+    }
     
     func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
         // 既存のアノテーションをフィルタリングして削除対象を見つける
         let annotationsToRemove = mapView.annotations.filter { annotation in
-            if let customAnnotation = annotation as? CustomAnnotation {
                 // 座標が一致するかチェック（浮動小数点の比較なので、小さな誤差を許容）
-                let latDiff = abs(customAnnotation.coordinate.latitude - coordinate.latitude)
-                let lonDiff = abs(customAnnotation.coordinate.longitude - coordinate.longitude)
+                let latDiff = abs(annotation.coordinate.latitude - coordinate.latitude)
+                let lonDiff = abs(annotation.coordinate.longitude - coordinate.longitude)
                 return latDiff < 0.000001 && lonDiff < 0.000001
             }
-            return false
-        }
+        
         // 見つかったアノテーションを削除
         mapView.removeAnnotations(annotationsToRemove)
+        pins.removeAll { pin in pin.coordinate.latitude == coordinate.latitude
+            && pin.coordinate.longitude == coordinate.longitude
+        }
+        printPins()
     }
     
     func removeAllNewPins() {
@@ -85,33 +114,19 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         
         mapView.setUserTrackingMode(.follow, animated: true)
     }
-    
+    // アノテーションが追加されたとき
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        print("mapView, ViewFor")
-        print(annotation)
-        
         if let pointAnnotation = annotation as? MKPointAnnotation {
+            print("hi")
             print(pointAnnotation.title ?? "")
             print(pointAnnotation.subtitle ?? "")
+            
             let identifier = "defaultPin"
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-            
-            if annotationView == nil {
-                annotationView = MKMarkerAnnotationView(annotation: pointAnnotation, reuseIdentifier: identifier)
-                annotationView?.markerTintColor = .orange
-                annotationView?.glyphText = nil
-            } else {
-                annotationView?.annotation = pointAnnotation
-            }
-            
+            annotationView = MKMarkerAnnotationView(annotation: pointAnnotation, reuseIdentifier: identifier)
+            annotationView?.markerTintColor = pincolor
             return annotationView
         } else if let customAnnotation = annotation as? CustomAnnotation {
-            print(customAnnotation.title ?? "")
-            print(customAnnotation.subtitle ?? "")
-            print(customAnnotation.image != nil ? 1 : 0) // 画像の数を表示
-            print(customAnnotation.category ?? "")
-            print(customAnnotation.tags ?? [])
-            
             let identifier = "CustomAnnotationView"
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView
             
@@ -127,18 +142,13 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         return nil
     }
 
+
+    // アノテーションが選択されたとき
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let annotation = view.annotation {
             print("coordinate",annotation.coordinate)
             isNewPin=false
             if let customAnnotation = annotation as? CustomAnnotation {
-                // CustomAnnotationの場合
-                print("title",customAnnotation.title ?? "")
-                print("subtitle",customAnnotation.subtitle ?? "")
-                print("image",customAnnotation.image != nil ? 1 : 0) // 画像の数を表示
-                print("category",customAnnotation.category ?? "")
-                print("tags",customAnnotation.tags ?? [])
-                
                 let images: [UIImage] = {
                     if let image = customAnnotation.image {
                         return [image]
@@ -155,9 +165,6 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
                                        tags: customAnnotation.tags)
                 delegate?.mapManager(self, didTapExistingPin: pinData)
             } else if let pointAnnotation = annotation as? MKPointAnnotation, pointAnnotation.title == "新しいピン", pointAnnotation.subtitle == nil {
-                // annotationの場合
-                print("title",pointAnnotation.title ?? "")
-                print("subtitle",pointAnnotation.subtitle ?? "")
                 let pinData = Data_Pin(coordinate: pointAnnotation.coordinate,
                                        title: "新しいピン",
                                        description: "",
@@ -167,9 +174,6 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
                 delegate?.mapManager(self, didTapNewPinAt: pinData)
                 isNewPin=true
             }else if let pointAnnotation = annotation as? MKPointAnnotation{
-                // annotationの場合
-                print("title2",pointAnnotation.title ?? "")
-                print("subtitle2",pointAnnotation.subtitle ?? "")
                 let pinData = Data_Pin(coordinate: pointAnnotation.coordinate,
                                        title: pointAnnotation.title,
                                        description: pointAnnotation.subtitle,
@@ -181,6 +185,18 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
             }else{
                 print("未知のピン")
             }
+        }
+    }
+    
+//    デバッグ用
+    func printPins() {
+        for pin in pins {
+            print("Title: \(pin.title ?? "No Title")")
+            print("Description: \(pin.description ?? "No Description")")
+            print("Coordinate: \(pin.coordinate.latitude), \(pin.coordinate.longitude)")
+            print("Category: \(pin.category ?? "No Category")")
+            print("Tags: \(pin.tags?.joined(separator: ", ") ?? "No Tags")")
+            print("Images Count: \(pin.images.count)\n")
         }
     }
 }

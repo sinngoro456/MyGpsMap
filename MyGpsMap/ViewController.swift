@@ -212,19 +212,15 @@ extension ViewController: UIAdaptivePresentationControllerDelegate {
 
 // MARK: - NewPinManagerDelegate
 extension ViewController: NewPinManagerDelegate {
-    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin, isValid: Bool) {
+    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin) {
         print("Plus button tapped with title: \(pinData.title ?? "") and description: \(pinData.description ?? "")")
-        if pinData.images.isEmpty {
-            mapManager.addPin_NoImage(with: pinData)
-        } else {
-            mapManager.addPin(with: pinData) // Data_Pinを使用してアノテーションを追加
-        }
-        print("アノテーションが追加されました")
+        mapManager.addPin(with: pinData)
         mapManager.removeAllNewPins()
     }
     
-    func newPinManagerDidTapClose(_ controller: NewPinManager) {
+    func newPinManagerDidTapClose(_ controller: NewPinManager, pinData: Data_Pin) {
         print("Close button tapped")
+        mapManager.removePinsAtCoordinate(pinData.coordinate)
         mapManager.removeAllNewPins()
     }
 }
