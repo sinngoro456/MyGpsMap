@@ -12,7 +12,9 @@ class PinManager {
     static let shared = PinManager() // シングルトンインスタンス
     private(set) var pins: [Data_Pin] = [] // 外部からは読み取り専用
 
-    private init() {} // 外部からのインスタンス化を防ぐ
+    private init() {
+        loadPins() // 初期化時にピンをロード
+    }
 
     func addPin(_ pin: Data_Pin) {
         if pin.id == 0{
@@ -20,6 +22,7 @@ class PinManager {
         }
         pins.append(pin)
         removeSameIdPins()
+        savePins()
     }
 
     // 指定された座標のピンを削除するメソッド
@@ -31,10 +34,11 @@ class PinManager {
             return latDiff < 0.000001 && lonDiff < 0.000001
         }
         removeSameIdPins()
+        savePins()
     }
     
     // ユニークなIDを生成する関数
-    func generateUniqueId() -> Int {
+    private func generateUniqueId() -> Int {
         var availableIds: [Int]  // 利用可能なIDの配列
         var currentIndex: Int = 0
         availableIds = Array(1...Constants_Main.Nmax_pin)
@@ -110,6 +114,39 @@ class PinManager {
             let pinKey = "\(pin.coordinate.latitude),\(pin.coordinate.longitude),\(pin.title ?? "")"
             return !matchingPins.contains(pinKey)  // 一致しない場合は削除
         }
+    }
+    
+    // ピンのローカル保存
+    func savePins() {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601 // 日付フォーマット設定
+        do {
+            let data = try encoder.encode(pins)
+            let url = getDocumentsDirectory().appendingPathComponent("pins.json")
+            try data.write(to: url)
+            print("ピンがローカルに保存されました:", url)
+        } catch {
+            print("ピンの保存エラー:", error)
+        }
+    }
+
+    // ピンのローカル読み込み
+    private func loadPins() {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601 // 日付フォーマット設定
+        do {
+            let url = getDocumentsDirectory().appendingPathComponent("pins.json")
+            let data = try Data(contentsOf: url)
+            pins = try decoder.decode([Data_Pin].self, from: data)
+            print("ピンがローカルから読み込まれました:", pins)
+        } catch {
+            print("ピンの読み込みエラー:", error)
+        }
+    }
+
+    // ドキュメントディレクトリの取得
+    func getDocumentsDirectory() -> URL {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
     
     //    デバッグ用

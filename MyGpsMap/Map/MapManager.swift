@@ -21,6 +21,10 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         super.init()
         setupLocationManager()
         setupMapView()
+        // 受け取ったピンデータを地図に追加
+        for pin in PinManager.shared.pins {
+            addPin(with: pin)
+        }
     }
 
     private func setupLocationManager() {

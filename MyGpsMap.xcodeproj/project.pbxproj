@@ -33,6 +33,7 @@
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
 		CADB0BEA2D0AA8EF001C175D /* SignInUISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE92D0AA8EF001C175D /* SignInUISetUpManager.swift */; };
 		CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFC2D14081D003620BF /* PinManager.swift */; };
+		CAE82BFF2D149167003620BF /* LocalSavePins.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFE2D149167003620BF /* LocalSavePins.swift */; };
 		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
 		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
 		CAE89DF32CB1BB6D001F9DA3 /* MainUISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */; };
@@ -93,6 +94,7 @@
 		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		CADB0BE92D0AA8EF001C175D /* SignInUISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUISetUpManager.swift; sourceTree = "<group>"; };
 		CAE82BFC2D14081D003620BF /* PinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
+		CAE82BFE2D149167003620BF /* LocalSavePins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSavePins.swift; sourceTree = "<group>"; };
 		CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Design.swift; sourceTree = "<group>"; };
 		CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Main.swift; sourceTree = "<group>"; };
 		CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUISetUpManager.swift; sourceTree = "<group>"; };
@@ -274,6 +276,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CAE82C002D14934C003620BF /* Save */ = {
+			isa = PBXGroup;
+			children = (
+				CAE82BFE2D149167003620BF /* LocalSavePins.swift */,
+			);
+			path = Save;
+			sourceTree = "<group>";
+		};
 		CAE89DED2CB1B1A2001F9DA3 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +296,7 @@
 		CAE89DF62CB2D6EE001F9DA3 /* Pin */ = {
 			isa = PBXGroup;
 			children = (
+				CAE82C002D14934C003620BF /* Save */,
 				CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */,
 				CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */,
 				CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */,
@@ -508,6 +519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAE82BFF2D149167003620BF /* LocalSavePins.swift in Sources */,
 				CADB0BEA2D0AA8EF001C175D /* SignInUISetUpManager.swift in Sources */,
 				CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */,
 				CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */,
