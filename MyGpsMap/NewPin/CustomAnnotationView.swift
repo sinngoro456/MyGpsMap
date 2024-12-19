@@ -1,3 +1,5 @@
+//　画像登録時のアイコンアノテーションを作成
+
 import MapKit
 
 class CustomAnnotationView: MKAnnotationView {

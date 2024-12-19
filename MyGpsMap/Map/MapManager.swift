@@ -195,6 +195,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
             print("Description: \(pin.description ?? "No Description")")
             print("Coordinate: \(pin.coordinate.latitude), \(pin.coordinate.longitude)")
             print("Category: \(pin.category ?? "No Category")")
+            print("Date: \(pin.date ?? Date())")
             print("Tags: \(pin.tags?.joined(separator: ", ") ?? "No Tags")")
             print("Images Count: \(pin.images.count)\n")
         }

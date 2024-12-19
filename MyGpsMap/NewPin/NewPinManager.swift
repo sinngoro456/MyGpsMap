@@ -12,7 +12,6 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     private var imageScrollView: UIScrollView!
     private var imageStackView: UIStackView!
     private let eventStore = EKEventStore()
-    private var selectedDate: Date?
     private var datePicker: UIDatePicker!
     var titleTextField: UITextField!
     var descriptionTextField: UITextField!
@@ -20,11 +19,13 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     var tappedTitle: String = ""
     var tappedDescription: String = ""
     var tappedImages: [UIImage] = []
+    var tappedDate: Date?
     var tappedCategory: String = ""
     var tappedTags: [String] = []
     var selectedTitle: String = ""
     var selectedDescription: String = ""
     var selectedImages: [UIImage] = []
+    var selectedDate: Date?
     var selectedCategory: String = ""
     var selectedTags: [String] = []
     private var titleLabel: UILabel!
@@ -38,6 +39,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         self.tappedTitle = pinData.title ?? ""
         self.tappedDescription = pinData.description ?? ""
         self.tappedImages = pinData.images
+        self.tappedDate = pinData.date
         self.tappedCategory = pinData.category ?? ""
         self.tappedTags = pinData.tags ?? []
     }
@@ -48,7 +50,6 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        updateUI()
     }
     private func setupUI() {
         view.backgroundColor = .white
@@ -60,14 +61,17 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         
         titleTextField = UISetUpManager_NewPin.setupTextField(placeholder: "タイトル", autocapitalizationType: .allCharacters)
         titleTextField.delegate = self
+        titleTextField.text = self.tappedTitle
         
         descriptionTextField = UISetUpManager_NewPin.setupTextField(placeholder: "説明")
         descriptionTextField.delegate = self
+        descriptionTextField.text = self.tappedDescription
         
         imageScrollView = UISetUpManager_NewPin.setupImageScrollView()
         imageStackView = UISetUpManager_NewPin.setupImageStackView()
         
         datePicker = UISetUpManager_NewPin.setupDatePicker()
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
                 
         [titleLabel, closeButton, plusButton, titleTextField, descriptionTextField, addImageButton, imageScrollView, datePicker].forEach { view.addSubview($0) }
         imageScrollView.addSubview(imageStackView)
@@ -84,44 +88,9 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         present(imagePicker, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
-            selectedImages.append(selectedImage)
-            updateImageScrollView()
-        }
-        dismiss(animated: true, completion: nil)
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        selectedDate = sender.date
     }
-    
-    func configure(for pinType: PinType, with pinData: Data_Pin? = nil) {
-        self.initialPinData = pinData
-    }
-    private func updateTitleLabel() {
-        NewPinManager.titleLabelText = isNewPin ? "お気に入りの場所を登録" : "ピンを編集"
-        titleLabel.text = NewPinManager.titleLabelText
-    }
-    
-    enum PinType {
-        case new
-        case existing
-    }
-    
-    private func updateUI() {
-        updateTitleLabel()
-    }
-    
-    private func updateImageScrollView() {
-        imageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
-        for image in selectedImages {
-            let imageView = UIImageView(image: image)
-            imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
-            imageStackView.addArrangedSubview(imageView)
-        }
-    }
-
     
     @objc func plusButtonTapped() {
         print("+が押されました")
@@ -134,6 +103,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
                                title: titleTextField.text,
                                description: descriptionTextField.text,
                                images: selectedImages,
+                               date: datePicker.date,
                                category: tappedCategory,
                                tags: tappedTags)
         
@@ -157,6 +127,37 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         
         delegate?.newPinManagerDidTapClose(self,pinData: pinData)
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            selectedImages.append(selectedImage)
+            updateImageScrollView()
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func configure(for pinType: PinType, with pinData: Data_Pin? = nil) {
+        self.initialPinData = pinData
+    }
+    
+    enum PinType {
+        case new
+        case existing
+    }
+    
+    private func updateImageScrollView() {
+        imageStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        for image in selectedImages {
+            let imageView = UIImageView(image: image)
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+            imageStackView.addArrangedSubview(imageView)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
