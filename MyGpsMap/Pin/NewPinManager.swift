@@ -65,7 +65,11 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         
         titleTextField = UISetUpManager_NewPin.setupTextField(placeholder: "タイトル", autocapitalizationType: .allCharacters)
         titleTextField.delegate = self
-        titleTextField.text = self.tappedTitle
+        if self.tappedTitle == "新しいピン" {
+            titleTextField.text = ""
+        } else {
+            titleTextField.text = self.tappedTitle
+        }
         
         descriptionTextField = UISetUpManager_NewPin.setupTextField(placeholder: "コメント")
         descriptionTextField.delegate = self
