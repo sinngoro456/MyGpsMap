@@ -15,6 +15,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     private var datePicker: UIDatePicker!
     var titleTextField: UITextField!
     var descriptionTextField: UITextField!
+    var tappedId: Int = 0
     var tappedCoordinate: CLLocationCoordinate2D?
     var tappedTitle: String = ""
     var tappedDescription: String = ""
@@ -24,6 +25,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     var tappedTags: [String] = []
     var selectedTitle: String = ""
     var selectedDescription: String = ""
+    var selectedColor: UIColor = .orange
     var selectedImages: [UIImage] = []
     var selectedDate: Date?
     var selectedCategory: String = ""
@@ -35,6 +37,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     
     init(pinData: Data_Pin) {
         super.init(nibName: nil, bundle: nil)
+        self.tappedId = pinData.id ?? 0
         self.tappedCoordinate = pinData.coordinate
         self.tappedTitle = pinData.title ?? ""
         self.tappedDescription = pinData.description ?? ""
@@ -50,6 +53,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        initializeValues()
     }
     private func setupUI() {
         view.backgroundColor = .white
@@ -63,9 +67,8 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         titleTextField.delegate = self
         titleTextField.text = self.tappedTitle
         
-        descriptionTextField = UISetUpManager_NewPin.setupTextField(placeholder: "説明")
+        descriptionTextField = UISetUpManager_NewPin.setupTextField(placeholder: "コメント")
         descriptionTextField.delegate = self
-        descriptionTextField.text = self.tappedDescription
         
         imageScrollView = UISetUpManager_NewPin.setupImageScrollView()
         imageStackView = UISetUpManager_NewPin.setupImageStackView()
@@ -80,6 +83,19 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         
         UISetUpManager_NewPin.setupConstraints(for: view, titleLabel: titleLabel, closeButton: closeButton, plusButton: plusButton, titleTextField: titleTextField, descriptionTextField: descriptionTextField, addImageButton: addImageButton, datePicker: datePicker, imageScrollView: imageScrollView, imageStackView: imageStackView)
     }
+    
+    private func initializeValues() {
+        titleTextField.text = self.tappedTitle
+        print(self.tappedDescription)
+        descriptionTextField.text = self.tappedDescription
+        selectedImages = self.tappedImages
+        // datePickerに日付を設定
+        if let date = tappedDate {
+            datePicker.date = date
+        }
+        updateImageScrollView()
+    }
+    
     @objc func addImageButtonTapped() {
         print("image")
         let imagePicker = UIImagePickerController()
@@ -99,9 +115,11 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
             return
         }
         
-        let pinData = Data_Pin(coordinate: coordinate,
+        let pinData = Data_Pin(id: tappedId,
+                               coordinate: coordinate,
                                title: titleTextField.text,
                                description: descriptionTextField.text,
+                               color: selectedColor,
                                images: selectedImages,
                                date: datePicker.date,
                                category: tappedCategory,
@@ -118,9 +136,10 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
             return
         }
         
-        let pinData = Data_Pin(coordinate: coordinate,
+        let pinData = Data_Pin(id: tappedId,coordinate: coordinate,
                                title: titleTextField.text,
                                description: descriptionTextField.text,
+                               color: selectedColor,
                                images: selectedImages,
                                category: tappedCategory,
                                tags: tappedTags)
@@ -128,23 +147,13 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
         delegate?.newPinManagerDidTapClose(self,pinData: pinData)
         dismiss(animated: true, completion: nil)
     }
-    
-    
+
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             selectedImages.append(selectedImage)
             updateImageScrollView()
         }
         dismiss(animated: true, completion: nil)
-    }
-    
-    func configure(for pinType: PinType, with pinData: Data_Pin? = nil) {
-        self.initialPinData = pinData
-    }
-    
-    enum PinType {
-        case new
-        case existing
     }
     
     private func updateImageScrollView() {

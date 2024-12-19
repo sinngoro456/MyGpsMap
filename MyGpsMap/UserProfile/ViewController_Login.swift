@@ -14,7 +14,6 @@ class ViewController_Config: UIViewController {
             auth.observeAuthEvents()
             showSignInView()
         }
-        print("hi1")
     }
 
     override func viewDidLoad() {
@@ -30,6 +29,5 @@ class ViewController_Config: UIViewController {
         
         signInView.view.frame = view.bounds
         signInView.didMove(toParent: self)
-        print("hi4")
     }
 }

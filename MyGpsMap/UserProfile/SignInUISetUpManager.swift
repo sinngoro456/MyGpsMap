@@ -38,9 +38,7 @@ class SignInView: UIViewController {
     
     @objc private func signInTapped() {
         Task {
-            print("do1")
             await auth?.signIn()
-            print("do2")
         }
     }
 }

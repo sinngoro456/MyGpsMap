@@ -1,6 +1,7 @@
 import UIKit
 
 class Constants_Main {
+    static let Nmax_pin: Int = 100000
     // 例: 色の定数
     static let profileButtonBackgroundColor = UIColor.white
     static let profileButtonTintColor = UIColor.systemBlue

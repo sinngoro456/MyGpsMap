@@ -183,20 +183,12 @@ extension ViewController: MKMapViewDelegate {
 // MARK: - MapManagerDelegate
 extension ViewController: MapManagerDelegate {
     
-    func mapManager(_ manager: MapManager, didTapNewPinAt pinData: Data_Pin) {
+    func mapManager(_ manager: MapManager, didTapPin pinData: Data_Pin) {
         print("モーダル遷移に入った")
         let newPinManager = NewPinManager(pinData: pinData)
         newPinManager.delegate = self
         newPinManager.modalPresentationStyle = .pageSheet
         newPinManager.tappedCoordinate = pinData.coordinate
-        present(newPinManager, animated: true, completion: nil)
-    }
-    
-    func mapManager(_ manager: MapManager, didTapExistingPin pinData: Data_Pin) {
-        print("didTapExistingPin")
-        let newPinManager = NewPinManager(pinData: pinData)
-        newPinManager.delegate = self
-        newPinManager.modalPresentationStyle = .pageSheet
         present(newPinManager, animated: true, completion: nil)
     }
 }
@@ -214,13 +206,15 @@ extension ViewController: UIAdaptivePresentationControllerDelegate {
 extension ViewController: NewPinManagerDelegate {
     func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin) {
         print("Plus button tapped with title: \(pinData.title ?? "") and description: \(pinData.description ?? "")")
-        mapManager.addPin(with: pinData)
         mapManager.removeAllNewPins()
+        mapManager.addPin(with: pinData)
+        PinManager.shared.printPins()
     }
     
     func newPinManagerDidTapClose(_ controller: NewPinManager, pinData: Data_Pin) {
         print("Close button tapped")
         mapManager.removePinsAtCoordinate(pinData.coordinate)
         mapManager.removeAllNewPins()
+        PinManager.shared.printPins()
     }
 }

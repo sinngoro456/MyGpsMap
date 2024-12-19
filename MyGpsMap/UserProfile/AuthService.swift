@@ -36,7 +36,6 @@ class AuthService: ObservableObject {
     
     @MainActor
     func signIn() async {
-        print("hi")
         do {
             let signInResult = try await Amplify.Auth.signInWithWebUI(presentationAnchor: window)
             if signInResult.isSignedIn {
