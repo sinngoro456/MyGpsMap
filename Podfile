@@ -5,6 +5,8 @@ target 'MyGpsMap' do
   
   # Pods for MyGpsMap
   pod 'AWSDynamoDB'
+  pod 'AWSAPIGateway'
+  pod 'Alamofire'
   
   target 'MyGpsMapTests' do
     inherit! :search_paths

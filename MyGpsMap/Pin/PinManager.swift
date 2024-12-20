@@ -7,8 +7,10 @@
 
 import CoreLocation  // Core Locationフレームワークをインポート
 import MapKit
+import AWSAPIGateway
 
 class PinManager {
+    var cognitoUserId: String? // 外部から読み書き可能なcognitoUserIdプロパティ
     static let shared = PinManager() // シングルトンインスタンス
     private(set) var pins: [Data_Pin] = [] // 外部からは読み取り専用
 
@@ -16,13 +18,15 @@ class PinManager {
         loadPins() // 初期化時にピンをロード
     }
 
-    func addPin(_ pin: Data_Pin) {
+    func addPin(_ pin: Data_Pin, shouldSave: Bool = true) {
         if pin.id == 0{
             pin.id = generateUniqueId()
         }
         pins.append(pin)
         removeSameIdPins()
-        savePins()
+        if shouldSave {
+            savePins()
+        }
     }
 
     // 指定された座標のピンを削除するメソッド

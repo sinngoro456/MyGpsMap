@@ -1,7 +1,7 @@
 import UIKit
 import MapKit
-import Amplify
-import AWSCognitoAuthPlugin
+//import Amplify
+//import AWSCognitoAuthPlugin
 
 protocol ViewControllerDelegate: AnyObject {
     var isNewPin: Bool { get }
@@ -126,13 +126,10 @@ class ViewController: UIViewController {
     }
     
     @objc private func handlePinch(_ gestureRecognizer: UIPinchGestureRecognizer) {
-        print("ピンチが検出されました: スケール = \(gestureRecognizer.scale)")
         userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonNone), for: .normal)
     }
     
     @objc private func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-        let translation = gestureRecognizer.translation(in: mapView)
-        print("パン（スライド）が検出されました: x=\(translation.x), y=\(translation.y)")
         userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonNone), for: .normal)
     }
     

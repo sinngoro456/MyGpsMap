@@ -13,8 +13,13 @@ import AWSCognitoAuthPlugin
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    var authService = AuthService() // AuthServiceのインスタンスを作成
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         configureAmplify()
+        Task {
+            await authService.checkSessionStatus() // セッション状態を確認
+        }
         return true
     }
     

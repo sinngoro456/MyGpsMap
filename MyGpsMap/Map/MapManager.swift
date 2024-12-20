@@ -21,10 +21,12 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         super.init()
         setupLocationManager()
         setupMapView()
+        PinManager.shared.printPins()
         // 受け取ったピンデータを地図に追加
         for pin in PinManager.shared.pins {
-            addPin(with: pin)
+            addPin(with: pin,shouldSave: false)
         }
+        PinManager.shared.savePins()
     }
 
     private func setupLocationManager() {
@@ -42,17 +44,16 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
 
     func addNewPin(at coordinate: CLLocationCoordinate2D) {
         print("新しいピンが追加されました")
-        removePinsAtCoordinate(coordinate)
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = "新しいピン"
         self.pincolor = UIColor.white
-        
+        removeAllNewPins()
         mapView.addAnnotation(annotation)
     }
     
-    func addPin(with pinData: Data_Pin) {
+    func addPin(with pinData: Data_Pin, shouldSave: Bool = true) {
         // 指定された座標の既存のピンを削除
         removePinsAtCoordinate(pinData.coordinate)
         self.pincolor = UIColor.orange
@@ -73,7 +74,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
             annotation.title = pinData.title ?? ""
             mapView.addAnnotation(annotation)
         }
-        PinManager.shared.addPin(pinData)  // pins 配列に追加
+        PinManager.shared.addPin(pinData,shouldSave: shouldSave)  // pins 配列に追加
     }
     
     func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {

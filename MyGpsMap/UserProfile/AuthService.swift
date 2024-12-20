@@ -7,6 +7,7 @@
 
 import Foundation
 import Amplify
+import AWSCognitoAuthPlugin
 import UIKit
 
 class AuthService: ObservableObject {
@@ -17,6 +18,25 @@ class AuthService: ObservableObject {
             let session = try await Amplify.Auth.fetchAuthSession()
             DispatchQueue.main.async {
                 self.isSignedIn = session.isSignedIn
+            }
+            if let cognitoSession = session as? AWSAuthCognitoSession {
+                // userPoolTokensResultからトークンを取得
+                switch cognitoSession.userPoolTokensResult {
+                    case .success(let tokens):
+                        // idTokenを取得
+                        let idToken = tokens.idToken
+                        
+                        // JWTをデコードしてcognito:usernameを取得
+                        if let username = getCognitoUsername(from: idToken) {
+                            print("Cognito Username: \(username)")
+                            PinManager.shared.cognitoUserId = username
+                        } else {
+                            print("cognito:usernameが見つかりませんでした。")
+                        }
+                        
+                    case .failure(let error):
+                        print("トークンの取得に失敗しました: \(error)")
+                    }
             }
         } catch {
             print("セッション取得失敗: \(error)")
@@ -65,5 +85,37 @@ class AuthService: ObservableObject {
                 break
             }
         }
+    }
+    
+    // JWTからcognito:usernameを取得する関数
+    private func getCognitoUsername(from idToken: String) -> String? {
+        // idTokenをドットで分割
+        let components = idToken.components(separatedBy: ".")
+        
+        guard components.count == 3,
+              let payloadData = Data(base64UrlEncoded: components[1]),
+              let json = try? JSONSerialization.jsonObject(with: payloadData, options: []) as? [String: Any],
+              let username = json["cognito:username"] as? String else {
+            return nil
+        }
+        
+        return username
+    }
+}
+
+// Base64Urlデコードの拡張機能
+extension Data {
+    init?(base64UrlEncoded string: String) {
+        var base64 = string.replacingOccurrences(of: "-", with: "+")
+                         .replacingOccurrences(of: "_", with: "/")
+        switch base64.count % 4 {
+        case 2:
+            base64 += "=="
+        case 3:
+            base64 += "="
+        default:
+            break
+        }
+        self.init(base64Encoded: base64)
     }
 }

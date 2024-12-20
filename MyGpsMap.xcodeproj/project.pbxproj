@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		027AD4C092D12FBAAD66D2AF /* Pods_MyGpsMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8FAEAA56E042DF93B98668F /* Pods_MyGpsMapTests.framework */; };
-		116BBF1C11B1A4B6746AA556 /* Pods_MyGpsMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A4D790430062204E46D739 /* Pods_MyGpsMapUITests.framework */; };
-		8A6026C257CB61DA683FE337 /* Pods_MyGpsMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47ABE517AEDA7539C18D217C /* Pods_MyGpsMap.framework */; };
+		14E2F0913E0AB894E56A16D8 /* Pods_MyGpsMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABEACEF92AC88925CC9E8443 /* Pods_MyGpsMapUITests.framework */; };
+		1EC16878D0E0653735012B9A /* Pods_MyGpsMapTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5349D1F25BD4F085E8F056B /* Pods_MyGpsMapTests.framework */; };
 		8E3E8F69BA4BD062519D89BC /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 496DD731DC8AA533FE5C0E9E /* amplifyconfiguration.json */; };
 		99D2DFC54C0CE7054BEAC45A /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = DEBBCC96568A13679E716D0A /* awsconfiguration.json */; };
 		CA06CE1F2CAED8240073950D /* SpotifyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA06CE1E2CAED8240073950D /* SpotifyManager.swift */; };
@@ -33,7 +32,6 @@
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
 		CADB0BEA2D0AA8EF001C175D /* SignInUISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE92D0AA8EF001C175D /* SignInUISetUpManager.swift */; };
 		CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFC2D14081D003620BF /* PinManager.swift */; };
-		CAE82BFF2D149167003620BF /* LocalSavePins.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFE2D149167003620BF /* LocalSavePins.swift */; };
 		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
 		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
 		CAE89DF32CB1BB6D001F9DA3 /* MainUISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */; };
@@ -42,6 +40,7 @@
 		CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */; };
 		CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */; };
 		CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */; };
+		D8892B0798FA062069CE90DE /* Pods_MyGpsMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A94B2751C6267E65661EAA /* Pods_MyGpsMap.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,15 +61,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2E21C0C72DBCA300DBE48542 /* Pods-MyGpsMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMap.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap.debug.xcconfig"; sourceTree = "<group>"; };
-		47ABE517AEDA7539C18D217C /* Pods_MyGpsMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyGpsMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0460224D0A8D8AA1506E00C3 /* Pods-MyGpsMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMap.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap.debug.xcconfig"; sourceTree = "<group>"; };
 		496DD731DC8AA533FE5C0E9E /* amplifyconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
-		83DA17E2D2BB1A250CCC1FB4 /* Pods-MyGpsMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapUITests.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMapUITests/Pods-MyGpsMapUITests.release.xcconfig"; sourceTree = "<group>"; };
-		85776EC1157E445B881F3B6A /* Pods-MyGpsMapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapUITests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapUITests/Pods-MyGpsMapUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		973FA9DB7F87A31229F3A582 /* Pods-MyGpsMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMap.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap.release.xcconfig"; sourceTree = "<group>"; };
-		A4A4D790430062204E46D739 /* Pods_MyGpsMapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyGpsMapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A698CC9143D03716C8868214 /* Pods-MyGpsMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapTests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapTests/Pods-MyGpsMapTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A8FAEAA56E042DF93B98668F /* Pods_MyGpsMapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyGpsMapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BF94E755C260EC708F4D95C /* Pods-MyGpsMapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapUITests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapUITests/Pods-MyGpsMapUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A60EB24FE4208B10DD734D8F /* Pods-MyGpsMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapTests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapTests/Pods-MyGpsMapTests.debug.xcconfig"; sourceTree = "<group>"; };
+		ABEACEF92AC88925CC9E8443 /* Pods_MyGpsMapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyGpsMapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2A94B2751C6267E65661EAA /* Pods_MyGpsMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyGpsMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD007F4A0B2F0F6518DBBA1B /* Pods-MyGpsMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapUITests.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMapUITests/Pods-MyGpsMapUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CA06CE1E2CAED8240073950D /* SpotifyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyManager.swift; sourceTree = "<group>"; };
 		CA06CE202CAED8DA0073950D /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		CA06CE222CAED8FA0073950D /* RadikoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadikoManager.swift; sourceTree = "<group>"; };
@@ -94,7 +91,6 @@
 		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		CADB0BE92D0AA8EF001C175D /* SignInUISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUISetUpManager.swift; sourceTree = "<group>"; };
 		CAE82BFC2D14081D003620BF /* PinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
-		CAE82BFE2D149167003620BF /* LocalSavePins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSavePins.swift; sourceTree = "<group>"; };
 		CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Design.swift; sourceTree = "<group>"; };
 		CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Main.swift; sourceTree = "<group>"; };
 		CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUISetUpManager.swift; sourceTree = "<group>"; };
@@ -103,8 +99,10 @@
 		CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_Pin.swift; sourceTree = "<group>"; };
 		CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
-		CE5AAACF5028B798C8236DA6 /* Pods-MyGpsMapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapTests.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMapTests/Pods-MyGpsMapTests.release.xcconfig"; sourceTree = "<group>"; };
+		D5349D1F25BD4F085E8F056B /* Pods_MyGpsMapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyGpsMapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEBBCC96568A13679E716D0A /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		E045218C6CB99B223556F857 /* Pods-MyGpsMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMap.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap.release.xcconfig"; sourceTree = "<group>"; };
+		EC19ECCC2E231E4EC216CE28 /* Pods-MyGpsMapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapTests.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMapTests/Pods-MyGpsMapTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +113,7 @@
 				CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */,
 				CA40FD052D11B742002052C1 /* Amplify in Frameworks */,
 				CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */,
-				8A6026C257CB61DA683FE337 /* Pods_MyGpsMap.framework in Frameworks */,
+				D8892B0798FA062069CE90DE /* Pods_MyGpsMap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,7 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				027AD4C092D12FBAAD66D2AF /* Pods_MyGpsMapTests.framework in Frameworks */,
+				1EC16878D0E0653735012B9A /* Pods_MyGpsMapTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				116BBF1C11B1A4B6746AA556 /* Pods_MyGpsMapUITests.framework in Frameworks */,
+				14E2F0913E0AB894E56A16D8 /* Pods_MyGpsMapUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,12 +139,12 @@
 		041569E80246B03E73A939CD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2E21C0C72DBCA300DBE48542 /* Pods-MyGpsMap.debug.xcconfig */,
-				973FA9DB7F87A31229F3A582 /* Pods-MyGpsMap.release.xcconfig */,
-				A698CC9143D03716C8868214 /* Pods-MyGpsMapTests.debug.xcconfig */,
-				CE5AAACF5028B798C8236DA6 /* Pods-MyGpsMapTests.release.xcconfig */,
-				85776EC1157E445B881F3B6A /* Pods-MyGpsMapUITests.debug.xcconfig */,
-				83DA17E2D2BB1A250CCC1FB4 /* Pods-MyGpsMapUITests.release.xcconfig */,
+				0460224D0A8D8AA1506E00C3 /* Pods-MyGpsMap.debug.xcconfig */,
+				E045218C6CB99B223556F857 /* Pods-MyGpsMap.release.xcconfig */,
+				A60EB24FE4208B10DD734D8F /* Pods-MyGpsMapTests.debug.xcconfig */,
+				EC19ECCC2E231E4EC216CE28 /* Pods-MyGpsMapTests.release.xcconfig */,
+				8BF94E755C260EC708F4D95C /* Pods-MyGpsMapUITests.debug.xcconfig */,
+				BD007F4A0B2F0F6518DBBA1B /* Pods-MyGpsMapUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -269,19 +267,11 @@
 			isa = PBXGroup;
 			children = (
 				CA68F1C72CAC25500060B8BB /* MapKit.framework */,
-				47ABE517AEDA7539C18D217C /* Pods_MyGpsMap.framework */,
-				A8FAEAA56E042DF93B98668F /* Pods_MyGpsMapTests.framework */,
-				A4A4D790430062204E46D739 /* Pods_MyGpsMapUITests.framework */,
+				B2A94B2751C6267E65661EAA /* Pods_MyGpsMap.framework */,
+				D5349D1F25BD4F085E8F056B /* Pods_MyGpsMapTests.framework */,
+				ABEACEF92AC88925CC9E8443 /* Pods_MyGpsMapUITests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CAE82C002D14934C003620BF /* Save */ = {
-			isa = PBXGroup;
-			children = (
-				CAE82BFE2D149167003620BF /* LocalSavePins.swift */,
-			);
-			path = Save;
 			sourceTree = "<group>";
 		};
 		CAE89DED2CB1B1A2001F9DA3 /* Constant */ = {
@@ -296,7 +286,6 @@
 		CAE89DF62CB2D6EE001F9DA3 /* Pin */ = {
 			isa = PBXGroup;
 			children = (
-				CAE82C002D14934C003620BF /* Save */,
 				CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */,
 				CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */,
 				CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */,
@@ -314,10 +303,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA68F1BD2CAC23060060B8BB /* Build configuration list for PBXNativeTarget "MyGpsMap" */;
 			buildPhases = (
-				A0EB6658F197751C7D42B851 /* [CP] Check Pods Manifest.lock */,
+				CEA54D7DC715A7E5815DC96B /* [CP] Check Pods Manifest.lock */,
 				CA68F18C2CAC23030060B8BB /* Sources */,
 				CA68F18D2CAC23030060B8BB /* Frameworks */,
 				CA68F18E2CAC23030060B8BB /* Resources */,
+				54103DDE89260323D5842F53 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -336,7 +326,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA68F1C02CAC23060060B8BB /* Build configuration list for PBXNativeTarget "MyGpsMapTests" */;
 			buildPhases = (
-				15A5803A958D9AB1C0F18AFE /* [CP] Check Pods Manifest.lock */,
+				528FE77F50558FB21E88937F /* [CP] Check Pods Manifest.lock */,
 				CA68F1A52CAC23060060B8BB /* Sources */,
 				CA68F1A62CAC23060060B8BB /* Frameworks */,
 				CA68F1A72CAC23060060B8BB /* Resources */,
@@ -355,7 +345,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA68F1C32CAC23060060B8BB /* Build configuration list for PBXNativeTarget "MyGpsMapUITests" */;
 			buildPhases = (
-				005C91DEEE185E25CDDBB65A /* [CP] Check Pods Manifest.lock */,
+				6C76546B32080C53D41E2994 /* [CP] Check Pods Manifest.lock */,
 				CA68F1AF2CAC23060060B8BB /* Sources */,
 				CA68F1B02CAC23060060B8BB /* Frameworks */,
 				CA68F1B12CAC23060060B8BB /* Resources */,
@@ -446,29 +436,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		005C91DEEE185E25CDDBB65A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MyGpsMapUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		15A5803A958D9AB1C0F18AFE /* [CP] Check Pods Manifest.lock */ = {
+		528FE77F50558FB21E88937F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -490,7 +458,46 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A0EB6658F197751C7D42B851 /* [CP] Check Pods Manifest.lock */ = {
+		54103DDE89260323D5842F53 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6C76546B32080C53D41E2994 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MyGpsMapUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CEA54D7DC715A7E5815DC96B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -519,7 +526,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAE82BFF2D149167003620BF /* LocalSavePins.swift in Sources */,
 				CADB0BEA2D0AA8EF001C175D /* SignInUISetUpManager.swift in Sources */,
 				CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */,
 				CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */,
@@ -716,7 +722,7 @@
 		};
 		CA68F1BE2CAC23060060B8BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E21C0C72DBCA300DBE48542 /* Pods-MyGpsMap.debug.xcconfig */;
+			baseConfigurationReference = 0460224D0A8D8AA1506E00C3 /* Pods-MyGpsMap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -749,7 +755,7 @@
 		};
 		CA68F1BF2CAC23060060B8BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 973FA9DB7F87A31229F3A582 /* Pods-MyGpsMap.release.xcconfig */;
+			baseConfigurationReference = E045218C6CB99B223556F857 /* Pods-MyGpsMap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -782,7 +788,7 @@
 		};
 		CA68F1C12CAC23060060B8BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A698CC9143D03716C8868214 /* Pods-MyGpsMapTests.debug.xcconfig */;
+			baseConfigurationReference = A60EB24FE4208B10DD734D8F /* Pods-MyGpsMapTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -803,7 +809,7 @@
 		};
 		CA68F1C22CAC23060060B8BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE5AAACF5028B798C8236DA6 /* Pods-MyGpsMapTests.release.xcconfig */;
+			baseConfigurationReference = EC19ECCC2E231E4EC216CE28 /* Pods-MyGpsMapTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -824,7 +830,7 @@
 		};
 		CA68F1C42CAC23060060B8BB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85776EC1157E445B881F3B6A /* Pods-MyGpsMapUITests.debug.xcconfig */;
+			baseConfigurationReference = 8BF94E755C260EC708F4D95C /* Pods-MyGpsMapUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -843,7 +849,7 @@
 		};
 		CA68F1C52CAC23060060B8BB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 83DA17E2D2BB1A250CCC1FB4 /* Pods-MyGpsMapUITests.release.xcconfig */;
+			baseConfigurationReference = BD007F4A0B2F0F6518DBBA1B /* Pods-MyGpsMapUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
