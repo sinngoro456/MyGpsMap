@@ -7,10 +7,11 @@
 
 import CoreLocation  // Core Locationフレームワークをインポート
 import MapKit
-import AWSAPIGateway
+import Alamofire
 
 class PinManager {
     var cognitoUserId: String? // 外部から読み書き可能なcognitoUserIdプロパティ
+    var cognitoToken: String? // 外部から読み書き可能なcognitoIdTokenプロパティ
     static let shared = PinManager() // シングルトンインスタンス
     private(set) var pins: [Data_Pin] = [] // 外部からは読み取り専用
 
@@ -25,12 +26,13 @@ class PinManager {
         pins.append(pin)
         removeSameIdPins()
         if shouldSave {
-            savePins()
+            savePinstoLocal()
+            savePinstoDB()
         }
     }
 
     // 指定された座標のピンを削除するメソッド
-    func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
+    func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D, shouldSave: Bool = true) {
         // 座標が一致するピンを削除
         pins.removeAll { pin in
             let latDiff = abs(pin.coordinate.latitude - coordinate.latitude)
@@ -38,7 +40,10 @@ class PinManager {
             return latDiff < 0.000001 && lonDiff < 0.000001
         }
         removeSameIdPins()
-        savePins()
+        if shouldSave {
+            savePinstoLocal()
+            savePinstoDB()
+        }
     }
     
     // ユニークなIDを生成する関数
@@ -76,7 +81,7 @@ class PinManager {
         return nil  // 一致するpinDataがない場合はnilを返す
     }
     
-    // 重複するIDを持つピンを削除するメソッド
+    // pinsから重複するIDを持つピンを削除するメソッド
     func removeSameIdPins() {
         var seenIds: Set<Int> = [] // 見たIDの集合
         var uniquePins: [Data_Pin] = [] // 重複を除いたピンの配列
@@ -92,7 +97,7 @@ class PinManager {
         pins = uniquePins.reversed()
     }
     
-    // Pinsの余計なpinを削除
+    // マップ上のannotationと対応しない余計なpinをpinsから削除
     func removeRedundantPins(from annotations: [MKAnnotation]) {
         let tolerance = 0.000004  // 許容誤差 0.000004
 
@@ -121,7 +126,7 @@ class PinManager {
     }
     
     // ピンのローカル保存
-    func savePins() {
+    func savePinstoLocal() {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601 // 日付フォーマット設定
         do {
@@ -152,6 +157,39 @@ class PinManager {
     func getDocumentsDirectory() -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
+    
+    func savePinstoDB() {
+        let url = "https://vo67363qqh.execute-api.ap-northeast-3.amazonaws.com/dev"
+        guard let cognitoToken = cognitoToken else {
+            print("エラー: cognitoIdTokenがnilです。トークンの有効期限切れの可能性があります。再ログインしてください。")
+            return
+        }
+        let defaultHeader: HTTPHeaders = [
+            "Authorization": "\(cognitoToken)",
+        ]
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601 // 日付フォーマット設定
+        
+        do {
+            let jsonData = try encoder.encode(pins)
+            
+            AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: defaultHeader)
+                .uploadProgress { progress in
+                    print("アップロード進捗: \(progress.fractionCompleted)")
+                }
+                .responseData { response in
+                    switch response.result {
+                    case .success(let data):
+                        print("成功: \(String(data: data, encoding: .utf8) ?? "")")
+                    case .failure(let error):
+                        print("エラー: \(error)")
+                    }
+                }
+        } catch {
+            print("ピンのエンコードエラー:", error)
+        }
+    }
+
     
     //    デバッグ用
     func printPins() {

@@ -26,7 +26,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         for pin in PinManager.shared.pins {
             addPin(with: pin,shouldSave: false)
         }
-        PinManager.shared.savePins()
+        PinManager.shared.savePinstoLocal()
     }
 
     private func setupLocationManager() {

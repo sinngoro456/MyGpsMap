@@ -25,11 +25,13 @@ class AuthService: ObservableObject {
                     case .success(let tokens):
                         // idTokenを取得
                         let idToken = tokens.idToken
+                        let accessToken = tokens.idToken
                         
                         // JWTをデコードしてcognito:usernameを取得
                         if let username = getCognitoUsername(from: idToken) {
                             print("Cognito Username: \(username)")
                             PinManager.shared.cognitoUserId = username
+                            PinManager.shared.cognitoToken = accessToken
                         } else {
                             print("cognito:usernameが見つかりませんでした。")
                         }
@@ -61,6 +63,9 @@ class AuthService: ObservableObject {
             if signInResult.isSignedIn {
                 print("ログイン成功")
                 isSignedIn = true
+                Task {
+                    await checkSessionStatus() // セッション状態を確認
+                }
             }
         } catch {
             print("ログイン失敗: \(error)")
