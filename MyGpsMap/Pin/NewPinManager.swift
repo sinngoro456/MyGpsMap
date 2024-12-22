@@ -37,7 +37,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
     
     init(pinData: Data_Pin) {
         super.init(nibName: nil, bundle: nil)
-        self.tappedId = pinData.id ?? 0
+        self.tappedId = pinData.pin_id ?? 0
         self.tappedCoordinate = pinData.coordinate
         self.tappedTitle = pinData.title ?? ""
         self.tappedDescription = pinData.description ?? ""
@@ -119,7 +119,7 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
             return
         }
         
-        let pinData = Data_Pin(id: tappedId,
+        let pinData = Data_Pin(pin_id: tappedId,
                                coordinate: coordinate,
                                title: titleTextField.text,
                                description: descriptionTextField.text,
@@ -140,7 +140,8 @@ class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControl
             return
         }
         
-        let pinData = Data_Pin(id: tappedId,coordinate: coordinate,
+        let pinData = Data_Pin(pin_id: tappedId,
+                               coordinate: coordinate,
                                title: titleTextField.text,
                                description: descriptionTextField.text,
                                color: selectedColor,

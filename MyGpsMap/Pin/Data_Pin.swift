@@ -3,51 +3,19 @@ import UIKit
 import CoreLocation
 
 class Data_Pin: Codable {
-    var id: Int?
-    var coordinate: CLLocationCoordinate2D
+    var pin_id: Int?
+    var latitude: Double
+    var longitude: Double
     var title: String?
     var description: String?
     var color: UIColor?
     var images: [UIImage]
-    var date: Date?  // 日付を格納するプロパティを追加
+    var date: Date?
     var category: String?
     var tags: [String]?
 
     enum CodingKeys: String, CodingKey {
-        case id, coordinate, title, description, color, images, date, category, tags
-    }
-
-    // CLLocationCoordinate2D用のCodable拡張
-    struct CoordinateWrapper: Codable {
-        var latitude: Double
-        var longitude: Double
-        
-        init(coordinate: CLLocationCoordinate2D) {
-            self.latitude = coordinate.latitude
-            self.longitude = coordinate.longitude
-        }
-        
-        func toCLLocationCoordinate2D() -> CLLocationCoordinate2D {
-            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        }
-        
-        // CLLocationCoordinate2DからCoordinateWrapperへの変換
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            latitude = try container.decode(Double.self, forKey: .latitude)
-            longitude = try container.decode(Double.self, forKey: .longitude)
-        }
-        
-        // CoordinateWrapperからCLLocationCoordinate2Dへの変換
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(latitude, forKey: .latitude)
-            try container.encode(longitude, forKey: .longitude)
-        }
-        
-        private enum CodingKeys: String, CodingKey {
-            case latitude, longitude
-        }
+        case pin_id, latitude, longitude, title, description, color, images, date, category, tags
     }
 
     // UIColorをCodableにするためのカスタムエンコーディング
@@ -58,11 +26,11 @@ class Data_Pin: Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = try container.decodeIfPresent(Int.self, forKey: .id)
+        pin_id = try container.decodeIfPresent(Int.self, forKey: .pin_id)
         
-        // CoordinateWrapperを使用して緯度と経度をデコード
-        let coordinateWrapper = try container.decode(CoordinateWrapper.self, forKey: .coordinate)
-        coordinate = CLLocationCoordinate2D(latitude: coordinateWrapper.latitude, longitude: coordinateWrapper.longitude)
+        // 緯度と経度を個別にデコード
+        latitude = try container.decode(Double.self, forKey: .latitude)
+        longitude = try container.decode(Double.self, forKey: .longitude)
 
         title = try container.decodeIfPresent(String.self, forKey: .title)
         description = try container.decodeIfPresent(String.self, forKey: .description)
@@ -79,8 +47,7 @@ class Data_Pin: Codable {
         }
 
         // UIImageのBase64エンコーディングをデコードしてUIImageに戻す
-        images = [] // ここでは一時的に空の配列で初期化します。
-        
+        images = []
         if let imageStrings = try? container.decode([String].self, forKey: .images) {
             images = imageStrings.compactMap { imageString in
                 if let data = Data(base64Encoded: imageString),
@@ -99,30 +66,30 @@ class Data_Pin: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(pin_id, forKey: .pin_id)
 
-        // CoordinateWrapperに変換してエンコード
-        let coordinateWrapper = CoordinateWrapper(coordinate: coordinate)
-        try container.encode(coordinateWrapper, forKey: .coordinate)
+        // 緯度と経度を個別にエンコード
+        try container.encode(latitude, forKey: .latitude)
+        try container.encode(longitude, forKey: .longitude)
 
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(description, forKey: .description)
 
         // UIColorをエンコード
         if let color = color {
-            let components = color.cgColor.components ?? [0.0, 0.0, 0.0, 1.0]
             var colorContainer = container.nestedContainer(keyedBy: ColorCodingKeys.self, forKey: .color)
-            try colorContainer.encode(components[0], forKey: .red)   // Red
-            try colorContainer.encode(components[1], forKey: .green) // Green
-            try colorContainer.encode(components[2], forKey: .blue)  // Blue
-            try colorContainer.encode(components[3], forKey: .alpha) // Alpha
+            var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+            color.getRed(&r, green: &g, blue: &b, alpha: &a)
+            try colorContainer.encode(r, forKey: .red)
+            try colorContainer.encode(g, forKey: .green)
+            try colorContainer.encode(b, forKey: .blue)
+            try colorContainer.encode(a, forKey: .alpha)
         }
 
         // UIImageをBase64エンコーディングして保存
         let imageStrings = images.map { image in
             image.jpegData(compressionQuality: 1.0)?.base64EncodedString() ?? ""
         }
-        
         try container.encode(imageStrings, forKey: .images)
         
         try container.encodeIfPresent(date, forKey: .date)
@@ -130,7 +97,7 @@ class Data_Pin: Codable {
         try container.encodeIfPresent(tags, forKey: .tags)
     }
 
-    init(id: Int? = nil,
+    init(pin_id: Int? = nil,
          coordinate: CLLocationCoordinate2D,
          title: String? = "新しいピン",
          description: String? = nil,
@@ -140,16 +107,14 @@ class Data_Pin: Codable {
          category: String? = nil,
          tags: [String]? = nil) {
         
-        self.id = id ?? 0
-        self.coordinate = coordinate // CoordinateWrapperで初期化しない（元の形式）
+        self.pin_id = pin_id ?? 0
+        self.latitude = coordinate.latitude
+        self.longitude = coordinate.longitude
         self.title = title
         self.description = description
         self.color = color ?? .orange
-        
-        // 画像をBase64エンコードして保存（元の形式）
         self.images = images
-        
-        self.date = date  // 初期化時に日付を設定
+        self.date = date
         self.category = category
         self.tags = tags
     }
@@ -164,5 +129,86 @@ class Data_Pin: Codable {
             print("JSONエンコードエラー:", error)
             return nil
         }
+    }
+
+    // CLLocationCoordinate2Dを取得するためのプロパティ
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+}
+
+extension Data_Pin {
+    // DBに対応した辞書型へのエンコードメソッド
+    func toDictionary() -> [String: Any] {
+        var dict: [String: Any] = [:]
+        
+        dict["pin_id"] = pin_id
+        dict["latitude"] = Int(latitude * 1e13)
+        dict["longitude"] = Int(longitude * 1e13)
+        dict["title"] = title
+        dict["description"] = description
+        
+        if let color = color {
+            var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+            color.getRed(&r, green: &g, blue: &b, alpha: &a)
+            dict["color"] = ["red": r, "green": g, "blue": b, "alpha": a]
+        }
+        
+        dict["images"] = images.map { image in
+            image.jpegData(compressionQuality: 1.0)?.base64EncodedString() ?? ""
+        }
+        
+        if let date = date {
+            let formatter = ISO8601DateFormatter()
+            dict["date"] = formatter.string(from: date)
+        }
+        
+        dict["category"] = category
+        dict["tags"] = tags
+        
+        return dict
+    }
+    
+    // 辞書型からのデコードメソッド（イニシャライザ）
+    convenience init?(fromDictionary dict: [String: Any]) {
+        guard let latitudeInt = dict["latitude"] as? Int,
+              let longitudeInt = dict["longitude"] as? Int else {
+            return nil
+        }
+
+        let latitude = Double(latitudeInt) / 1e13
+        let longitude = Double(longitudeInt) / 1e13
+        
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        self.init(coordinate: coordinate)
+        
+        pin_id = dict["pin_id"] as? Int
+        title = dict["title"] as? String
+        description = dict["description"] as? String
+        
+        if let colorDict = dict["color"] as? [String: CGFloat] {
+            color = UIColor(red: colorDict["red"] ?? 0,
+                            green: colorDict["green"] ?? 0,
+                            blue: colorDict["blue"] ?? 0,
+                            alpha: colorDict["alpha"] ?? 1)
+        }
+        
+        if let imageStrings = dict["images"] as? [String] {
+            images = imageStrings.compactMap { imageString in
+                if let data = Data(base64Encoded: imageString) {
+                    return UIImage(data: data)
+                }
+                return nil
+            }
+        }
+        
+        if let dateString = dict["date"] as? String {
+            let formatter = ISO8601DateFormatter()
+            date = formatter.date(from: dateString)
+        }
+        
+        category = dict["category"] as? String
+        tags = dict["tags"] as? [String]
     }
 }

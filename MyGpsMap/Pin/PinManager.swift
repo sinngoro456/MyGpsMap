@@ -20,8 +20,8 @@ class PinManager {
     }
 
     func addPin(_ pin: Data_Pin, shouldSave: Bool = true) {
-        if pin.id == 0{
-            pin.id = generateUniqueId()
+        if pin.pin_id == 0{
+            pin.pin_id = generateUniqueId()
         }
         pins.append(pin)
         removeSameIdPins()
@@ -57,7 +57,7 @@ class PinManager {
             currentIndex += 1  // インデックスを進める
             
             // pins内に同じIDが存在しないか確認
-            if !pins.contains(where: { $0.id == newId }) {
+            if !pins.contains(where: { $0.pin_id == newId }) {
                 return newId  // ユニークなIDが見つかった場合、返す
             }
         }
@@ -88,8 +88,8 @@ class PinManager {
 
         // pins配列を逆順でループ（最後尾から先頭へ）
         for pin in pins.reversed() {
-            if !seenIds.contains(pin.id!) {
-                seenIds.insert(pin.id!) // IDを集合に追加
+            if !seenIds.contains(pin.pin_id!) {
+                seenIds.insert(pin.pin_id!) // IDを集合に追加
                 uniquePins.append(pin) // ユニークなピンを追加
             }
         }
@@ -159,35 +159,38 @@ class PinManager {
     }
     
     func savePinstoDB() {
-        let url = "https://vo67363qqh.execute-api.ap-northeast-3.amazonaws.com/dev"
-        guard let cognitoToken = cognitoToken else {
-            print("エラー: cognitoIdTokenがnilです。トークンの有効期限切れの可能性があります。再ログインしてください。")
+        let url = "https://vo67363qqh.execute-api.ap-northeast-3.amazonaws.com/dev2"
+        guard let cognitoToken = cognitoToken, let userId = cognitoUserId else {
+            print("エラー: cognitoIdTokenまたはcognitoUserIdがnilです。")
             return
         }
         let defaultHeader: HTTPHeaders = [
             "Authorization": "\(cognitoToken)",
         ]
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601 // 日付フォーマット設定
         
-        do {
-            let jsonData = try encoder.encode(pins)
-            
-            AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: defaultHeader)
-                .uploadProgress { progress in
-                    print("アップロード進捗: \(progress.fractionCompleted)")
+        // pinsを辞書の配列に変換
+        let pinsDict = pins.map { $0.toDictionary() }
+        
+        // パラメータを作成し、user_idとwrittenDateTimeを追加
+        let parameters: [String: Any] = [
+            "user_id": userId,
+            "writtenDateTime": ISO8601DateFormatter().string(from: Date()),
+            "command": "set",
+            "pins": pinsDict
+        ]
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
+            .uploadProgress { progress in
+                print("アップロード進捗: \(progress.fractionCompleted)")
+            }
+            .responseData { response in
+                switch response.result {
+                case .success(let data):
+                    print("成功: \(String(data: data, encoding: .utf8) ?? "")")
+                case .failure(let error):
+                    print("エラー: \(error)")
                 }
-                .responseData { response in
-                    switch response.result {
-                    case .success(let data):
-                        print("成功: \(String(data: data, encoding: .utf8) ?? "")")
-                    case .failure(let error):
-                        print("エラー: \(error)")
-                    }
-                }
-        } catch {
-            print("ピンのエンコードエラー:", error)
-        }
+            }
     }
 
     
@@ -196,7 +199,7 @@ class PinManager {
         print("---------------pin-----------------")
         for pin in pins {
             
-            print("Id: \(pin.id != nil ? String(pin.id!) : "No Id")")
+            print("Id: \(pin.pin_id != nil ? String(pin.pin_id!) : "No Id")")
             print("Title: \(pin.title ?? "No Title")")
             print("Description: \(pin.description ?? "No Description")")
             print("Coordinate: \(pin.coordinate.latitude), \(pin.coordinate.longitude)")
