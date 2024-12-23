@@ -1,6 +1,6 @@
 {
   "auth": {
-    "mygpsmap": {
+    "myGpsMapCategory": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -18,9 +18,7 @@
         "signupAttributes": [
           "EMAIL"
         ],
-        "socialProviders": [
-          "GOOGLE"
-        ],
+        "socialProviders": [],
         "usernameAttributes": [
           "EMAIL"
         ],
@@ -30,6 +28,24 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_myGpsMapCategory_googleClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "myGpsMapCategory"
+        }
+      ]
+    },
+    "AMPLIFY_auth_myGpsMapCategory_googleIos": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "myGpsMapCategory"
+        }
+      ]
     }
   }
 }

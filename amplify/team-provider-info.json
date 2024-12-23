@@ -1,19 +1,22 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-mygpsmap-dev-ea98e-authRole",
-      "UnauthRoleArn": "arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-ea98e-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-ea98e-authRole",
-      "Region": "ap-northeast-3",
-      "DeploymentBucketName": "amplify-mygpsmap-dev-ea98e-deployment",
-      "UnauthRoleName": "amplify-mygpsmap-dev-ea98e-unauthRole",
-      "StackName": "amplify-mygpsmap-dev-ea98e",
-      "StackId": "arn:aws:cloudformation:ap-northeast-3:975050242324:stack/amplify-mygpsmap-dev-ea98e/47594600-bab3-11ef-a28e-0e70df39c969",
-      "AmplifyAppId": "d1ybvy66hvn4k5"
+      "AuthRoleName": "amplify-mygpsmap-dev-e361e-authRole",
+      "UnauthRoleArn": "arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-e361e-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-e361e-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-mygpsmap-dev-e361e-deployment",
+      "UnauthRoleName": "amplify-mygpsmap-dev-e361e-unauthRole",
+      "StackName": "amplify-mygpsmap-dev-e361e",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:975050242324:stack/amplify-mygpsmap-dev-e361e/ac2595b0-c130-11ef-8c8c-0a4bb7e20f99",
+      "AmplifyAppId": "d1pn2dzpqv1j8d"
     },
     "categories": {
       "auth": {
-        "mygpsmap": {}
+        "myGpsMapCategory": {
+          "googleClientId": "1050746425987-c8te1dg83mjrbv2eaj17p02vu7l1oma6.apps.googleusercontent.com",
+          "googleIos": "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"
+        }
       }
     }
   }

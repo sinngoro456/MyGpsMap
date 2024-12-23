@@ -206,6 +206,8 @@ extension ViewController: NewPinManagerDelegate {
         mapManager.removeAllNewPins()
         mapManager.addPin(with: pinData)
         PinManager.shared.printPins()
+        PinManager.shared.savePinstoLocal()
+        PinManager.shared.savePinstoDB()
     }
     
     func newPinManagerDidTapClose(_ controller: NewPinManager, pinData: Data_Pin) {
@@ -213,5 +215,7 @@ extension ViewController: NewPinManagerDelegate {
         mapManager.removePinsAtCoordinate(pinData.coordinate)
         mapManager.removeAllNewPins()
         PinManager.shared.printPins()
+        PinManager.shared.savePinstoLocal()
+        PinManager.shared.savePinstoDB()
     }
 }

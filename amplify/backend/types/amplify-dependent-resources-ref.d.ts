@@ -1,8 +1,10 @@
 export type AmplifyDependentResourcesAttributes = {
   "auth": {
-    "mygpsmap": {
+    "myGpsMapCategory": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
+      "GoogleIOSClient": "string",
+      "GoogleWebClient": "string",
       "HostedUIDomain": "string",
       "IdentityPoolId": "string",
       "IdentityPoolName": "string",

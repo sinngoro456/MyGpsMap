@@ -1,29 +1,25 @@
 PODS:
   - Alamofire (5.10.2)
-  - AWSAPIGateway (2.38.0):
-    - AWSCore (= 2.38.0)
   - AWSCore (2.38.0)
-  - AWSDynamoDB (2.38.0):
+  - AWSS3 (2.38.0):
     - AWSCore (= 2.38.0)
 
 DEPENDENCIES:
   - Alamofire
-  - AWSAPIGateway
-  - AWSDynamoDB
+  - AWSCore
+  - AWSS3
 
 SPEC REPOS:
   trunk:
     - Alamofire
-    - AWSAPIGateway
     - AWSCore
-    - AWSDynamoDB
+    - AWSS3
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
-  AWSAPIGateway: c22f873ccc993e5975014854a50d06dd2471280a
   AWSCore: daf6c241f66465c8df96f7f89f7f3bfc577d85f5
-  AWSDynamoDB: 287ad30530838655c2685b28e0364d45eba43517
+  AWSS3: fb233a794ea46233b27a2391dd3ba69a13eb111c
 
-PODFILE CHECKSUM: 73c24a2be6deea9e176e731b6490545495ad7356
+PODFILE CHECKSUM: d9df8f98f713e816a7ceeb8059ccb49b1c660e2c
 
 COCOAPODS: 1.16.2

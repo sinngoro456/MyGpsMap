@@ -4,9 +4,10 @@ target 'MyGpsMap' do
   use_frameworks!
   
   # Pods for MyGpsMap
-  pod 'AWSDynamoDB'
-  pod 'AWSAPIGateway'
   pod 'Alamofire'
+  pod 'AWSCore'
+  pod 'AWSS3'
+
   
   target 'MyGpsMapTests' do
     inherit! :search_paths

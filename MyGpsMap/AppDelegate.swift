@@ -9,6 +9,8 @@ import UIKit
 import CoreData
 import Amplify
 import AWSCognitoAuthPlugin
+import AWSCore
+import AWSS3
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,6 +30,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
             try Amplify.configure()
             print("Amplify configured with auth plugin")
+            
+            // AWSの認証情報を設定
+            let credentialsProvider = AWSCognitoCredentialsProvider(
+                regionType: .APNortheast1, // 代わりに東京リージョンを一時的に指定
+                identityPoolId: "ap-northeast-1:5afceccc-9cca-4586-8221-f5f4dc4c7d17"
+            )
+            
+            // カスタムリージョン設定
+            let configuration = AWSServiceConfiguration(
+                region: .APNortheast1,
+                endpoint: AWSEndpoint(region: .APNortheast1, service: .S3, url: URL(string: "https://s3.ap-northeast-1.amazonaws.com")!),
+                credentialsProvider: credentialsProvider
+            )
+            
+            AWSServiceManager.default().defaultServiceConfiguration = configuration
+            
+            // S3の設定
+            AWSS3TransferUtility.register(with: configuration!, forKey: "defaultKey")
+            
+            print("AWS S3 configured")
         } catch {
             print("Failed to initialize Amplify with \(error)")
         }

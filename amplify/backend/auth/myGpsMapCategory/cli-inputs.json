@@ -1,0 +1,67 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "myGpsMapIdentityPool",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "mygpsmedd0601c",
+    "userPoolName": "myGpsMapGoogleUserPool",
+    "autoVerifiedAttributes": [
+      "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "確認コード",
+    "emailVerificationMessage": "確認コードは{####}です。",
+    "defaultPasswordPolicy": true,
+    "passwordPolicyMinLength": "8",
+    "passwordPolicyCharacters": [
+      "Requires Lowercase",
+      "Requires Numbers"
+    ],
+    "requiredAttributes": [
+      "email"
+    ],
+    "aliasAttributes": [],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": "30",
+    "userpoolClientWriteAttributes": [
+      "email"
+    ],
+    "userpoolClientReadAttributes": [
+      "email"
+    ],
+    "userpoolClientLambdaRole": "myGpsMedd0601c_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "sharedId": "edd0601c",
+    "resourceName": "myGpsMapCategory",
+    "authSelections": "identityPoolAndUserPool",
+    "useDefault": "manual",
+    "thirdPartyAuth": true,
+    "authProviders": [
+      "accounts.google.com"
+    ],
+    "usernameAttributes": [
+      "email"
+    ],
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": {},
+    "hostedUI": true,
+    "hostedUIDomainName": "mugpsmapdomain",
+    "authProvidersUserPool": [],
+    "audiences": [
+      "1050746425987-c8te1dg83mjrbv2eaj17p02vu7l1oma6.apps.googleusercontent.com",
+      "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"
+    ],
+    "hostedUIProviderMeta": "[]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"MyGpsMap://\"],\"LogoutURLs\":[\"MyGpsMap://\"]}",
+    "userPoolGroupList": [],
+    "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
+    "useEnabledMfas": true
+  }
+}

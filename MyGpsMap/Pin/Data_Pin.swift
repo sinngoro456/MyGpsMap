@@ -1,6 +1,9 @@
 import Foundation
 import UIKit
 import CoreLocation
+import AWSCore
+import AWSS3
+import Alamofire
 
 class Data_Pin: Codable {
     var pin_id: Int?
@@ -154,9 +157,8 @@ extension Data_Pin {
             dict["color"] = ["red": r, "green": g, "blue": b, "alpha": a]
         }
         
-        dict["images"] = images.map { image in
-            image.jpegData(compressionQuality: 1.0)?.base64EncodedString() ?? ""
-        }
+        // imagesの有無に応じて "true" または "false" を設定
+        dict["images"] = !images.isEmpty ? "true" : "false"
         
         if let date = date {
             let formatter = ISO8601DateFormatter()
@@ -194,14 +196,8 @@ extension Data_Pin {
                             alpha: colorDict["alpha"] ?? 1)
         }
         
-        if let imageStrings = dict["images"] as? [String] {
-            images = imageStrings.compactMap { imageString in
-                if let data = Data(base64Encoded: imageString) {
-                    return UIImage(data: data)
-                }
-                return nil
-            }
-        }
+        // imagesは空の配列で初期化
+        images = []
         
         if let dateString = dict["date"] as? String {
             let formatter = ISO8601DateFormatter()

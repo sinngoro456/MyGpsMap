@@ -24,9 +24,8 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         PinManager.shared.printPins()
         // 受け取ったピンデータを地図に追加
         for pin in PinManager.shared.pins {
-            addPin(with: pin,shouldSave: false)
+            addPin(with: pin)
         }
-        PinManager.shared.savePinstoLocal()
     }
 
     private func setupLocationManager() {
@@ -53,7 +52,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         mapView.addAnnotation(annotation)
     }
     
-    func addPin(with pinData: Data_Pin, shouldSave: Bool = true) {
+    func addPin(with pinData: Data_Pin) {
         // 指定された座標の既存のピンを削除
         removePinsAtCoordinate(pinData.coordinate)
         self.pincolor = UIColor.orange
@@ -74,7 +73,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
             annotation.title = pinData.title ?? ""
             mapView.addAnnotation(annotation)
         }
-        PinManager.shared.addPin(pinData,shouldSave: shouldSave)  // pins 配列に追加
+        PinManager.shared.addPin(pinData)  // pins 配列に追加
     }
     
     func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
@@ -149,7 +148,6 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         }
         return nil
     }
-
 
     // アノテーションが選択されたとき
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
