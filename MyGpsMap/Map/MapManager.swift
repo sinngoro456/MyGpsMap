@@ -23,9 +23,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         setupMapView()
         PinManager.shared.printPins()
         // 受け取ったピンデータを地図に追加
-        for pin in PinManager.shared.pins {
-            addPin(with: pin)
-        }
+        addPins(with: PinManager.shared.pins)
     }
 
     private func setupLocationManager() {
@@ -52,28 +50,29 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         mapView.addAnnotation(annotation)
     }
     
-    func addPin(with pinData: Data_Pin) {
-        // 指定された座標の既存のピンを削除
-        removePinsAtCoordinate(pinData.coordinate)
-        self.pincolor = UIColor.orange
-        
-        // 画像が存在する場合はカスタムアノテーションを作成
-        if let image = pinData.images.first {
-            let annotation = CustomAnnotation(coordinate: pinData.coordinate,
-                                              title: pinData.title ?? "",
-                                              subtitle: pinData.description ?? "",
-                                              image: image,
-                                              category: pinData.category ?? "",
-                                              tags: pinData.tags ?? [])
-            mapView.addAnnotation(annotation)
-        } else {
-            // 画像が存在しない場合は通常のMKPointAnnotationを作成
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = pinData.coordinate
-            annotation.title = pinData.title ?? ""
-            mapView.addAnnotation(annotation)
+    func addPins(with newPins: [Data_Pin]) {
+        for pin in newPins {
+            // 指定された座標の既存のピンを削除
+            removePinsAtCoordinate(pin.coordinate)
+            self.pincolor = UIColor.orange
+            
+            // 画像が存在する場合はカスタムアノテーションを作成
+            if let image = pin.images.first {
+                let annotation = CustomAnnotation(coordinate: pin.coordinate,
+                                                  title: pin.title ?? "",
+                                                  subtitle: pin.description ?? "",
+                                                  image: image,
+                                                  category: pin.category ?? "",
+                                                  tags: pin.tags ?? [])
+                mapView.addAnnotation(annotation)
+            } else {
+                // 画像が存在しない場合は通常のMKPointAnnotationを作成
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = pin.coordinate
+                annotation.title = pin.title ?? ""
+                mapView.addAnnotation(annotation)
+            }
         }
-        PinManager.shared.addPin(pinData)  // pins 配列に追加
     }
     
     func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
@@ -89,7 +88,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate,ViewCon
         // 見つかったアノテーションを削除
         mapView.removeAnnotations(annotationsToRemove)
         // PinManagerのメソッドを使ってpins配列からも削除
-        PinManager.shared.removePinsAtCoordinate(coordinate)
+        PinManager.shared.deletePins(coordinate)
     }
     
     func removeAllNewPins() {

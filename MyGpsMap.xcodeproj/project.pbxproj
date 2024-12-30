@@ -29,18 +29,20 @@
 		CA68F1B82CAC23060060B8BB /* MyGpsMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */; };
 		CA68F1BA2CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */; };
 		CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA68F1C72CAC25500060B8BB /* MapKit.framework */; };
-		CA81D9552D1725A2007515A3 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA81D9542D1725A2007515A3 /* File.swift */; };
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
 		CADB0BEA2D0AA8EF001C175D /* SignInUISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE92D0AA8EF001C175D /* SignInUISetUpManager.swift */; };
 		CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFC2D14081D003620BF /* PinManager.swift */; };
 		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
 		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
 		CAE89DF32CB1BB6D001F9DA3 /* MainUISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */; };
-		CAE89DF52CB254E0001F9DA3 /* NewPinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF42CB254E0001F9DA3 /* NewPinManager.swift */; };
+		CAE89DF52CB254E0001F9DA3 /* ViewController_PinEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */; };
 		CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */; };
 		CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */; };
 		CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */; };
 		CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */; };
+		CAFD51032D2318B700D544FF /* LocalPinsSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFD51022D2318B700D544FF /* LocalPinsSave.swift */; };
+		CAFD51052D231BD700D544FF /* S3PinsSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFD51042D231BD700D544FF /* S3PinsSave.swift */; };
+		CAFD51072D231BFE00D544FF /* DynamoDBPinsSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFD51062D231BFE00D544FF /* DynamoDBPinsSave.swift */; };
 		D8892B0798FA062069CE90DE /* Pods_MyGpsMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A94B2751C6267E65661EAA /* Pods_MyGpsMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,18 +91,20 @@
 		CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITests.swift; sourceTree = "<group>"; };
 		CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CA68F1C72CAC25500060B8BB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		CA81D9542D1725A2007515A3 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		CADB0BE92D0AA8EF001C175D /* SignInUISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUISetUpManager.swift; sourceTree = "<group>"; };
 		CAE82BFC2D14081D003620BF /* PinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
 		CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Design.swift; sourceTree = "<group>"; };
 		CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Main.swift; sourceTree = "<group>"; };
 		CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUISetUpManager.swift; sourceTree = "<group>"; };
-		CAE89DF42CB254E0001F9DA3 /* NewPinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPinManager.swift; sourceTree = "<group>"; };
+		CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_PinEdit.swift; sourceTree = "<group>"; };
 		CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISetUpManager_NewPin.swift; sourceTree = "<group>"; };
 		CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_Pin.swift; sourceTree = "<group>"; };
 		CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
+		CAFD51022D2318B700D544FF /* LocalPinsSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPinsSave.swift; sourceTree = "<group>"; };
+		CAFD51042D231BD700D544FF /* S3PinsSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3PinsSave.swift; sourceTree = "<group>"; };
+		CAFD51062D231BFE00D544FF /* DynamoDBPinsSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamoDBPinsSave.swift; sourceTree = "<group>"; };
 		D5349D1F25BD4F085E8F056B /* Pods_MyGpsMapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyGpsMapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEBBCC96568A13679E716D0A /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		E045218C6CB99B223556F857 /* Pods-MyGpsMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMap.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap.release.xcconfig"; sourceTree = "<group>"; };
@@ -288,15 +292,33 @@
 		CAE89DF62CB2D6EE001F9DA3 /* Pin */ = {
 			isa = PBXGroup;
 			children = (
+				CAFD51082D23294900D544FF /* PinSave */,
 				CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */,
-				CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */,
-				CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */,
-				CAE89DF42CB254E0001F9DA3 /* NewPinManager.swift */,
-				CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */,
+				CAFD51092D2329FA00D544FF /* Definition(Pin,Annotation) */,
+				CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */,
 				CAE82BFC2D14081D003620BF /* PinManager.swift */,
-				CA81D9542D1725A2007515A3 /* File.swift */,
 			);
 			path = Pin;
+			sourceTree = "<group>";
+		};
+		CAFD51082D23294900D544FF /* PinSave */ = {
+			isa = PBXGroup;
+			children = (
+				CAFD51042D231BD700D544FF /* S3PinsSave.swift */,
+				CAFD51022D2318B700D544FF /* LocalPinsSave.swift */,
+				CAFD51062D231BFE00D544FF /* DynamoDBPinsSave.swift */,
+			);
+			path = PinSave;
+			sourceTree = "<group>";
+		};
+		CAFD51092D2329FA00D544FF /* Definition(Pin,Annotation) */ = {
+			isa = PBXGroup;
+			children = (
+				CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */,
+				CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */,
+				CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */,
+			);
+			path = "Definition(Pin,Annotation)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,13 +491,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -535,21 +553,23 @@
 			files = (
 				CADB0BEA2D0AA8EF001C175D /* SignInUISetUpManager.swift in Sources */,
 				CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */,
+				CAFD51032D2318B700D544FF /* LocalPinsSave.swift in Sources */,
 				CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */,
 				CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */,
 				CA06CE232CAED8FA0073950D /* RadikoManager.swift in Sources */,
 				CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */,
 				CAE89DF32CB1BB6D001F9DA3 /* MainUISetUpManager.swift in Sources */,
+				CAFD51072D231BFE00D544FF /* DynamoDBPinsSave.swift in Sources */,
 				CA68F1982CAC23030060B8BB /* ViewController.swift in Sources */,
 				CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */,
-				CAE89DF52CB254E0001F9DA3 /* NewPinManager.swift in Sources */,
+				CAE89DF52CB254E0001F9DA3 /* ViewController_PinEdit.swift in Sources */,
 				CA06CE1F2CAED8240073950D /* SpotifyManager.swift in Sources */,
 				CA06CE252CAED9BF0073950D /* MapManager.swift in Sources */,
 				CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */,
 				CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */,
 				CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */,
 				CA06CE212CAED8DA0073950D /* UserProfileManager.swift in Sources */,
-				CA81D9552D1725A2007515A3 /* File.swift in Sources */,
+				CAFD51052D231BD700D544FF /* S3PinsSave.swift in Sources */,
 				CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */,
 				CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */,
 				CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */,

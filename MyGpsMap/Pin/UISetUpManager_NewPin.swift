@@ -10,7 +10,7 @@ import UIKit
 class UISetUpManager_NewPin {
     static func setupTitleLabel() -> UILabel {
         let titleLabel = UILabel()
-        titleLabel.text = NewPinManager.titleLabelText
+        titleLabel.text = ViewController_PinEdit.titleLabelText
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
         titleLabel.textAlignment = .center
         return titleLabel

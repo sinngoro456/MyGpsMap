@@ -2,13 +2,13 @@ import UIKit
 import CoreLocation
 import EventKit
 
-protocol NewPinManagerDelegate: AnyObject {
-    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin)
-    func newPinManagerDidTapClose(_ controller: NewPinManager, pinData: Data_Pin)
+protocol ViewController_PinEdit_Delegate: AnyObject {
+    func newPinManagerDidTapPlus(_ controller: ViewController_PinEdit, pinData: Data_Pin)
+    func newPinManagerDidTapClose(_ controller: ViewController_PinEdit, pinData: Data_Pin)
 }
 
-class NewPinManager: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    weak var delegate: NewPinManagerDelegate?
+class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    weak var delegate: ViewController_PinEdit_Delegate?
     private var imageScrollView: UIScrollView!
     private var imageStackView: UIStackView!
     private let eventStore = EKEventStore()

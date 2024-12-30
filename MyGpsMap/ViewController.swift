@@ -182,11 +182,11 @@ extension ViewController: MapManagerDelegate {
     
     func mapManager(_ manager: MapManager, didTapPin pinData: Data_Pin) {
         print("モーダル遷移に入った")
-        let newPinManager = NewPinManager(pinData: pinData)
-        newPinManager.delegate = self
-        newPinManager.modalPresentationStyle = .pageSheet
-        newPinManager.tappedCoordinate = pinData.coordinate
-        present(newPinManager, animated: true, completion: nil)
+        let viewController_PinEdit = ViewController_PinEdit(pinData: pinData)
+        viewController_PinEdit.delegate = self
+        viewController_PinEdit.modalPresentationStyle = .pageSheet
+        viewController_PinEdit.tappedCoordinate = pinData.coordinate
+        present(viewController_PinEdit, animated: true, completion: nil)
     }
 }
 
@@ -200,22 +200,21 @@ extension ViewController: UIAdaptivePresentationControllerDelegate {
 }
 
 // MARK: - NewPinManagerDelegate
-extension ViewController: NewPinManagerDelegate {
-    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin) {
+extension ViewController: ViewController_PinEdit_Delegate {
+    func newPinManagerDidTapPlus(_ controller: ViewController_PinEdit, pinData: Data_Pin) {
         print("Plus button tapped with title: \(pinData.title ?? "") and description: \(pinData.description ?? "")")
         mapManager.removeAllNewPins()
-        mapManager.addPin(with: pinData)
+        mapManager.addPins(with: [pinData])
+        PinManager.shared.addPins([pinData])
+        PinManager.shared.saveAllPins()
         PinManager.shared.printPins()
-        PinManager.shared.savePinstoLocal()
-        PinManager.shared.savePinstoDB()
     }
     
-    func newPinManagerDidTapClose(_ controller: NewPinManager, pinData: Data_Pin) {
+    func newPinManagerDidTapClose(_ controller: ViewController_PinEdit, pinData: Data_Pin) {
         print("Close button tapped")
         mapManager.removePinsAtCoordinate(pinData.coordinate)
         mapManager.removeAllNewPins()
+        PinManager.shared.saveAllPins()
         PinManager.shared.printPins()
-        PinManager.shared.savePinstoLocal()
-        PinManager.shared.savePinstoDB()
     }
 }
