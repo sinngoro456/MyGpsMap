@@ -32,6 +32,7 @@
 		CA81D9552D1725A2007515A3 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA81D9542D1725A2007515A3 /* File.swift */; };
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
 		CADB0BEA2D0AA8EF001C175D /* SignInUISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE92D0AA8EF001C175D /* SignInUISetUpManager.swift */; };
+		CAE18A792D240B77006D59F2 /* AWSS3 in Frameworks */ = {isa = PBXBuildFile; productRef = CAE18A782D240B77006D59F2 /* AWSS3 */; };
 		CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFC2D14081D003620BF /* PinManager.swift */; };
 		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
 		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
@@ -112,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAE18A792D240B77006D59F2 /* AWSS3 in Frameworks */,
 				CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */,
 				CA40FD052D11B742002052C1 /* Amplify in Frameworks */,
 				CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */,
@@ -320,6 +322,7 @@
 			packageProductDependencies = (
 				CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */,
 				CA40FD042D11B742002052C1 /* Amplify */,
+				CAE18A782D240B77006D59F2 /* AWSS3 */,
 			);
 			productName = MyGpsMap;
 			productReference = CA68F1902CAC23030060B8BB /* MyGpsMap.app */;
@@ -397,6 +400,7 @@
 			mainGroup = CA68F1872CAC23030060B8BB;
 			packageReferences = (
 				CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */,
+				CAE18A772D240B77006D59F2 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */,
 			);
 			productRefGroup = CA68F1912CAC23030060B8BB /* Products */;
 			projectDirPath = "";
@@ -924,6 +928,14 @@
 				minimumVersion = 2.45.2;
 			};
 		};
+		CAE18A772D240B77006D59F2 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/awslabs/aws-sdk-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.47;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -936,6 +948,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */;
 			productName = Amplify;
+		};
+		CAE18A782D240B77006D59F2 /* AWSS3 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAE18A772D240B77006D59F2 /* XCRemoteSwiftPackageReference "aws-sdk-swift" */;
+			productName = AWSS3;
 		};
 /* End XCSwiftPackageProductDependency section */
 
