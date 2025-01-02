@@ -6,6 +6,7 @@ import AWSS3
 import Alamofire
 
 class Data_Pin: Codable {
+    var user_id: String?
     var pin_id: Int?
     var latitude: Double
     var longitude: Double
@@ -16,9 +17,10 @@ class Data_Pin: Codable {
     var date: Date?
     var category: String?
     var tags: [String]?
+    var visibility: String?
 
     enum CodingKeys: String, CodingKey {
-        case pin_id, latitude, longitude, title, description, color, images, date, category, tags
+        case user_id, pin_id, latitude, longitude, title, description, color, images, date, category, tags, visibility
     }
 
     // UIColorをCodableにするためのカスタムエンコーディング
@@ -28,7 +30,7 @@ class Data_Pin: Codable {
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
+        user_id = try container.decodeIfPresent(String.self, forKey: .user_id)
         pin_id = try container.decodeIfPresent(Int.self, forKey: .pin_id)
         
         // 緯度と経度を個別にデコード
@@ -64,11 +66,12 @@ class Data_Pin: Codable {
         date = try container.decodeIfPresent(Date.self, forKey: .date)
         category = try container.decodeIfPresent(String.self, forKey: .category)
         tags = try container.decodeIfPresent([String].self, forKey: .tags)
+        visibility = try container.decodeIfPresent(String.self, forKey: .visibility)
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-
+        try container.encodeIfPresent(user_id, forKey: .user_id)
         try container.encodeIfPresent(pin_id, forKey: .pin_id)
 
         // 緯度と経度を個別にエンコード
@@ -98,9 +101,11 @@ class Data_Pin: Codable {
         try container.encodeIfPresent(date, forKey: .date)
         try container.encodeIfPresent(category, forKey: .category)
         try container.encodeIfPresent(tags, forKey: .tags)
+        try container.encodeIfPresent(visibility, forKey: .visibility)
     }
 
-    init(pin_id: Int? = nil,
+    init(user_id: String? = PinManager.shared.cognitoUserId,
+         pin_id: Int = 0,
          coordinate: CLLocationCoordinate2D,
          title: String? = "新しいピン",
          description: String? = nil,
@@ -108,9 +113,11 @@ class Data_Pin: Codable {
          images: [UIImage] = [],
          date: Date? = nil,
          category: String? = nil,
-         tags: [String]? = nil) {
-        
-        self.pin_id = pin_id ?? 0
+         tags: [String]? = nil,
+         visibility: String? = "private"
+    ) {
+        self.user_id = user_id
+        self.pin_id = pin_id
         self.latitude = coordinate.latitude
         self.longitude = coordinate.longitude
         self.title = title
@@ -120,6 +127,7 @@ class Data_Pin: Codable {
         self.date = date
         self.category = category
         self.tags = tags
+        self.visibility = visibility
     }
     
     // JSONへの変換メソッド
@@ -144,10 +152,11 @@ extension Data_Pin {
     // DBに対応した辞書型へのエンコードメソッド
     func toDictionary() -> [String: Any] {
         var dict: [String: Any] = [:]
-        
-        dict["pin_id"] = pin_id
+        dict["user_id"] = user_id
+        dict["pin_id"] = Int(pin_id ?? 0)
         dict["latitude"] = Int(latitude * 1e13)
         dict["longitude"] = Int(longitude * 1e13)
+        print(latitude)
         dict["title"] = title
         dict["description"] = description
         
@@ -157,8 +166,8 @@ extension Data_Pin {
             dict["color"] = ["red": r, "green": g, "blue": b, "alpha": a]
         }
         
-        // imagesの有無に応じて "true" または "false" を設定
-        dict["images"] = !images.isEmpty ? "true" : "false"
+        // imagesの有無に応じて要素数を設定
+        dict["images"] = images.count // imagesの要素数を整数で設定
         
         if let date = date {
             let formatter = ISO8601DateFormatter()
@@ -167,6 +176,7 @@ extension Data_Pin {
         
         dict["category"] = category
         dict["tags"] = tags
+        dict["visibility"] = visibility
         
         return dict
     }
@@ -184,27 +194,24 @@ extension Data_Pin {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         
         self.init(coordinate: coordinate)
-        
-        pin_id = dict["pin_id"] as? Int
+        user_id = dict["user_id"] as? String
+        pin_id = (dict["pin_id"] as! Int)
         title = dict["title"] as? String
         description = dict["description"] as? String
-        
         if let colorDict = dict["color"] as? [String: CGFloat] {
             color = UIColor(red: colorDict["red"] ?? 0,
                             green: colorDict["green"] ?? 0,
                             blue: colorDict["blue"] ?? 0,
                             alpha: colorDict["alpha"] ?? 1)
         }
-        
         // imagesは空の配列で初期化
         images = []
-        
         if let dateString = dict["date"] as? String {
             let formatter = ISO8601DateFormatter()
             date = formatter.date(from: dateString)
         }
-        
         category = dict["category"] as? String
         tags = dict["tags"] as? [String]
+        visibility = dict["visibility"] as? String
     }
 }

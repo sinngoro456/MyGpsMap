@@ -1,11 +1,12 @@
+// ViewController.swift
+
 import UIKit
 import MapKit
-//import Amplify
-//import AWSCognitoAuthPlugin
 
 protocol ViewControllerDelegate: AnyObject {
     var isNewPin: Bool { get }
 }
+
 class ViewController: UIViewController {
     
     // MARK: - Properties
@@ -13,6 +14,8 @@ class ViewController: UIViewController {
     
     private var mapManager: MapManager!
     private var uiSetupManager: UISetupManager!
+    
+    // UI要素のプロパティ
     private var compassButton: MKCompassButton!
     private var userTrackingButton: UIButton!
     private var spotifyButton: UIButton!
@@ -22,7 +25,7 @@ class ViewController: UIViewController {
     
     private var customPanGesture: UIPanGestureRecognizer!
     private var customPinchGesture: UIPinchGestureRecognizer!
-    
+
     // MARK: - Lifecycle Methods
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -31,15 +34,27 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupManagers()
-        setupUI()
-        setupMapView()
-        setupGestures()
+        
+        // PinManagerのインスタンスを起動
+        let _ = PinManager.shared
+        Task {
+            await setupManagers()
+            setupUI()
+            setupMapView()
+            setupGestures()
+            do {
+                _ = await PinManager.shared.loadPinsDynamoDB()
+                await MainActor.run {
+                    mapManager.addPins(with: PinManager.shared.pins)
+                }
+            }
+        }
     }
     
     // MARK: - Setup Methods
-    private func setupManagers() {
-        mapManager = MapManager(mapView: mapView)
+    private func setupManagers() async {
+        mapManager = MapManager.shared // シングルトンインスタンスを取得
+        mapManager.configure(with: mapView) // マップビューを設定
         mapManager.delegate = self
         uiSetupManager = UISetupManager()
     }
@@ -79,33 +94,47 @@ class ViewController: UIViewController {
         customPanGesture.delegate = self
     }
 
-
-    
     // MARK: - Button Actions
     @objc private func userTrackingButtonTapped() {
         print("ユーザートラッキングボタンがタップされました")
+        
         switch mapView.userTrackingMode {
-        case .none:
-            mapView.setUserTrackingMode(.follow, animated: true)
-            userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonFollow), for: .normal)
-        case .follow:
-            mapView.setUserTrackingMode(.followWithHeading, animated: true)
-            userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonFollowWithHeading), for: .normal)
-        case .followWithHeading:
-            mapView.setUserTrackingMode(.none, animated: true)
-            userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonNone), for: .normal)
-        @unknown default:
-            break
+            case .none:
+                mapView.setUserTrackingMode(.follow, animated: true)
+                userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonFollow), for: .normal)
+            case .follow:
+                mapView.setUserTrackingMode(.followWithHeading, animated: true)
+                userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonFollowWithHeading), for: .normal)
+            case .followWithHeading:
+                mapView.setUserTrackingMode(.none, animated: true)
+                userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonNone), for: .normal)
+            @unknown default:
+                break
         }
+    }
+    
+    private func confirmOverwritePins(completion: @escaping (Bool) -> Void) {
+        let alert = UIAlertController(title: "上書き確認", message: "ローカルのデータが最新です。データベースのデータで上書きしますか？", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { _ in
+            completion(true) // ユーザーが「はい」を選択した場合
+        }))
+        
+        alert.addAction(UIAlertAction(title: "いいえ", style: .cancel, handler: { _ in
+            completion(false) // ユーザーが「いいえ」を選択した場合
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc private func profileButtonTapped() {
         print("プロフィールボタンがタップされました")
-
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewControllerLogin = storyboard.instantiateViewController(withIdentifier: "Login")
+        
         navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.pushViewController(viewControllerLogin, animated: true)
+        navigationController?.pushViewController(viewControllerLogin, animated: true)
     }
     
     @objc private func spotifyButtonTapped() {
@@ -115,7 +144,7 @@ class ViewController: UIViewController {
     @objc private func radikoButtonTapped() {
         print("Radikoボタンがタップされました")
     }
-    
+
     // MARK: - Gesture Handlers
     @objc private func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
@@ -132,7 +161,7 @@ class ViewController: UIViewController {
     @objc private func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         userTrackingButton.setImage(UIImage(systemName: Constants_Design.userTrackingButtonNone), for: .normal)
     }
-    
+
     // MARK: - Helper Methods
     private func deselectAllAnnotations() {
         for annotation in mapView.annotations {
@@ -143,7 +172,6 @@ class ViewController: UIViewController {
 
 // MARK: - UITextFieldDelegate
 extension ViewController: UITextFieldDelegate {
-    // Implement UITextFieldDelegate methods here
 }
 
 // MARK: - UIGestureRecognizerDelegate
@@ -154,68 +182,57 @@ extension ViewController: UIGestureRecognizerDelegate {
 }
 
 // MARK: - MKMapViewDelegate
-extension ViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if let annotation = annotation as? MKMapFeatureAnnotation {
-            let markerAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "featureAnnotation", for: annotation) as? MKMarkerAnnotationView
-            markerAnnotationView?.animatesWhenAdded = true
-            markerAnnotationView?.canShowCallout = true
-            
-            let infoButton = UIButton(type: .detailDisclosure)
-            markerAnnotationView?.rightCalloutAccessoryView = infoButton
-            
-            if let tappedFeatureColor = annotation.iconStyle?.backgroundColor,
-               let image = annotation.iconStyle?.image {
-                let imageView = UIImageView(image: image.withTintColor(tappedFeatureColor, renderingMode: .alwaysOriginal))
-                imageView.bounds = CGRect(origin: .zero, size: CGSize(width: 50, height: 50))
-                markerAnnotationView?.leftCalloutAccessoryView = imageView
-            }
-            return markerAnnotationView
-        } else {
-            return nil
-        }
-    }
+extension ViewController : MKMapViewDelegate {
 }
 
 // MARK: - MapManagerDelegate
-extension ViewController: MapManagerDelegate {
+extension ViewController : MapManagerDelegate {
     
-    func mapManager(_ manager: MapManager, didTapPin pinData: Data_Pin) {
+    func mapManager(_ manager : MapManager , didTapPin pinData : Data_Pin) {
         print("モーダル遷移に入った")
-        let newPinManager = NewPinManager(pinData: pinData)
-        newPinManager.delegate = self
-        newPinManager.modalPresentationStyle = .pageSheet
-        newPinManager.tappedCoordinate = pinData.coordinate
-        present(newPinManager, animated: true, completion: nil)
+        
+        let viewController_PinEdit = ViewController_PinEdit(pinData : pinData)
+        
+        viewController_PinEdit.delegate = self
+        viewController_PinEdit.modalPresentationStyle = .pageSheet
+        
+        viewController_PinEdit.tappedCoordinate = pinData.coordinate
+        
+        present(viewController_PinEdit , animated : true , completion : nil)
     }
 }
 
-// MARK: - UIAdaptivePresentationControllerDelegate
-extension ViewController: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("モーダルが閉じられました")
-        view.endEditing(true)
-        deselectAllAnnotations()
-    }
-}
-
-// MARK: - NewPinManagerDelegate
-extension ViewController: NewPinManagerDelegate {
-    func newPinManagerDidTapPlus(_ controller: NewPinManager, pinData: Data_Pin) {
-        print("Plus button tapped with title: \(pinData.title ?? "") and description: \(pinData.description ?? "")")
-        mapManager.removeAllNewPins()
-        mapManager.addPin(with: pinData)
-        PinManager.shared.printPins()
-        PinManager.shared.savePinstoLocal()
-        PinManager.shared.savePinstoDB()
-    }
+// MARK:- UIAdaptivePresentationControllerDelegate
+extension ViewController : UIAdaptivePresentationControllerDelegate {
     
-    func newPinManagerDidTapClose(_ controller: NewPinManager, pinData: Data_Pin) {
-        print("Close button tapped")
-        mapManager.removePinsAtCoordinate(pinData.coordinate)
-        mapManager.removeAllNewPins()
-        PinManager.shared.printPins()
-        PinManager.shared.savePinstoLocal()
-        PinManager.shared.savePinstoDB()
-    }
+    func presentationControllerDidDismiss(_ presentationController : UIPresentationController) {
+        
+         print("モーダルが閉じられました")
+         view.endEditing(true)
+         deselectAllAnnotations()
+     }
+}
+
+// MARK:- NewPinManagerDelegate
+extension ViewController : ViewController_PinEdit_Delegate {
+
+     func newPinManagerDidTapPlus(_ controller : ViewController_PinEdit , pinData : Data_Pin) {
+         print("Plus button tapped with title : \(pinData.title ?? "") and description : \(pinData.description ?? "")")
+         
+         mapManager.removeAllNewPins()
+         mapManager.addPins(with : [pinData])
+         PinManager.shared.addPins([pinData])
+         PinManager.shared.saveAllPins()
+         PinManager.shared.printPins()
+     }
+
+     func newPinManagerDidTapClose(_ controller : ViewController_PinEdit , pinData : Data_Pin) {
+         print("Close button tapped")
+         
+         mapManager.removeAllNewPins()
+         mapManager.removePinsAtCoordinate(pinData.coordinate)
+         PinManager.shared.deletePins([pinData.coordinate])
+         PinManager.shared.saveAllPins()
+         PinManager.shared.printPins()
+     }
 }
