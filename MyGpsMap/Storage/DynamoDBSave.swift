@@ -1,5 +1,5 @@
 //
-//  DynamoDBPinsSave.swift
+//  DynamoDBSave.swift
 //  MyGpsMap
 //
 //  Created by 川渕悟郎 on 2024/12/31.
@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 import CoreLocation
 
-class DynamoDBPinsSave {
+class DynamoDBSave {
     func savePinstoDynamoDB(pins:[Data_Pin]) {
         let url = "https://wz4q6hl5oa.execute-api.ap-northeast-1.amazonaws.com/dev"
         guard let cognitoToken = PinManager.shared.cognitoToken, let userId = PinManager.shared.cognitoUserId else {

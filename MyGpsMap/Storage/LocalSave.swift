@@ -7,17 +7,14 @@
 
 import Foundation
 
-import Foundation
-
 struct PinsData: Codable {
     var pins: [Data_Pin]
     var savedAt: Date
 }
 
-class LocalPinsSave {
+class LocalSave {
     // ピンのローカル保存
     func savePinstoLocal() {
-        let a = PinManager.shared.pins
         let pins = PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins)
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601 // 日付フォーマット設定

@@ -29,12 +29,12 @@ class PinManager {
     var writtenDateTime: Date? // 外部から読み書き可能な更新日時プロパティ
     static let shared = PinManager() // シングルトンインスタンス
     private(set) var pins: [Data_Pin] = [] // 外部からは読み取り専用
-    private var dynamoDBPinsSave = DynamoDBPinsSave()
+    private var dynamoDBSave = DynamoDBSave()
     private var s3Save = S3Save()
-    private var localPinsSave = LocalPinsSave()
+    private var localSave = LocalSave()
     
     private init() {
-        let localPinSaver = LocalPinsSave() // LocalPinsSave のインスタンスを作成
+        let localPinSaver = LocalSave() // LocalSave のインスタンスを作成
         if let (loadedPins, writtenDateTime_Local) = localPinSaver.loadPins() { // タプルからピンの配列を取得
             pins = loadedPins // 読み込んだピンを設定
             writtenDateTime = writtenDateTime_Local
@@ -75,15 +75,15 @@ class PinManager {
     
     // pinsを各種DB,Localに保存するメソッド
     func saveAllPins() {
-        localPinsSave.savePinstoLocal()
+        localSave.savePinstoLocal()
         s3Save.S3Clear()
         s3Save.uploadImagesForPinToS3(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
-        dynamoDBPinsSave.savePinstoDynamoDB(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
+        dynamoDBSave.savePinstoDynamoDB(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
     }
     
     func loadPinsDynamoDB() async -> Bool {
         do {
-            let (loadedPins, writtenDateTimeDB) = try await DynamoDBPinsSave().loadPinsfromDynamoDB()
+            let (loadedPins, writtenDateTimeDB) = try await DynamoDBSave().loadPinsfromDynamoDB()
             
             // 新しいwrittenDateTimeが現在のものより新しい場合のみ更新
             if self.writtenDateTime == nil || writtenDateTimeDB > self.writtenDateTime! {

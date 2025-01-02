@@ -31,22 +31,6 @@ class FriendManager {
         print("友達が追加されました。合計数: \(friends.count)")
     }
 
-//    // DynamoDBから友達データをロードするメソッド
-//    func loadFriendsDynamoDB() async -> Bool {
-//        do {
-//            let loadedFriends = try await dynamoDBFriendSave.loadFriendsFromDynamoDB()
-//            
-//            self.clearFriends() // 既存の友達をクリア
-//            self.addFriends(loadedFriends) // 新しい友達を追加
-//            
-//            print("友達が更新されました。合計数: \(self.friends.count)")
-//            return true // 更新が発生した場合はtrueを返す
-//        } catch {
-//            print("友達のロード中にエラーが発生しました: \(error.localizedDescription)")
-//            return false // エラーが発生した場合もfalseを返す
-//        }
-//    }
-
     // すべての友達をクリアするメソッド
     func clearFriends() {
         friends.removeAll() // friends配列を空にする
