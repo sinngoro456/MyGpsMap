@@ -128,6 +128,17 @@ class PinManager {
             return false // エラーが発生した場合もfalseを返す
         }
     }
+    func loadFriendsPinsDynamoDB() async -> Bool {
+        do {
+            let loadedPins = try await DynamoDBSave().loadFriendsPinsfromDynamoDB()
+            self.addPins(loadedPins) // 新しいピンを追加
+            print("ピンが更新されました。合計ピン数: \(self.pins.count)")
+            return true // 更新が発生した場合はtrueを返す
+        }catch {
+            print("ピンのロード中にエラーが発生しました: \(error.localizedDescription)")
+            return false // エラーが発生した場合もfalseを返す
+        }
+    }
 }
 extension PinManager {
     // ユニークなIDを生成する関数

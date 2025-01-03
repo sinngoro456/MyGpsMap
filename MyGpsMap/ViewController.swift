@@ -47,6 +47,7 @@ class ViewController: UIViewController {
                 await MainActor.run {
                     mapManager.addPins(with: PinManager.shared.pins)
                 }
+                _ = await FriendManager.shared.loadFriendsFromDynamoDB()
             }
         }
     }
