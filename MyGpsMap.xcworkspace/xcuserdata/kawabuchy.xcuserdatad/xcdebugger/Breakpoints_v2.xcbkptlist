@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "440BB3C6-A282-4FD5-85B5-271F9104F519"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyGpsMap/NewPin/NewPinManager.swift"
@@ -24,7 +24,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "DA07BB9A-1A7D-498D-AA00-650984B5D20F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyGpsMap/Pin/Definition(Pin,Annotation)/Data_Pin.swift"
@@ -40,7 +40,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9404576D-5D72-4AAD-A141-3DA8D65FA16E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MyGpsMap/Pin/PinSave/LocalPinsSave.swift"
@@ -55,62 +55,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C4E49AE5-D092-45B2-B40E-0D28AA415717"
-            shouldBeEnabled = "Yes"
+            uuid = "4B5DB756-6CA1-4221-AA0D-1C163DA5310D"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
+            filePath = "MyGpsMap/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "s3UnnecessaryClear()"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "timerFired2()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C4E49AE5-D092-45B2-B40E-0D28AA415717 - cfbf52a0e1fb34a4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MyGpsMap.S3Save.s3UnnecessaryClear() -&gt; ()"
-                  moduleName = "MyGpsMap"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140">
-               </Location>
-               <Location
-                  uuid = "C4E49AE5-D092-45B2-B40E-0D28AA415717 - 40175b2b126a2bdb"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Swift.Array&lt;Swift.String&gt;&gt;) -&gt; () in MyGpsMap.S3Save.s3UnnecessaryClear() -&gt; ()"
-                  moduleName = "MyGpsMap"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "57E6E6E6-17B3-472A-84F8-388CFBCDE356"
-            shouldBeEnabled = "Yes"
+            uuid = "15528204-018C-4685-9BF8-D594892FB92D"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MyGpsMap/MapPinFriendOrganizer/Storage/DynamoDBSave.swift"
+            filePath = "MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "loadFriendsPinsfromDynamoDB()"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "saveAllPins()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

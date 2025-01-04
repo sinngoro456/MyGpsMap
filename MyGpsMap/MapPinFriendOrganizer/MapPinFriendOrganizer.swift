@@ -28,6 +28,8 @@ class MapPinFriendOrganizer{
             print("pins_displayが一致しません")
             MapManager.shared.clearPins()
             MapManager.shared.addPins(with: PinManager.shared.pins) // マップに新しいピンを追加
+            let bool = (PinManager.shared.pins == MapManager.shared.pins_display)
+            print(bool)
         }
     }
 }

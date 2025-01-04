@@ -86,8 +86,6 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
-        removeAllNewPins()
-        
         guard let mapView = mapView else { return }
         
         // 既存のアノテーションをフィルタリングして削除対象を見つける

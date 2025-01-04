@@ -32,7 +32,6 @@
 		CAE18A832D272570006D59F2 /* FriendManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A822D272570006D59F2 /* FriendManager.swift */; };
 		CAE18A862D27794D006D59F2 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A852D27794D006D59F2 /* UserSessionManager.swift */; };
 		CAE18A882D298D93006D59F2 /* MapPinFriendOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A872D298D93006D59F2 /* MapPinFriendOrganizer.swift */; };
-		CAE18A8A2D298E2E006D59F2 /* MapPinFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A892D298E2E006D59F2 /* MapPinFriend.swift */; };
 		CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFC2D14081D003620BF /* PinManager.swift */; };
 		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
 		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
@@ -97,7 +96,6 @@
 		CAE18A822D272570006D59F2 /* FriendManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendManager.swift; sourceTree = "<group>"; };
 		CAE18A852D27794D006D59F2 /* UserSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
 		CAE18A872D298D93006D59F2 /* MapPinFriendOrganizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinFriendOrganizer.swift; sourceTree = "<group>"; };
-		CAE18A892D298E2E006D59F2 /* MapPinFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinFriend.swift; sourceTree = "<group>"; };
 		CAE82BFC2D14081D003620BF /* PinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
 		CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Design.swift; sourceTree = "<group>"; };
 		CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Main.swift; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 				CA06CE1C2CAED7D80073950D /* Radiko */,
 				CA06CE1B2CAED7CA0073950D /* Spotify */,
 				CA68F1932CAC23030060B8BB /* AppDelegate.swift */,
-				CAE18A892D298E2E006D59F2 /* MapPinFriend.swift */,
 				CA68F1952CAC23030060B8BB /* SceneDelegate.swift */,
 				CAE18A8B2D298E3A006D59F2 /* MapPinFriendOrganizer */,
 				CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */,
@@ -606,7 +603,6 @@
 				CA06CE252CAED9BF0073950D /* MapManager.swift in Sources */,
 				CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */,
 				CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */,
-				CAE18A8A2D298E2E006D59F2 /* MapPinFriend.swift in Sources */,
 				CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */,
 				CAFD51052D231BD700D544FF /* S3Save.swift in Sources */,
 				CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */,

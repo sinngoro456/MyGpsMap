@@ -149,9 +149,16 @@ class PinManager {
     }
 }
 extension PinManager {
-    // pinsを各種DB,Localに保存するメソッド
+    // pinsを各種DB, Localに保存するメソッド
     private func loadPinsImages() async {
-        pins = await s3Save.downloadImagesFromS3(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
+        let downloadedPins = await s3Save.downloadImagesFromS3(pins: PinManager.shared.pins)
+        // ダウンロードしたピンを元のpinsに上書きする
+        for downloadedPin in downloadedPins {
+            if let index = pins.firstIndex(where: { $0.pin_id == downloadedPin.pin_id }) {
+                // 該当するpinが見つかった場合、上書き
+                pins[index] = downloadedPin
+            }
+        }
     }
     
     // ユニークなIDを生成する関数
@@ -207,8 +214,15 @@ extension PinManager {
     
     // ユーザーIDに基づいてフィルタリングされたピンを取得するメソッド
     func filteredPinsForCurrentUser(from pins: [Data_Pin]) -> [Data_Pin] {
-        guard let userId = UserSessionManager.shared.user_id else { return pins }  // cognitoUserIdがnilの場合は空の配列を返す
-        return pins.filter { $0.user_id == userId || $0.user_id == nil}  // userIdが一致するピンのみを返す
+        guard let userId = UserSessionManager.shared.user_id else {
+            print("ユーザーIDがnilです。全てのピンを返します。")
+            return pins // cognitoUserIdがnilの場合は全てのピンを返す
+        }
+        let filteredPins = pins.filter { pin in
+            // ユーザーIDが一致するか、ユーザーIDがnilの場合にフィルタリング
+            return pin.user_id == userId || pin.user_id == nil
+        }
+        return filteredPins
     }
     
     // 新しいユーザーIDでピンのuser_idを更新するメソッド

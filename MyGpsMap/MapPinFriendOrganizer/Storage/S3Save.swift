@@ -72,7 +72,7 @@ class S3Save {
         }
     }
     
-    func listS3Items(user_id: String?, pin_id: Int, completion: @escaping ([String: [String]]) -> Void) {
+    func listS3Items(user_id: String?, completion: @escaping ([String: [String]]) -> Void) {
         var result: [String: [String]] = [:]
 
         // user_idがnilまたは空の場合のエラーハンドリング
@@ -85,13 +85,7 @@ class S3Save {
         let s3 = AWSS3.default()
         let request = AWSS3ListObjectsV2Request()
         request?.bucket = bucket
-        
-        // pin_idが0の場合、プレフィックスにはuserIdのみを設定
-        if pin_id != 0 {
-            request?.prefix = "\(userId)/\(pin_id)" // pin_idが指定されている場合
-        } else {
-            request?.prefix = "\(userId)/" // pin_idが指定されていない場合
-        }
+        request?.prefix = "\(userId)/" // pin_idが指定されていない場合
 
         s3.listObjectsV2(request!) { (response, error) in
             if let error = error {
@@ -116,7 +110,7 @@ class S3Save {
 
     func s3Clear() {
         print("Clear S3 Image")
-        listS3Items(user_id: UserSessionManager.shared.user_id, pin_id: 0) { result in
+        listS3Items(user_id: UserSessionManager.shared.user_id) { result in
             if let listKey = result["list_key"] {
                 print("取得したキー:", listKey)
 
@@ -137,7 +131,7 @@ class S3Save {
             return
         }
 
-        listS3Items(user_id: userId, pin_id: 0) { result in
+        listS3Items(user_id: userId) { result in
             if let listKey = result["list_key"] {
                 print("取得したキー:", listKey)
 
@@ -181,42 +175,45 @@ class S3Save {
     
     func downloadImagesFromS3(pins: [Data_Pin]) async -> [Data_Pin] {
         let transferUtility = AWSS3TransferUtility.default()
-        let updatedPins = pins
+        var updatedPins = pins // updatedPins を初期化
+
+        // FriendManagerから友達のリストを取得
+        var userIds = FriendManager.shared.getFriendUserIdList()
+        userIds.append(UserSessionManager.shared.user_id!) // ユーザーIDを追加
 
         for (index, pin) in pins.enumerated() {
-            guard let pinId = pin.pin_id, let userId = UserSessionManager.shared.user_id else {
-                continue
-            }
+            // 各ピンに対して友達の user_id をループ
+            for userId in userIds {
+                var downloadedImages: [UIImage] = []
+                let semaphore = DispatchSemaphore(value: 0)
 
-            var downloadedImages: [UIImage] = []
-            let semaphore = DispatchSemaphore(value: 0)
+                listS3Items(user_id: userId) { result in
+                    if let keys = result["list_key"] {
+                        let dispatchGroup = DispatchGroup()
 
-            listS3Items(user_id: userId, pin_id: pinId) { result in
-                if let keys = result["list_key"] {
-                    let dispatchGroup = DispatchGroup()
-
-                    for key in keys {
-                        dispatchGroup.enter()
-                        transferUtility.downloadData(
-                            fromBucket: self.bucket,
-                            key: key,
-                            expression: nil
-                        ) { task, url, data, error in
-                            defer { dispatchGroup.leave() }
-                            if let error = error {
-                                print("ダウンロードエラー: \(error.localizedDescription)")
-                            } else if let data = data, let image = UIImage(data: data) {
-                                downloadedImages.append(image)
+                        for key in keys {
+                            dispatchGroup.enter()
+                            transferUtility.downloadData(
+                                fromBucket: self.bucket,
+                                key: key,
+                                expression: nil
+                            ) { task, url, data, error in
+                                defer { dispatchGroup.leave() }
+                                if let error = error {
+                                    print("ダウンロードエラー: \(error.localizedDescription)")
+                                } else if let data = data, let image = UIImage(data: data) {
+                                    downloadedImages.append(image)
+                                }
                             }
                         }
-                    }
 
-                    dispatchGroup.notify(queue: .main) {
-                        updatedPins[index].images = downloadedImages
+                        dispatchGroup.notify(queue: .main) {
+                            updatedPins[index].images.append(contentsOf: downloadedImages) // 画像を追加
+                            semaphore.signal()
+                        }
+                    } else {
                         semaphore.signal()
                     }
-                } else {
-                    semaphore.signal()
                 }
             }
         }
