@@ -38,6 +38,7 @@ class UserSessionManager {
         $user_id
             .dropFirst() // 初期値の変更を無視
             .compactMap { $0 } // nilの値をフィルタリング
+            .removeDuplicates() // 重複する値（変更がない場合）を除外
             .sink { [weak self] newUserId in
                 Task { [weak self] in
                     guard let self = self else { return }

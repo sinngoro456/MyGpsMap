@@ -10,7 +10,7 @@ import Alamofire
 import CoreLocation
 
 class DynamoDBSave {
-    func savePinstoDynamoDB(pins:[Data_Pin]) {
+    func savePinstoDynamoDB(pins:[Data_Pin], writtenDateTime: String) {
         let url = "https://wz4q6hl5oa.execute-api.ap-northeast-1.amazonaws.com/dev"
         guard let cognitoToken = UserSessionManager.shared.cognitoToken, let userId = UserSessionManager.shared.user_id else {
             print("エラー: cognitoIdTokenまたはcognitoUserIdがnilです。")
@@ -26,7 +26,7 @@ class DynamoDBSave {
         // パラメータを作成し、user_idとwrittenDateTimeを追加
         let parameters: [String: Any] = [
             "user_id": userId,
-            "writtenDateTime": ISO8601DateFormatter().string(from: Date()),
+            "writtenDateTime": writtenDateTime,
             "command": "set",
             "pins": pinsDict
         ]
@@ -61,7 +61,6 @@ class DynamoDBSave {
         
         let parameters: [String: Any] = [
             "user_id": userId,
-            "writtenDateTime": ISO8601DateFormatter().string(from: Date()),
             "command": "get"
         ]
         
@@ -134,7 +133,6 @@ class DynamoDBSave {
         
         let parameters: [String: Any] = [
             "user_id": userId,
-            "writtenDateTime": ISO8601DateFormatter().string(from: Date()),
             "command": "get",
             "target_id": FriendManager.shared.getFriendUserIdList()
         ]
@@ -207,7 +205,6 @@ class DynamoDBSave {
         
         let parameters: [String: Any] = [
             "user_id": userId,
-            "writtenDateTime": ISO8601DateFormatter().string(from: Date()),
             "command": "get_friends"
         ]
         
@@ -242,7 +239,7 @@ class DynamoDBSave {
         }
     }
 
-    func addFriendsfromDynamoDB(friend_ids: [String]) async throws -> ([Data_Friend], [Data_Friend], [Data_Friend], [Data_Friend], [Data_Friend]) {
+    func addFriendsfromDynamoDB(friend_ids: [String], writtenDateTime: String) async throws -> ([Data_Friend], [Data_Friend], [Data_Friend], [Data_Friend], [Data_Friend]) {
         let url = "https://wz4q6hl5oa.execute-api.ap-northeast-1.amazonaws.com/dev"
         guard let cognitoToken = UserSessionManager.shared.cognitoToken, let userId = UserSessionManager.shared.user_id else {
             throw NSError(domain: "PinManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "cognitoIdTokenまたはcognitoUserIdがnilです。"])
@@ -254,7 +251,7 @@ class DynamoDBSave {
 
         let parameters: [String: Any] = [
             "user_id": userId,
-            "writtenDateTime": ISO8601DateFormatter().string(from: Date()),
+            "writtenDateTime": writtenDateTime,
             "command": "add_friends",
             "target_id": friend_ids
         ]

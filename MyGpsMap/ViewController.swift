@@ -157,7 +157,7 @@ class ViewController: UIViewController {
     
     // MARK:- Timer Methods
     private func startTimer() {
-        timer1 = Timer.scheduledTimer(timeInterval: 20.0, target: self, selector: #selector(timerFired1), userInfo: nil, repeats: true)
+        timer1 = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(timerFired1), userInfo: nil, repeats: true)
         timer2 = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(timerFired2), userInfo: nil, repeats: true)
     }
 

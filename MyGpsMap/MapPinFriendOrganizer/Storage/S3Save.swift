@@ -114,7 +114,7 @@ class S3Save {
         }
     }
 
-    func S3Clear() {
+    func s3Clear() {
         print("Clear S3 Image")
         listS3Items(user_id: UserSessionManager.shared.user_id, pin_id: 0) { result in
             if let listKey = result["list_key"] {
@@ -130,7 +130,7 @@ class S3Save {
         }
     }
     
-    func S3UnnecessaryClear() {
+    func s3UnnecessaryClear() {
         print("Clear unnecessary S3 Images")
         guard let userId = UserSessionManager.shared.user_id else {
             print("ユーザーIDが取得できません")

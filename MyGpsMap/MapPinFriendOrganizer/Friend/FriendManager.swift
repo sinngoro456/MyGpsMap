@@ -33,7 +33,8 @@ class FriendManager {
     // 友達を追加するメソッド
     func addFriends(_ friendIds: [String]) async {
         do {
-            let (newFriendsList, newFriendsILikeList, alreadyFriendsList, alreadyFriendsILikeList, nonExistentUsersList) = try await DynamoDBSave().addFriendsfromDynamoDB(friend_ids: friendIds)
+            let currentDateTime = ISO8601DateFormatter().string(from: Date())
+            let (newFriendsList, newFriendsILikeList, alreadyFriendsList, alreadyFriendsILikeList, nonExistentUsersList) = try await DynamoDBSave().addFriendsfromDynamoDB(friend_ids: friendIds,writtenDateTime: currentDateTime)
             
             // 新しい友達と「いいね」した友達を追加
             self.friends.append(contentsOf: newFriendsList)

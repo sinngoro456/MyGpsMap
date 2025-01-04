@@ -55,75 +55,63 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F"
+            uuid = "C4E49AE5-D092-45B2-B40E-0D28AA415717"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+            filePath = "MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "loadPins()"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "s3UnnecessaryClear()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F - f2d36be6f78b36e5"
+                  uuid = "C4E49AE5-D092-45B2-B40E-0D28AA415717 - cfbf52a0e1fb34a4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for MyGpsMap.PinManager.loadPins() async -&gt; Swift.Bool"
+                  symbolName = "MyGpsMap.S3Save.s3UnnecessaryClear() -&gt; ()"
                   moduleName = "MyGpsMap"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "81"
-                  endingLineNumber = "81">
+                  startingLineNumber = "140"
+                  endingLineNumber = "140">
                </Location>
                <Location
-                  uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F - d5a08b32153a98d6"
+                  uuid = "C4E49AE5-D092-45B2-B40E-0D28AA415717 - 40175b2b126a2bdb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for MyGpsMap.PinManager.loadPins() async -&gt; Swift.Bool"
+                  symbolName = "closure #1 (Swift.Dictionary&lt;Swift.String, Swift.Array&lt;Swift.String&gt;&gt;) -&gt; () in MyGpsMap.S3Save.s3UnnecessaryClear() -&gt; ()"
                   moduleName = "MyGpsMap"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "81"
-                  endingLineNumber = "81">
-               </Location>
-               <Location
-                  uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F - 669f3db79f266e7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for MyGpsMap.PinManager.loadPins() async -&gt; Swift.Bool"
-                  moduleName = "MyGpsMap"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "81"
-                  endingLineNumber = "81">
-               </Location>
-               <Location
-                  uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F - 3689ff4ad03daee2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(8) suspend resume partial function for MyGpsMap.PinManager.loadPins() async -&gt; Swift.Bool"
-                  moduleName = "MyGpsMap"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "81"
-                  endingLineNumber = "81">
+                  startingLineNumber = "140"
+                  endingLineNumber = "140">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "57E6E6E6-17B3-472A-84F8-388CFBCDE356"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyGpsMap/MapPinFriendOrganizer/Storage/DynamoDBSave.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "loadFriendsPinsfromDynamoDB()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

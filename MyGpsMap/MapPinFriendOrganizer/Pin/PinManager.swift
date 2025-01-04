@@ -68,12 +68,14 @@ class PinManager {
         print("All pins have been cleared.") // デバッグ用メッセージ
     }
     
-    // pinsを各種DB,Localに保存するメソッド
+    // pinsを各種DB,Localに保存するメソッド(S3(画像)をclearする)
     func saveAllPins() {
-        localSave.savePinstoLocal()
-        s3Save.S3UnnecessaryClear()
+        print("saveAllPins")
+        let currentDateTime = ISO8601DateFormatter().string(from: Date())
+        localSave.savePinstoLocal(writtenDateTime: currentDateTime)
+        s3Save.s3Clear()
         s3Save.uploadImagesForPinToS3(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
-        dynamoDBSave.savePinstoDynamoDB(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
+        dynamoDBSave.savePinstoDynamoDB(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins),writtenDateTime: currentDateTime)
     }
     
     func loadPins() async -> Bool {
@@ -81,17 +83,14 @@ class PinManager {
             let (loadedPins, writtenDateTimeDB) = try await DynamoDBSave().loadPinsfromDynamoDB()
             
             // 新しいwrittenDateTimeが現在のものより新しい場合のみ更新
-            if self.writtenDateTime == nil || writtenDateTimeDB > self.writtenDateTime! {
-                self.writtenDateTime = writtenDateTimeDB
-                self.clearPins() // 既存のピンをクリア
-                self.addPins(loadedPins) // 新しいピンを追加
-                await self.loadPinsImages()
+            if writtenDateTimeDB <= self.writtenDateTime! {
+                print("ローカルのデータが最新です。")
                 self.saveAllPins()
                 self.printPins()
                 print("ピンが更新されました。合計ピン数: \(self.pins.count)")
                 return true // 更新が発生した場合はtrueを返す
             } else {
-                print("ローカルのデータが最新です。")
+                print("データベースのデータが最新です。")
                 // ローカルデータが最新の場合、ポップアップで確認
                 return await withCheckedContinuation { continuation in
                     DispatchQueue.main.async {
@@ -102,7 +101,7 @@ class PinManager {
                             return
                         }
                         
-                        let alert = UIAlertController(title: "上書き確認", message: "ローカルのデータが最新です。データベースのデータで上書きしますか？", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "上書き確認", message: "データベースのデータが最新です。データベースのデータで上書きしますか？", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { _ in
                             Task {
@@ -137,8 +136,10 @@ class PinManager {
     func loadFriendsPinsDynamoDB() async -> Bool {
         do {
             let loadedPins = try await DynamoDBSave().loadFriendsPinsfromDynamoDB()
+            
             self.clearFriendPins()
             self.addPins(loadedPins) // 新しいピンを追加
+            await self.loadPinsImages()
             print("ピンが更新されました。合計ピン数: \(self.pins.count)")
             return true // 更新が発生した場合はtrueを返す
         }catch {

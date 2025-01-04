@@ -14,12 +14,19 @@ struct PinsData: Codable {
 
 class LocalSave {
     // ピンのローカル保存
-    func savePinstoLocal() {
+    func savePinstoLocal(writtenDateTime: String) {
         let pins = PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins)
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601 // 日付フォーマット設定
         do {
-            let pinsData = PinsData(pins: pins, savedAt: Date())
+            // writtenDateTimeをDate型に変換
+            let dateFormatter = ISO8601DateFormatter()
+            guard let savedAt = dateFormatter.date(from: writtenDateTime) else {
+                print("日付の変換に失敗しました: \(writtenDateTime)")
+                return
+            }
+
+            let pinsData = PinsData(pins: pins, savedAt: savedAt)
             let data = try encoder.encode(pinsData)
             let url = getDocumentsDirectory().appendingPathComponent("pins.json")
             try data.write(to: url)
