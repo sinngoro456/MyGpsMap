@@ -30,8 +30,7 @@ class AuthService: ObservableObject {
                         // JWTをデコードしてcognito:usernameを取得
                         if let username = getCognitoUsername(from: idToken) {
                             print("Cognito Username: \(username)")
-                            PinManager.shared.cognitoUserId = username
-                            PinManager.shared.cognitoToken = accessToken
+                            await UserSessionManager.shared.login(userId: username,token: accessToken)
                         } else {
                             print("cognito:usernameが見つかりませんでした。")
                         }
@@ -61,6 +60,7 @@ class AuthService: ObservableObject {
         do {
             let signInResult = try await Amplify.Auth.signInWithWebUI(presentationAnchor: window)
             if signInResult.isSignedIn {
+                await UserSessionManager.shared.login(userId: nil,token: nil)
                 print("ログイン成功")
                 isSignedIn = true
                 Task {
@@ -69,6 +69,16 @@ class AuthService: ObservableObject {
             }
         } catch {
             print("ログイン失敗: \(error)")
+        }
+    }
+    
+    @MainActor
+    func signOut() async {
+        do {
+            _ = await Amplify.Auth.signOut()
+            UserSessionManager.shared.logout()
+            print("サインアウト成功")
+            isSignedIn = false
         }
     }
     

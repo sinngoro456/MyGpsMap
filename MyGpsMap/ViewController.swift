@@ -3,6 +3,7 @@
 import UIKit
 import MapKit
 
+
 protocol ViewControllerDelegate: AnyObject {
     var isNewPin: Bool { get }
 }
@@ -14,6 +15,8 @@ class ViewController: UIViewController {
     
     private var mapManager: MapManager!
     private var uiSetupManager: UISetupManager!
+    private var timer1: Timer? // Timerプロパティを追加
+    private var timer2: Timer? // Timerプロパティを追加
     
     // UI要素のプロパティ
     private var compassButton: MKCompassButton!
@@ -30,6 +33,13 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        startTimer()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // Timerを停止
+        stopTimer()
     }
     
     override func viewDidLoad() {
@@ -43,14 +53,13 @@ class ViewController: UIViewController {
             setupMapView()
             setupGestures()
             do {
-                _ = await PinManager.shared.loadPinsDynamoDB()
-                await MainActor.run {
-                    mapManager.addPins(with: PinManager.shared.pins)
-                }
+                _ = await PinManager.shared.loadPins()
                 _ = await FriendManager.shared.loadFriendsFromDynamoDB()
             }
         }
     }
+    
+
     
     // MARK: - Setup Methods
     private func setupManagers() async {
@@ -114,20 +123,6 @@ class ViewController: UIViewController {
         }
     }
     
-    private func confirmOverwritePins(completion: @escaping (Bool) -> Void) {
-        let alert = UIAlertController(title: "上書き確認", message: "ローカルのデータが最新です。データベースのデータで上書きしますか？", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { _ in
-            completion(true) // ユーザーが「はい」を選択した場合
-        }))
-        
-        alert.addAction(UIAlertAction(title: "いいえ", style: .cancel, handler: { _ in
-            completion(false) // ユーザーが「いいえ」を選択した場合
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     @objc private func profileButtonTapped() {
         print("プロフィールボタンがタップされました")
         
@@ -145,6 +140,44 @@ class ViewController: UIViewController {
     @objc private func radikoButtonTapped() {
         print("Radikoボタンがタップされました")
     }
+    
+    private func confirmOverwritePins(completion: @escaping (Bool) -> Void) {
+        let alert = UIAlertController(title: "上書き確認", message: "ローカルのデータが最新です。データベースのデータで上書きしますか？", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { _ in
+            completion(true) // ユーザーが「はい」を選択した場合
+        }))
+        
+        alert.addAction(UIAlertAction(title: "いいえ", style: .cancel, handler: { _ in
+            completion(false) // ユーザーが「いいえ」を選択した場合
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK:- Timer Methods
+    private func startTimer() {
+        timer1 = Timer.scheduledTimer(timeInterval: 20.0, target: self, selector: #selector(timerFired1), userInfo: nil, repeats: true)
+        timer2 = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(timerFired2), userInfo: nil, repeats: true)
+    }
+
+    private func stopTimer() {
+        timer1?.invalidate()
+        timer2?.invalidate()
+        timer1 = nil
+        timer2 = nil
+    }
+    
+    @objc private func timerFired1() {
+        print("定期処理1が実行されました")
+        // 定期的に実行したい処理をここに記述します。
+        MapPinFriendOrganizer.shared.Refresh1()
+   }
+    
+    @objc private func timerFired2() {
+        // 定期的に実行したい処理をここに記述します。
+        MapPinFriendOrganizer.shared.Refresh2()
+   }
 
     // MARK: - Gesture Handlers
     @objc private func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -219,9 +252,6 @@ extension ViewController : ViewController_PinEdit_Delegate {
 
      func newPinManagerDidTapPlus(_ controller : ViewController_PinEdit , pinData : Data_Pin) {
          print("Plus button tapped with title : \(pinData.title ?? "") and description : \(pinData.description ?? "")")
-         
-         mapManager.removeAllNewPins()
-         mapManager.addPins(with : [pinData])
          PinManager.shared.addPins([pinData])
          PinManager.shared.saveAllPins()
          PinManager.shared.printPins()
@@ -229,9 +259,6 @@ extension ViewController : ViewController_PinEdit_Delegate {
 
      func newPinManagerDidTapClose(_ controller : ViewController_PinEdit , pinData : Data_Pin) {
          print("Close button tapped")
-         
-         mapManager.removeAllNewPins()
-         mapManager.removePinsAtCoordinate(pinData.coordinate)
          PinManager.shared.deletePins([pinData.coordinate])
          PinManager.shared.saveAllPins()
          PinManager.shared.printPins()

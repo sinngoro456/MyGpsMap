@@ -15,6 +15,7 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
     private var datePicker: UIDatePicker!
     var titleTextField: UITextField!
     var descriptionTextField: UITextField!
+    var tappedUserId: String? = nil
     var tappedId: Int = 0
     var tappedCoordinate: CLLocationCoordinate2D?
     var tappedTitle: String = ""
@@ -23,6 +24,7 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
     var tappedDate: Date?
     var tappedCategory: String = ""
     var tappedTags: [String] = []
+    var tappedVisibility: String = "private"
     var selectedTitle: String = ""
     var selectedDescription: String = ""
     var selectedColor: UIColor = .orange
@@ -30,13 +32,17 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
     var selectedDate: Date?
     var selectedCategory: String = ""
     var selectedTags: [String] = []
+    private var userIdLabel: UILabel!
     private var titleLabel: UILabel!
     private var initialPinData: Data_Pin?
+    private var visibilitySwitch: UISwitch!
+    private var visibilityLabel: UILabel!
     static var titleLabelText: String = "お気に入りの場所を登録"
     var isNewPin: Bool = true  // デフォルトは新しいピン
     
     init(pinData: Data_Pin) {
         super.init(nibName: nil, bundle: nil)
+        self.tappedUserId = pinData.user_id ?? ""
         self.tappedId = pinData.pin_id ?? 0
         self.tappedCoordinate = pinData.coordinate
         self.tappedTitle = pinData.title ?? ""
@@ -45,6 +51,7 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
         self.tappedDate = pinData.date
         self.tappedCategory = pinData.category ?? ""
         self.tappedTags = pinData.tags ?? []
+        self.tappedVisibility = pinData.visibility ?? "private"
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -85,7 +92,39 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
         
         [titleLabel, closeButton, plusButton, titleTextField, descriptionTextField, addImageButton, imageScrollView, imageStackView, datePicker].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
+        // Visibility スイッチの設定
+        visibilitySwitch = UISwitch()
+        visibilitySwitch.addTarget(self, action: #selector(visibilitySwitchChanged), for: .valueChanged)
+        
+        visibilityLabel = UILabel()
+        visibilityLabel.text = "公開"
+        visibilityLabel.font = UIFont.systemFont(ofSize: 16)
+
+        let visibilityStackView = UIStackView(arrangedSubviews: [visibilityLabel, visibilitySwitch])
+        visibilityStackView.axis = .horizontal
+        visibilityStackView.spacing = 8
+        visibilityStackView.alignment = .center
+        visibilityStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(visibilityStackView)
+        
+        userIdLabel = UILabel()
+        userIdLabel.text = "ユーザーID: \(tappedUserId ?? "不明")"
+        userIdLabel.font = UIFont.systemFont(ofSize: 14)
+        userIdLabel.textColor = .gray
+        userIdLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(userIdLabel)
+        
         UISetUpManager_NewPin.setupConstraints(for: view, titleLabel: titleLabel, closeButton: closeButton, plusButton: plusButton, titleTextField: titleTextField, descriptionTextField: descriptionTextField, addImageButton: addImageButton, datePicker: datePicker, imageScrollView: imageScrollView, imageStackView: imageStackView)
+        
+        NSLayoutConstraint.activate([
+            visibilityStackView.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 16),
+            visibilityStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            visibilityStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            userIdLabel.topAnchor.constraint(equalTo: visibilityStackView.bottomAnchor, constant: 16),
+            userIdLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            userIdLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
     }
     
     private func initializeValues() {
@@ -98,6 +137,12 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
             datePicker.date = date
         }
         updateImageScrollView()
+        visibilitySwitch.isOn = (tappedVisibility == "public")
+        updateVisibilityLabel()
+        userIdLabel.text = "作成者: \(self.tappedUserId ?? "不明")"
+    }
+    private func updateVisibilityLabel() {
+        visibilityLabel.text = visibilitySwitch.isOn ? "公開" : "非公開"
     }
     
     @objc func addImageButtonTapped() {
@@ -119,7 +164,8 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
             return
         }
         
-        let pinData = Data_Pin(pin_id: tappedId,
+        let pinData = Data_Pin(user_id: tappedUserId,
+                               pin_id: tappedId,
                                coordinate: coordinate,
                                title: titleTextField.text,
                                description: descriptionTextField.text,
@@ -127,7 +173,8 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
                                images: selectedImages,
                                date: datePicker.date,
                                category: tappedCategory,
-                               tags: tappedTags)
+                               tags: tappedTags,
+                               visibility: visibilitySwitch.isOn ? "public" : "private")
         
         delegate?.newPinManagerDidTapPlus(self, pinData: pinData)
         dismiss(animated: true, completion: nil)
@@ -140,7 +187,8 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
             return
         }
         
-        let pinData = Data_Pin(pin_id: tappedId,
+        let pinData = Data_Pin(user_id: tappedUserId,
+                               pin_id: tappedId,
                                coordinate: coordinate,
                                title: titleTextField.text,
                                description: descriptionTextField.text,
@@ -151,6 +199,10 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
         
         delegate?.newPinManagerDidTapClose(self,pinData: pinData)
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func visibilitySwitchChanged() {
+        updateVisibilityLabel()
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

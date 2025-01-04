@@ -9,22 +9,6 @@ import CoreLocation  // Core Locationフレームワークをインポート
 import MapKit
 
 class PinManager {
-    private var _cognitoUserId: String? // プライベート変数　変更監視用
-    var cognitoUserId: String? { // 外部から読み書き可能なプロパティ
-        get {
-            return _cognitoUserId
-        }
-        set {
-            // 新しいユーザーIDが設定されたときに呼ばれる
-            if let newUserId = newValue, _cognitoUserId != newUserId {
-                _cognitoUserId = newUserId
-                updatePinsWithNewUserId(newUserId) // ピンのuser_idを更新
-                
-            } else {
-                _cognitoUserId = newValue // nilの場合も設定
-            }
-        }
-    }
     var cognitoToken: String? // 外部から読み書き可能なcognitoIdTokenプロパティ
     var writtenDateTime: Date? // 外部から読み書き可能な更新日時プロパティ
     static let shared = PinManager() // シングルトンインスタンス
@@ -54,6 +38,17 @@ class PinManager {
         removeSameIdPins() // 重複IDの削除
     }
     
+    // 指定されたピンをpinsに追加するメソッド
+    func clearFriendPins() {
+        for pin in pins {
+            // ユーザーIDが一致する場合にピンを削除
+            if (UserSessionManager.shared.user_id != nil && pin.user_id != UserSessionManager.shared.user_id) {
+                deletePins([pin.coordinate])
+            }
+        }
+        removeSameIdPins() // 重複IDの削除
+    }
+    
     // 指定された座標のピンをpinsから削除するメソッド
     func deletePins(_ coordinates: [CLLocationCoordinate2D]) {
         for coordinate in coordinates {
@@ -76,12 +71,12 @@ class PinManager {
     // pinsを各種DB,Localに保存するメソッド
     func saveAllPins() {
         localSave.savePinstoLocal()
-        s3Save.S3Clear()
+        s3Save.S3UnnecessaryClear()
         s3Save.uploadImagesForPinToS3(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
         dynamoDBSave.savePinstoDynamoDB(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
     }
     
-    func loadPinsDynamoDB() async -> Bool {
+    func loadPins() async -> Bool {
         do {
             let (loadedPins, writtenDateTimeDB) = try await DynamoDBSave().loadPinsfromDynamoDB()
             
@@ -90,6 +85,9 @@ class PinManager {
                 self.writtenDateTime = writtenDateTimeDB
                 self.clearPins() // 既存のピンをクリア
                 self.addPins(loadedPins) // 新しいピンを追加
+                await self.loadPinsImages()
+                self.saveAllPins()
+                self.printPins()
                 print("ピンが更新されました。合計ピン数: \(self.pins.count)")
                 return true // 更新が発生した場合はtrueを返す
             } else {
@@ -107,16 +105,22 @@ class PinManager {
                         let alert = UIAlertController(title: "上書き確認", message: "ローカルのデータが最新です。データベースのデータで上書きしますか？", preferredStyle: .alert)
                         
                         alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { _ in
-                            // データベースから新しいピンを追加する処理を書く
-                            self.clearPins() // 既存のピンをクリア
-                            self.addPins(loadedPins) // データベースから取得したピンで上書き
-                            
-                            print("データベースのデータで上書きしました。")
-                            continuation.resume(returning: true)
+                            Task {
+                                // データベースから新しいピンを追加する処理を書く
+                                self.clearPins() // 既存のピンをクリア
+                                self.addPins(loadedPins) // データベースから取得したピンで上書き
+                                await self.loadPinsImages()
+                                self.saveAllPins()
+                                print("データベースのデータで上書きしました。")
+                                continuation.resume(returning: true)
+                            }
                         }))
                         
                         alert.addAction(UIAlertAction(title: "いいえ", style: .cancel, handler: { _ in
-                            continuation.resume(returning: false)
+                            Task {
+                                self.saveAllPins()
+                                continuation.resume(returning: false)
+                            }
                         }))
                         
                         topViewController.present(alert, animated: true, completion: nil)
@@ -128,9 +132,12 @@ class PinManager {
             return false // エラーが発生した場合もfalseを返す
         }
     }
+
+    
     func loadFriendsPinsDynamoDB() async -> Bool {
         do {
             let loadedPins = try await DynamoDBSave().loadFriendsPinsfromDynamoDB()
+            self.clearFriendPins()
             self.addPins(loadedPins) // 新しいピンを追加
             print("ピンが更新されました。合計ピン数: \(self.pins.count)")
             return true // 更新が発生した場合はtrueを返す
@@ -141,6 +148,11 @@ class PinManager {
     }
 }
 extension PinManager {
+    // pinsを各種DB,Localに保存するメソッド
+    private func loadPinsImages() async {
+        pins = await s3Save.downloadImagesFromS3(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
+    }
+    
     // ユニークなIDを生成する関数
     private func generateUniqueId() -> Int {
         var availableIds: [Int]  // 利用可能なIDの配列
@@ -194,16 +206,18 @@ extension PinManager {
     
     // ユーザーIDに基づいてフィルタリングされたピンを取得するメソッド
     func filteredPinsForCurrentUser(from pins: [Data_Pin]) -> [Data_Pin] {
-        guard let userId = cognitoUserId else { return pins }  // cognitoUserIdがnilの場合は空の配列を返す
+        guard let userId = UserSessionManager.shared.user_id else { return pins }  // cognitoUserIdがnilの場合は空の配列を返す
         return pins.filter { $0.user_id == userId || $0.user_id == nil}  // userIdが一致するピンのみを返す
     }
     
     // 新しいユーザーIDでピンのuser_idを更新するメソッド
-    private func updatePinsWithNewUserId(_ userId: String) {
-        for index in pins.indices {
-            pins[index].user_id = userId // 各ピンのuser_idを更新
+    func updatePinsWithNewUserId() {
+        if UserSessionManager.shared.user_id != nil{
+            for index in pins.indices {
+                pins[index].user_id = UserSessionManager.shared.user_id // 各ピンのuser_idを更新
+            }
+            print("すべてのピンのuser_idが更新されました:", UserSessionManager.shared.user_id!)
         }
-        print("すべてのピンのuser_idが更新されました:", userId)
     }
     
     // デバッグ用

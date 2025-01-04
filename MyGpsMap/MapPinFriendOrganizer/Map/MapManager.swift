@@ -10,11 +10,13 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
     
     weak var delegate: MapManagerDelegate?
     
+    let tolerance: Double = 0.000004
     private var mapView: MKMapView?
     private var locationManager: CLLocationManager
     private var isInitialLocationSet = false
-    var isNewPin: Bool = true
     private var pincolor: UIColor
+    private(set) var pins_display: [Data_Pin] = [] // 実際のannotationと完全に対応するpins, 外部からは読み取り専用
+    var isNewPin: Bool = true
 
     private override init() {
         self.locationManager = CLLocationManager()
@@ -80,6 +82,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
                 mapView.addAnnotation(annotation)
             }
         }
+        addPinsDisplay(newPins)
     }
     
     func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
@@ -91,11 +94,12 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         let annotationsToRemove = mapView.annotations.filter { annotation in
             let diffLatitude = abs(annotation.coordinate.latitude - coordinate.latitude)
             let diffLongitude = abs(annotation.coordinate.longitude - coordinate.longitude)
-            return (diffLatitude < 0.000004 && diffLongitude < 0.000004)
+            return (diffLatitude < tolerance && diffLongitude < tolerance)
         }
         
         // 見つかったアノテーションを削除
         mapView.removeAnnotations(annotationsToRemove)
+        removePinsDisplayAtCoordinate(coordinate)
     }
     
     func removeAllNewPins() {
@@ -107,9 +111,6 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         // 管理されていないアノテーションをフィルタリング
         let newPinsToRemove = mapView.annotations.filter { annotation in
             if let pointAnnotation = annotation as? MKPointAnnotation {
-                // 座標の誤差を許容するための閾値
-                let tolerance: Double = 0.000004
-                
                 // 管理されているピンと比較
                 for managedPin in managedPins {
                     let diffLatitude = abs(pointAnnotation.coordinate.latitude - managedPin.coordinate.latitude)
@@ -127,6 +128,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         
         // フィルタリングしたアノテーションを削除
         mapView.removeAnnotations(newPinsToRemove)
+        removeAllNewPinsDisplay(managedPins)
     }
     
     func clearPins() {
@@ -135,6 +137,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         let allAnnotations = mapView.annotations
         let annotationsToRemove = allAnnotations.filter { !($0 is MKUserLocation) }
         mapView.removeAnnotations(annotationsToRemove)
+        pins_display=[]
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -171,5 +174,46 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         let pinData = PinManager.shared.findMatchingPin(for: annotation) ?? Data_Pin(coordinate: annotation.coordinate, title: "新しいピン")
         
         delegate?.mapManager(self, didTapPin: pinData)
+    }
+}
+// MARK: - pins_displayを操作するメソッド
+extension MapManager {
+    func removePinsDisplayAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
+        let tolerance: Double = 0.000004 // 適切な値に調整してください
+        
+        pins_display.removeAll { pin in
+            let diffLatitude = abs(pin.coordinate.latitude - coordinate.latitude)
+            let diffLongitude = abs(pin.coordinate.longitude - coordinate.longitude)
+            return diffLatitude < tolerance && diffLongitude < tolerance
+        }
+    }
+    
+    func addPinsDisplay(_ newPins: [Data_Pin]) {
+        for pin in newPins {
+            // pins_displayに追加
+            if !pins_display.contains(where: { pins_display in
+                return pins_display.coordinate.latitude == pin.coordinate.latitude &&
+                    pins_display.coordinate.longitude == pin.coordinate.longitude
+            }) {
+                pins_display.append(pin)
+            }
+        }
+    }
+    
+    func removeAllNewPinsDisplay(_ managedPins: [Data_Pin]) {
+        // 管理されていないピンをフィルタリング
+        pins_display = pins_display.filter { displayPin in
+            // 管理されているピンと比較
+            for managedPin in managedPins {
+                let diffLatitude = abs(displayPin.coordinate.latitude - managedPin.coordinate.latitude)
+                let diffLongitude = abs(displayPin.coordinate.longitude - managedPin.coordinate.longitude)
+                
+                // 誤差内でかつタイトルが一致する場合は管理されているピンとみなす
+                if diffLatitude < tolerance && diffLongitude < tolerance && displayPin.title == managedPin.title {
+                    return true // 管理されているピンなので保持する
+                }
+            }
+            return false // 管理されていないピンなので削除
+        }
     }
 }

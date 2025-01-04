@@ -18,7 +18,7 @@ class S3Save {
         expression.progressBlock = { (task, progress) in
             DispatchQueue.main.async {
                 // UIの更新やプログレスの表示など
-                print("アップロード進捗: \(progress.fractionCompleted)")
+//                print("アップロード進捗: \(progress.fractionCompleted)")
             }
         }
         
@@ -27,7 +27,7 @@ class S3Save {
             for (index, image) in pin.images.enumerated() {
                 
                 if let pinId = pin.pin_id {
-                    let key = "\(PinManager.shared.cognitoUserId ?? "None")/\(pinId)_\(index + 1).png" // ここでunwrappedPinIdを使用
+                    let key = "\(UserSessionManager.shared.user_id ?? "None")/\(pinId)_\(index + 1).png" // ここでunwrappedPinIdを使用
                     // UIImage を PNG データに変換
                     guard let pngData = image.pngData() else {
                         print("UIImage を PNG データに変換できませんでした (Pin ID \(String(describing: pinId)), Image Index \(index))")
@@ -88,7 +88,7 @@ class S3Save {
         
         // pin_idが0の場合、プレフィックスにはuserIdのみを設定
         if pin_id != 0 {
-            request?.prefix = "\(userId)/\(pin_id)/" // pin_idが指定されている場合
+            request?.prefix = "\(userId)/\(pin_id)" // pin_idが指定されている場合
         } else {
             request?.prefix = "\(userId)/" // pin_idが指定されていない場合
         }
@@ -99,7 +99,6 @@ class S3Save {
                 completion(result) // エラー時も空の辞書を返す
                 return
             }
-            print("hi1")
             guard let contents = response?.contents, !contents.isEmpty else {
                 print("オブジェクトが見つかりませんでした。")
                 completion(result) // 空の辞書を返す
@@ -112,18 +111,49 @@ class S3Save {
             
             // 結果をクロージャで返す
             completion(result)
-            print("hi2")
         }
     }
 
     func S3Clear() {
         print("Clear S3 Image")
-        listS3Items(user_id: PinManager.shared.cognitoUserId, pin_id: 0) { result in
+        listS3Items(user_id: UserSessionManager.shared.user_id, pin_id: 0) { result in
             if let listKey = result["list_key"] {
                 print("取得したキー:", listKey)
 
                 // 各キーに対して削除処理を行う
                 for key in listKey {
+                    self.deleteObject(key: key)
+                }
+            } else {
+                print("キーの取得に失敗しました。")
+            }
+        }
+    }
+    
+    func S3UnnecessaryClear() {
+        print("Clear unnecessary S3 Images")
+        guard let userId = UserSessionManager.shared.user_id else {
+            print("ユーザーIDが取得できません")
+            return
+        }
+
+        listS3Items(user_id: userId, pin_id: 0) { result in
+            if let listKey = result["list_key"] {
+                print("取得したキー:", listKey)
+
+                // PinManagerで管理されているpin_idのリストを作成
+                let managedPinIds = Set(PinManager.shared.pins.compactMap { $0.pin_id }.map { String($0) })
+
+                // S3のキーをフィルタリング
+                let unnecessaryKeys = listKey.filter { key in
+                    let components = key.components(separatedBy: "/")
+                    guard components.count >= 2 else { return false }
+                    let pinIdString = components[1].split(separator: "_").first.map(String.init) ?? ""
+                    return !managedPinIds.contains(pinIdString)
+                }
+
+                // 不要なキーを削除
+                for key in unnecessaryKeys {
                     self.deleteObject(key: key)
                 }
             } else {
@@ -147,5 +177,49 @@ class S3Save {
             }
             return nil // nilを明示的に返す
         }
+    }
+    
+    func downloadImagesFromS3(pins: [Data_Pin]) async -> [Data_Pin] {
+        let transferUtility = AWSS3TransferUtility.default()
+        let updatedPins = pins
+
+        for (index, pin) in pins.enumerated() {
+            guard let pinId = pin.pin_id, let userId = UserSessionManager.shared.user_id else {
+                continue
+            }
+
+            var downloadedImages: [UIImage] = []
+            let semaphore = DispatchSemaphore(value: 0)
+
+            listS3Items(user_id: userId, pin_id: pinId) { result in
+                if let keys = result["list_key"] {
+                    let dispatchGroup = DispatchGroup()
+
+                    for key in keys {
+                        dispatchGroup.enter()
+                        transferUtility.downloadData(
+                            fromBucket: self.bucket,
+                            key: key,
+                            expression: nil
+                        ) { task, url, data, error in
+                            defer { dispatchGroup.leave() }
+                            if let error = error {
+                                print("ダウンロードエラー: \(error.localizedDescription)")
+                            } else if let data = data, let image = UIImage(data: data) {
+                                downloadedImages.append(image)
+                            }
+                        }
+                    }
+
+                    dispatchGroup.notify(queue: .main) {
+                        updatedPins[index].images = downloadedImages
+                        semaphore.signal()
+                    }
+                } else {
+                    semaphore.signal()
+                }
+            }
+        }
+        return updatedPins
     }
 }

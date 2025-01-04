@@ -5,7 +5,22 @@ import AWSCore
 import AWSS3
 import Alamofire
 
-class Data_Pin: Codable {
+class Data_Pin: Codable, Equatable {
+    static func == (lhs: Data_Pin, rhs: Data_Pin) -> Bool {
+        return lhs.user_id == rhs.user_id &&
+        lhs.pin_id == rhs.pin_id &&
+        lhs.latitude == rhs.latitude &&
+        lhs.longitude == rhs.longitude &&
+        lhs.title == rhs.title &&
+        lhs.description == rhs.description &&
+        lhs.color == rhs.color &&
+        lhs.images == rhs.images &&
+        lhs.date == rhs.date &&
+        lhs.category == rhs.category &&
+        lhs.tags == rhs.tags &&
+        lhs.visibility == rhs.visibility
+    }
+    
     var user_id: String?
     var pin_id: Int?
     var latitude: Double
@@ -104,7 +119,7 @@ class Data_Pin: Codable {
         try container.encodeIfPresent(visibility, forKey: .visibility)
     }
 
-    init(user_id: String? = PinManager.shared.cognitoUserId,
+    init(user_id: String? = UserSessionManager.shared.user_id,
          pin_id: Int = 0,
          coordinate: CLLocationCoordinate2D,
          title: String? = "新しいピン",

@@ -52,5 +52,79 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "loadPins()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F - f2d36be6f78b36e5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for MyGpsMap.PinManager.loadPins() async -&gt; Swift.Bool"
+                  moduleName = "MyGpsMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81">
+               </Location>
+               <Location
+                  uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F - d5a08b32153a98d6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for MyGpsMap.PinManager.loadPins() async -&gt; Swift.Bool"
+                  moduleName = "MyGpsMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81">
+               </Location>
+               <Location
+                  uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F - 669f3db79f266e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for MyGpsMap.PinManager.loadPins() async -&gt; Swift.Bool"
+                  moduleName = "MyGpsMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81">
+               </Location>
+               <Location
+                  uuid = "CA6A024B-A23E-49FF-86AF-116F1F1F185F - 3689ff4ad03daee2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for MyGpsMap.PinManager.loadPins() async -&gt; Swift.Bool"
+                  moduleName = "MyGpsMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap/MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

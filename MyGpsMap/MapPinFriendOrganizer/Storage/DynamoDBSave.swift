@@ -12,7 +12,7 @@ import CoreLocation
 class DynamoDBSave {
     func savePinstoDynamoDB(pins:[Data_Pin]) {
         let url = "https://wz4q6hl5oa.execute-api.ap-northeast-1.amazonaws.com/dev"
-        guard let cognitoToken = PinManager.shared.cognitoToken, let userId = PinManager.shared.cognitoUserId else {
+        guard let cognitoToken = UserSessionManager.shared.cognitoToken, let userId = UserSessionManager.shared.user_id else {
             print("エラー: cognitoIdTokenまたはcognitoUserIdがnilです。")
             return
         }
@@ -52,7 +52,7 @@ class DynamoDBSave {
     
     func loadPinsfromDynamoDB() async throws -> ([Data_Pin], Date) {
         let url = "https://wz4q6hl5oa.execute-api.ap-northeast-1.amazonaws.com/dev"
-        guard let cognitoToken = PinManager.shared.cognitoToken, let userId = PinManager.shared.cognitoUserId else {
+        guard let cognitoToken = UserSessionManager.shared.cognitoToken, let userId = UserSessionManager.shared.user_id else {
             throw NSError(domain: "PinManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "cognitoIdTokenまたはcognitoUserIdがnilです。"])
         }
         let defaultHeader: HTTPHeaders = [
@@ -125,7 +125,7 @@ class DynamoDBSave {
     
     func loadFriendsPinsfromDynamoDB() async throws -> [Data_Pin] {
         let url = "https://wz4q6hl5oa.execute-api.ap-northeast-1.amazonaws.com/dev"
-        guard let cognitoToken = PinManager.shared.cognitoToken, let userId = PinManager.shared.cognitoUserId else {
+        guard let cognitoToken = UserSessionManager.shared.cognitoToken, let userId = UserSessionManager.shared.user_id else {
             throw NSError(domain: "PinManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "cognitoIdTokenまたはcognitoUserIdがnilです。"])
         }
         let defaultHeader: HTTPHeaders = [
@@ -197,7 +197,7 @@ class DynamoDBSave {
     
     func loadFriendsfromDynamoDB() async throws -> [[Data_Friend]] {
         let url = "https://wz4q6hl5oa.execute-api.ap-northeast-1.amazonaws.com/dev"
-        guard let cognitoToken = PinManager.shared.cognitoToken, let userId = PinManager.shared.cognitoUserId else {
+        guard let cognitoToken = UserSessionManager.shared.cognitoToken, let userId = UserSessionManager.shared.user_id else {
             throw NSError(domain: "PinManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "cognitoIdTokenまたはcognitoUserIdがnilです。"])
         }
         
@@ -241,6 +241,107 @@ class DynamoDBSave {
                 }
         }
     }
+
+    func addFriendsfromDynamoDB(friend_ids: [String]) async throws -> ([Data_Friend], [Data_Friend], [Data_Friend], [Data_Friend], [Data_Friend]) {
+        let url = "https://wz4q6hl5oa.execute-api.ap-northeast-1.amazonaws.com/dev"
+        guard let cognitoToken = UserSessionManager.shared.cognitoToken, let userId = UserSessionManager.shared.user_id else {
+            throw NSError(domain: "PinManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "cognitoIdTokenまたはcognitoUserIdがnilです。"])
+        }
+
+        let defaultHeader: HTTPHeaders = [
+            "Authorization": "\(cognitoToken)",
+        ]
+
+        let parameters: [String: Any] = [
+            "user_id": userId,
+            "writtenDateTime": ISO8601DateFormatter().string(from: Date()),
+            "command": "add_friends",
+            "target_id": friend_ids
+        ]
+
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
+                .responseData { response in
+                    switch response.result {
+                    case .success(let value):
+                        do {
+                            guard let jsonResponse = try JSONSerialization.jsonObject(with: value, options: []) as? [String: Any],
+                                  let bodyString = jsonResponse["body"] as? String,
+                                  let bodyData = bodyString.data(using: .utf8),
+                                  let body = try JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any] else {
+                                throw NSError(domain: "PinManager", code: 2, userInfo: [NSLocalizedDescriptionKey: "ピンデータの解析に失敗しました"])
+                            }
+
+                            // friendsリストを取得
+                            guard let newFriendsData = body["new_friends"] as? [[String: Any]] else {
+                                throw NSError(domain: "PinManager", code: 4, userInfo: [NSLocalizedDescriptionKey: "new_friendsが見つかりません"])
+                            }
+                            guard let newFriendsILikeData = body["new_friends_I_like"] as? [[String: Any]] else {
+                                throw NSError(domain: "PinManager", code: 4, userInfo: [NSLocalizedDescriptionKey: "new_friends_I_likeが見つかりません"])
+                            }
+                            guard let alreadyFriendsData = body["already_friends"] as? [[String: Any]] else {
+                                throw NSError(domain: "PinManager", code: 4, userInfo: [NSLocalizedDescriptionKey: "already_friendsが見つかりません"])
+                            }
+                            guard let alreadyFriendsILikeData = body["already_friends_I_like"] as? [[String: Any]] else {
+                                throw NSError(domain: "PinManager", code: 4, userInfo: [NSLocalizedDescriptionKey: "already_friends_I_likeが見つかりません"])
+                            }
+                            guard let nonExistentUsers = body["non_existent_users"] as? [String] else {
+                                throw NSError(domain: "PinManager", code: 4, userInfo: [NSLocalizedDescriptionKey: "usersが見つかりません"])
+                            }
+
+                            // Data_Friend型の配列を作成
+                            let newFriendsList = newFriendsData.compactMap { dict -> Data_Friend? in
+                                guard let userId = dict["user_id"] as? String,
+                                      let name = dict["name"] as? String?,
+                                      let isActive = dict["isActive"] as? Bool else { return nil }
+                                return Data_Friend(user_id: userId, name: name, isActive: isActive)
+                            }
+
+                            let newFriendsILikeList = newFriendsILikeData.compactMap { dict -> Data_Friend? in
+                                guard let userId = dict["user_id"] as? String,
+                                      let name = dict["name"] as? String?,
+                                      let isActive = dict["isActive"] as? Bool else { return nil }
+                                return Data_Friend(user_id: userId, name: name, isActive: isActive)
+                            }
+
+                            let alreadyFriendsList = alreadyFriendsData.compactMap { dict -> Data_Friend? in
+                                guard let userId = dict["user_id"] as? String,
+                                      let name = dict["name"] as? String?,
+                                      let isActive = dict["isActive"] as? Bool else { return nil }
+                                return Data_Friend(user_id: userId, name: name, isActive: isActive)
+                            }
+
+                            let alreadyFriendsILikeList = alreadyFriendsILikeData.compactMap { dict -> Data_Friend? in
+                                guard let userId = dict["user_id"] as? String,
+                                      let name = dict["name"] as? String?,
+                                      let isActive = dict["isActive"] as? Bool else { return nil }
+                                return Data_Friend(user_id: userId, name: name, isActive: isActive)
+                            }
+
+                            let nonExistentUsersList = nonExistentUsers.compactMap { userId -> Data_Friend? in
+                                // userIdからData_Friendを作成
+                                return Data_Friend(user_id: userId, name: nil, isActive: false)
+                            }
+                            
+                            continuation.resume(returning:
+                                (newFriendsList, newFriendsILikeList, alreadyFriendsList, alreadyFriendsILikeList, nonExistentUsersList)
+                            )
+
+                        } catch {
+                            continuation.resume(throwing:
+                                NSError(domain: "PinManager", code: 3, userInfo:
+                                    [NSLocalizedDescriptionKey:
+                                        "JSON解析中にエラーが発生しました"]))
+                        }
+
+                    case .failure(let error):
+                        continuation.resume(throwing:error)
+                    }
+                }
+        }
+    }
+
+
 
     // Data_Friend型へのマッピングを行うヘルパー関数
     private func mapToFriends(_ data: Any?) throws -> [Data_Friend] {

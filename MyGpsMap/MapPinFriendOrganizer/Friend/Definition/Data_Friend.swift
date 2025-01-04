@@ -10,10 +10,10 @@ import Foundation
 // Friendデータモデル
 struct Data_Friend {
     var user_id: String
-    var name: String
+    var name: String?
     var isActive: Bool // オンラインまたはオフライン状態
     
-    init(user_id: String, name: String, isActive: Bool) {
+    init(user_id: String, name: String?, isActive: Bool) {
         self.user_id = user_id
         self.name = name
         self.isActive = isActive
