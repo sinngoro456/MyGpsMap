@@ -74,13 +74,13 @@ class PinManager {
         let currentDateTime = ISO8601DateFormatter().string(from: Date())
         localSave.savePinstoLocal(writtenDateTime: currentDateTime)
         s3Save.s3Clear()
-        s3Save.uploadImagesForPinToS3(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
+        s3Save.saveImagesForPinToS3(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins))
         dynamoDBSave.savePinstoDynamoDB(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins),writtenDateTime: currentDateTime)
     }
     
     func loadPins() async -> Bool {
         do {
-            let (loadedPins, writtenDateTimeDB) = try await DynamoDBSave().loadPinsfromDynamoDB()
+            let (initialLoadedPins, writtenDateTimeDB) = try await DynamoDBSave().loadPinsfromDynamoDB()
             
             // 新しいwrittenDateTimeが現在のものより新しい場合のみ更新
             if writtenDateTimeDB <= self.writtenDateTime! {
@@ -106,9 +106,9 @@ class PinManager {
                         alert.addAction(UIAlertAction(title: "はい", style: .default, handler: { _ in
                             Task {
                                 // データベースから新しいピンを追加する処理を書く
+                                let updatedPins = await S3Save().loadPinImagesFromS3(user_ids: [UserSessionManager.shared.user_id!], pins: initialLoadedPins)
                                 self.clearPins() // 既存のピンをクリア
-                                self.addPins(loadedPins) // データベースから取得したピンで上書き
-                                await self.loadPinsImages()
+                                self.addPins(updatedPins) // データベースから取得したピンで上書き
                                 self.saveAllPins()
                                 print("データベースのデータで上書きしました。")
                                 continuation.resume(returning: true)
@@ -136,10 +136,9 @@ class PinManager {
     func loadFriendsPinsDynamoDB() async -> Bool {
         do {
             let loadedPins = try await DynamoDBSave().loadFriendsPinsfromDynamoDB()
-            
+            let loadedPins2 = await S3Save().loadPinImagesFromS3(user_ids: FriendManager.shared.getFriendUserIds(friends_input: FriendManager.shared.friends),pins: loadedPins)
             self.clearFriendPins()
-            self.addPins(loadedPins) // 新しいピンを追加
-            await self.loadPinsImages()
+            self.addPins(loadedPins2) // 新しいピンを追加
             print("ピンが更新されました。合計ピン数: \(self.pins.count)")
             return true // 更新が発生した場合はtrueを返す
         }catch {
@@ -149,15 +148,21 @@ class PinManager {
     }
 }
 extension PinManager {
-    // pinsを各種DB, Localに保存するメソッド
-    private func loadPinsImages() async {
-        let downloadedPins = await s3Save.downloadImagesFromS3(pins: PinManager.shared.pins)
-        // ダウンロードしたピンを元のpinsに上書きする
-        for downloadedPin in downloadedPins {
-            if let index = pins.firstIndex(where: { $0.pin_id == downloadedPin.pin_id }) {
-                // 該当するpinが見つかった場合、上書き
-                pins[index] = downloadedPin
-            }
+    // 引数なしで自分のuser_idのpinsを返す関数
+    func getMyPins(pins_input:[Data_Pin]) -> [Data_Pin] {
+        guard let myUserId = UserSessionManager.shared.user_id else {
+            print("ユーザーIDが設定されていません。")
+            return []
+        }
+        return pins_input.filter { $0.user_id == myUserId || $0.user_id == nil }
+    }
+    
+    // 引数なしでフレンドのpinsを返す関数
+    func getFriendPins(pins_input:[Data_Pin]) -> [Data_Pin] {
+        let friendUserIds = FriendManager.shared.getFriendUserIds(friends_input: FriendManager.shared.friends)
+        return pins_input.filter { pin in
+            guard let pinUserId = pin.user_id else { return false }
+            return friendUserIds.contains(pinUserId)
         }
     }
     

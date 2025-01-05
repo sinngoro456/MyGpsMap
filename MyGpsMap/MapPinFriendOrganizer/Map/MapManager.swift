@@ -86,6 +86,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     func removePinsAtCoordinate(_ coordinate: CLLocationCoordinate2D) {
+        
         guard let mapView = mapView else { return }
         
         // 既存のアノテーションをフィルタリングして削除対象を見つける
@@ -213,5 +214,23 @@ extension MapManager {
             }
             return false // 管理されていないピンなので削除
         }
+    }
+    
+    // デバッグ用
+    func printPins() {
+        print("---------------pin-----------------")
+        for pin in pins_display {
+            print("user_id: \(pin.user_id ?? "No user_id")")
+            print("pin_id: \(pin.pin_id != 0 ? String(pin.pin_id!) : "pin_id")")
+            print("Title: \(pin.title ?? "No Title")")
+            print("Description: \(pin.description ?? "No Description")")
+            print("Coordinate: \(pin.coordinate.latitude), \(pin.coordinate.longitude)")
+            print("Category: \(pin.category ?? "No Category")")
+            print("Date: \(pin.date ?? Date())")
+            print("Tags: \(pin.tags?.joined(separator: ", ") ?? "No Tags")")
+            print("Images Count: \(pin.images.count)")
+            print("Visibility: \(pin.visibility ?? "No Visibility")\n\n")
+        }
+        print("----------------------------------")
     }
 }

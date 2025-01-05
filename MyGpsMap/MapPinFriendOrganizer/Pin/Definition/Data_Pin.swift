@@ -14,7 +14,7 @@ class Data_Pin: Codable, Equatable {
         lhs.title == rhs.title &&
         lhs.description == rhs.description &&
         lhs.color == rhs.color &&
-        lhs.images == rhs.images &&
+        areImagesEqual(lhs.images, rhs.images) &&
         lhs.date == rhs.date &&
         lhs.category == rhs.category &&
         lhs.tags == rhs.tags &&
@@ -228,5 +228,18 @@ extension Data_Pin {
         category = dict["category"] as? String
         tags = dict["tags"] as? [String]
         visibility = dict["visibility"] as? String
+    }
+    
+    // 画像の内容を比較するメソッド
+    private static func areImagesEqual(_ images1: [UIImage], _ images2: [UIImage]) -> Bool {
+        guard images1.count == images2.count else { return false }
+        
+        for (index, image1) in images1.enumerated() {
+            let image2 = images2[index]
+            if image1.size != image2.size {
+                return false
+            }
+        }
+        return true
     }
 }

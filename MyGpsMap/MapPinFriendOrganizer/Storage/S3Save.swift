@@ -12,7 +12,7 @@ class S3Save {
     let bucket = "mygpsmapdb"
     
     // 指定された pin_id のリストの画像を S3 にアップロードする関数
-    func uploadImagesForPinToS3(pins: [Data_Pin]) {
+    func saveImagesForPinToS3(pins: [Data_Pin]) {
         let transferUtility = AWSS3TransferUtility.default()
         let expression = AWSS3TransferUtilityUploadExpression()
         expression.progressBlock = { (task, progress) in
@@ -71,6 +71,156 @@ class S3Save {
             }
         }
     }
+
+    func s3Clear() {
+        print("Clear S3 Image")
+        listS3Items(user_id: UserSessionManager.shared.user_id) { result in
+            if let listKey = result["list_key"] {
+                print("取得したキー:", listKey)
+
+                // 各キーに対して削除処理を行う
+                for key in listKey {
+                    self.deleteObject(key: key)
+                }
+            } else {
+                print("キーの取得に失敗しました。")
+            }
+        }
+    }
+    
+//    func s3UnnecessaryClear(donotClearPins: [Data_Pin]) {
+//        print("Clear unnecessary S3 Images")
+//        guard let userId = UserSessionManager.shared.user_id else {
+//            print("ユーザーIDが取得できません")
+//            return
+//        }
+//
+//        listS3Items(user_id: userId) { result in
+//            if let listKey = result["list_key"] {
+//                print("取得したキー:", listKey)
+//
+//                // 管理されているpin_idのリストを作成
+//                let managedPinIds = Set(donotClearPins.compactMap { $0.pin_id }.map { String($0) })
+//
+//                // S3のキーをフィルタリング
+//                let unnecessaryKeys = listKey.filter { key in
+//                    let components = key.components(separatedBy: "/")
+//                    guard components.count >= 2 else { return false }
+//                    let pinIdString = components[1].split(separator: "_").first.map(String.init) ?? ""
+//                    return !managedPinIds.contains(pinIdString)
+//                }
+//
+//                // 不要なキーを削除
+//                for key in unnecessaryKeys {
+//                    self.deleteObject(key: key)
+//                }
+//            } else {
+//                print("キーの取得に失敗しました。")
+//            }
+//        }
+//    }
+}
+extension S3Save{
+    private func deleteObject(key: String) {
+        let s3 = AWSS3.default()
+        let deleteObjectRequest = AWSS3DeleteObjectRequest()!
+        
+        deleteObjectRequest.bucket = bucket
+        deleteObjectRequest.key = key
+        
+        s3.deleteObject(deleteObjectRequest).continueWith { task -> AnyObject? in
+            if let error = task.error {
+                print("削除エラー: \(error.localizedDescription)")
+            } else {
+                print("削除成功: \(key)")
+            }
+            return nil // nilを明示的に返す
+        }
+    }
+    
+    func loadPinImagesFromS3(user_ids: [String], pins: [Data_Pin]) async -> [Data_Pin] {
+        // keysを並べ替える関数
+        func sortKeysForPins(s3Keys: [String], pins: [Data_Pin]) -> [[String]] {
+            var sortedKeys: [[String]] = Array(repeating: [], count: pins.count)
+            
+            for key in s3Keys {
+                if let userId = key.split(separator: "/").first,
+                   let pinIdStr = key.split(separator: "/").dropFirst().first?.split(separator: "_").first,
+                   let pinId = Int(pinIdStr),
+                   let index = pins.firstIndex(where: { $0.user_id == String(userId) && $0.pin_id == pinId }) {
+                    sortedKeys[index].append(key)
+                }
+            }
+            
+            return sortedKeys
+        }
+        
+        let transferUtility = AWSS3TransferUtility.default()
+        let updatedPins = pins // updatedPinsの初期化
+
+        // 非同期forループでユーザーIDを処理
+        for userId in user_ids {
+            print("Fetching S3 items for user ID: \(userId)")
+
+            // 非同期でS3アイテムリストを取得
+            let s3Items = await listS3ItemsAsync(user_id: userId)
+
+            // keysを並べ替え
+            let sortedKeys = sortKeysForPins(s3Keys: s3Items["list_key"] as? [String] ?? [], pins: pins)
+
+            // pin_idのループ
+            for (index, _) in pins.enumerated() {
+                print("Processing pin with ID: \(String(describing: pins[index].pin_id))")
+
+                let keys = sortedKeys[index]
+                if !keys.isEmpty {
+                    print("Found \(keys.count) keys for user ID: \(userId) and pin ID: \(String(describing: pins[index].pin_id))")
+
+                    for key in keys {
+                        print("Starting download for key: \(key)")
+
+                        // 非同期で画像をダウンロード
+                        if let data = await downloadImageDataAsync(transferUtility: transferUtility, key: key),
+                           let image = UIImage(data: data) {
+                            updatedPins[index].images.append(image)
+                            print("Successfully downloaded image for key: \(key)")
+                        } else {
+                            print("Failed to download or convert image for key: \(key)")
+                        }
+                    }
+                } else {
+                    print("No matching keys found for user ID: \(userId) and pin ID: \(String(describing: pins[index].pin_id))")
+                }
+            }
+        }
+
+        return updatedPins
+    }
+
+    // 非同期関数でS3アイテムリストを取得
+    func listS3ItemsAsync(user_id: String) async -> [String: Any] {
+        await withCheckedContinuation { continuation in
+            listS3Items(user_id: user_id) { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
+
+    // 非同期関数で画像データをダウンロード
+    func downloadImageDataAsync(transferUtility: AWSS3TransferUtility, key: String) async -> Data? {
+        await withCheckedContinuation { continuation in
+            transferUtility.downloadData(fromBucket: self.bucket, key: key, expression: nil) { _, _, data, error in
+                if let error = error {
+                    print("ダウンロードエラー (key: \(key)): \(error.localizedDescription)")
+                    continuation.resume(returning: nil)
+                } else {
+                    continuation.resume(returning: data)
+                }
+            }
+        }
+    }
+
+
     
     func listS3Items(user_id: String?, completion: @escaping ([String: [String]]) -> Void) {
         var result: [String: [String]] = [:]
@@ -106,117 +256,5 @@ class S3Save {
             // 結果をクロージャで返す
             completion(result)
         }
-    }
-
-    func s3Clear() {
-        print("Clear S3 Image")
-        listS3Items(user_id: UserSessionManager.shared.user_id) { result in
-            if let listKey = result["list_key"] {
-                print("取得したキー:", listKey)
-
-                // 各キーに対して削除処理を行う
-                for key in listKey {
-                    self.deleteObject(key: key)
-                }
-            } else {
-                print("キーの取得に失敗しました。")
-            }
-        }
-    }
-    
-    func s3UnnecessaryClear() {
-        print("Clear unnecessary S3 Images")
-        guard let userId = UserSessionManager.shared.user_id else {
-            print("ユーザーIDが取得できません")
-            return
-        }
-
-        listS3Items(user_id: userId) { result in
-            if let listKey = result["list_key"] {
-                print("取得したキー:", listKey)
-
-                // PinManagerで管理されているpin_idのリストを作成
-                let managedPinIds = Set(PinManager.shared.pins.compactMap { $0.pin_id }.map { String($0) })
-
-                // S3のキーをフィルタリング
-                let unnecessaryKeys = listKey.filter { key in
-                    let components = key.components(separatedBy: "/")
-                    guard components.count >= 2 else { return false }
-                    let pinIdString = components[1].split(separator: "_").first.map(String.init) ?? ""
-                    return !managedPinIds.contains(pinIdString)
-                }
-
-                // 不要なキーを削除
-                for key in unnecessaryKeys {
-                    self.deleteObject(key: key)
-                }
-            } else {
-                print("キーの取得に失敗しました。")
-            }
-        }
-    }
-
-    private func deleteObject(key: String) {
-        let s3 = AWSS3.default()
-        let deleteObjectRequest = AWSS3DeleteObjectRequest()!
-        
-        deleteObjectRequest.bucket = bucket
-        deleteObjectRequest.key = key
-        
-        s3.deleteObject(deleteObjectRequest).continueWith { task -> AnyObject? in
-            if let error = task.error {
-                print("削除エラー: \(error.localizedDescription)")
-            } else {
-                print("削除成功: \(key)")
-            }
-            return nil // nilを明示的に返す
-        }
-    }
-    
-    func downloadImagesFromS3(pins: [Data_Pin]) async -> [Data_Pin] {
-        let transferUtility = AWSS3TransferUtility.default()
-        var updatedPins = pins // updatedPins を初期化
-
-        // FriendManagerから友達のリストを取得
-        var userIds = FriendManager.shared.getFriendUserIdList()
-        userIds.append(UserSessionManager.shared.user_id!) // ユーザーIDを追加
-
-        for (index, pin) in pins.enumerated() {
-            // 各ピンに対して友達の user_id をループ
-            for userId in userIds {
-                var downloadedImages: [UIImage] = []
-                let semaphore = DispatchSemaphore(value: 0)
-
-                listS3Items(user_id: userId) { result in
-                    if let keys = result["list_key"] {
-                        let dispatchGroup = DispatchGroup()
-
-                        for key in keys {
-                            dispatchGroup.enter()
-                            transferUtility.downloadData(
-                                fromBucket: self.bucket,
-                                key: key,
-                                expression: nil
-                            ) { task, url, data, error in
-                                defer { dispatchGroup.leave() }
-                                if let error = error {
-                                    print("ダウンロードエラー: \(error.localizedDescription)")
-                                } else if let data = data, let image = UIImage(data: data) {
-                                    downloadedImages.append(image)
-                                }
-                            }
-                        }
-
-                        dispatchGroup.notify(queue: .main) {
-                            updatedPins[index].images.append(contentsOf: downloadedImages) // 画像を追加
-                            semaphore.signal()
-                        }
-                    } else {
-                        semaphore.signal()
-                    }
-                }
-            }
-        }
-        return updatedPins
     }
 }
