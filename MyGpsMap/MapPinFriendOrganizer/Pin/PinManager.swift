@@ -16,6 +16,7 @@ class PinManager {
     private var dynamoDBSave = DynamoDBSave()
     private var s3Save = S3Save()
     private var localSave = LocalSave()
+    private var tolerance = 0.000001
     
     private init() {
         let localPinSaver = LocalSave() // LocalSave のインスタンスを作成
@@ -24,6 +25,7 @@ class PinManager {
             writtenDateTime = writtenDateTime_Local
         }
         printPins()
+        print("init")
     }
     
     // 指定されたピンをpinsに追加するメソッド
@@ -36,6 +38,8 @@ class PinManager {
             pins.append(pin)
         }
         removeSameIdPins() // 重複IDの削除
+        PinViewManager.shared.addPinViews(for: newPins)
+        print("addPins")
     }
     
     // 指定されたピンをpinsに追加するメソッド
@@ -46,26 +50,32 @@ class PinManager {
                 deletePins([pin.coordinate])
             }
         }
-        removeSameIdPins() // 重複IDの削除
     }
     
     // 指定された座標のピンをpinsから削除するメソッド
     func deletePins(_ coordinates: [CLLocationCoordinate2D]) {
-        for coordinate in coordinates {
-            // 座標が一致するピンを削除
-            pins.removeAll { pin in
+        // 削除するpin_idを抽出
+        let pinIdsToRemove = coordinates.compactMap { coordinate in
+            pins.first { pin in
                 let latDiff = abs(pin.coordinate.latitude - coordinate.latitude)
                 let lonDiff = abs(pin.coordinate.longitude - coordinate.longitude)
-                return latDiff < 0.000001 && lonDiff < 0.000001
-            }
+                return latDiff < tolerance && lonDiff < tolerance
+            }?.pin_id // 条件に一致する最初のピンのIDを返す
         }
-        removeSameIdPins()
+        pins.removeAll { pin in
+            pinIdsToRemove.contains(pin.pin_id!) // 削除対象のIDリストに含まれているか
+        }
+        PinViewManager.shared.removePinViews(for: pinIdsToRemove)
     }
     
     // すべてのピンを削除するメソッド
     func clearPins() {
         pins.removeAll() // pins配列を空にする
         print("All pins have been cleared.") // デバッグ用メッセージ
+    }
+    
+    func updatePinViews() {
+        PinViewManager.shared.updatePinViews(for: self.pins)
     }
     
     // pinsを各種DB,Localに保存するメソッド(S3(画像)をclearする)
@@ -182,23 +192,6 @@ extension PinManager {
             }
         }
         return 0
-    }
-    
-    // アノテーションとピンデータを比較する関数
-    func findMatchingPin(for annotation: MKAnnotation) -> Data_Pin? {
-        let tolerance = 0.000004  // 許容誤差 0.000004
-        
-        for pin in pins {
-            let Difference = abs(pin.coordinate.latitude - annotation.coordinate.latitude)+abs(pin.coordinate.longitude - annotation.coordinate.longitude)
-            
-            // 緯度・経度の差が許容誤差内であり、タイトルが一致する場合
-            if Difference < tolerance,
-               pin.title == annotation.title {
-                return pin  // 一致したpinDataを返す
-            }
-        }
-        
-        return nil  // 一致するpinDataがない場合はnilを返す
     }
 
     // pinsから重複するIDを持つピンを削除するメソッド

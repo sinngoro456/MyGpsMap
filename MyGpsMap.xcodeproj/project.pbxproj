@@ -26,6 +26,8 @@
 		CA68F1B82CAC23060060B8BB /* MyGpsMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */; };
 		CA68F1BA2CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */; };
 		CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA68F1C72CAC25500060B8BB /* MapKit.framework */; };
+		CA7019BB2D66F9D7004C3646 /* View_Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7019BA2D66F9D7004C3646 /* View_Pin.swift */; };
+		CA7019BD2D66FD5A004C3646 /* PinViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7019BC2D66FD5A004C3646 /* PinViewManager.swift */; };
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
 		CADB0BEA2D0AA8EF001C175D /* SignInUISetUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE92D0AA8EF001C175D /* SignInUISetUp.swift */; };
 		CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A802D2723AF006D59F2 /* Data_Friend.swift */; };
@@ -90,6 +92,8 @@
 		CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITests.swift; sourceTree = "<group>"; };
 		CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CA68F1C72CAC25500060B8BB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		CA7019BA2D66F9D7004C3646 /* View_Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_Pin.swift; sourceTree = "<group>"; };
+		CA7019BC2D66FD5A004C3646 /* PinViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewManager.swift; sourceTree = "<group>"; };
 		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		CADB0BE92D0AA8EF001C175D /* SignInUISetUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUISetUp.swift; sourceTree = "<group>"; };
 		CAE18A802D2723AF006D59F2 /* Data_Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_Friend.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 				CAFD51092D2329FA00D544FF /* Definition */,
 				CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */,
 				CAE82BFC2D14081D003620BF /* PinManager.swift */,
+				CA7019BC2D66FD5A004C3646 /* PinViewManager.swift */,
 			);
 			path = Pin;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */,
+				CA7019BA2D66F9D7004C3646 /* View_Pin.swift */,
 			);
 			path = Definition;
 			sourceTree = "<group>";
@@ -548,9 +554,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -591,6 +601,7 @@
 				CAFD51032D2318B700D544FF /* LocalSave.swift in Sources */,
 				CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */,
 				CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */,
+				CA7019BB2D66F9D7004C3646 /* View_Pin.swift in Sources */,
 				CAE18A832D272570006D59F2 /* FriendManager.swift in Sources */,
 				CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */,
 				CAE89DF32CB1BB6D001F9DA3 /* MainUISetUpManager.swift in Sources */,
@@ -601,6 +612,7 @@
 				CAE89DF52CB254E0001F9DA3 /* ViewController_PinEdit.swift in Sources */,
 				CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */,
 				CA06CE252CAED9BF0073950D /* MapManager.swift in Sources */,
+				CA7019BD2D66FD5A004C3646 /* PinViewManager.swift in Sources */,
 				CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */,
 				CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */,
 				CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */,

@@ -22,14 +22,4 @@ class MapPinFriendOrganizer{
             _ = await PinManager.shared.loadFriendsPinsDynamoDB() // ピンの更新を待機
         }
     }
-
-    func Refresh2() {
-        if PinManager.shared.pins != MapManager.shared.pins_display{
-            print("pins_displayが一致しません")
-            MapManager.shared.clearPins()
-            MapManager.shared.addPins(with: PinManager.shared.pins) // マップに新しいピンを追加
-            let bool = (PinManager.shared.pins == MapManager.shared.pins_display)
-            print(bool)
-        }
-    }
 }
