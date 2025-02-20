@@ -23,6 +23,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
     func configure(with mapView: MKMapView) {
         self.mapView = mapView
         setupMapView()
+        setupLongPressGesture()
     }
     
     private func setupLocationManager() {
@@ -33,6 +34,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     private func setupMapView() {
+        print("fi")
         guard let mapView = mapView else { return }
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -40,7 +42,6 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     
     func setupLongPressGesture() {
-        print("LongPress")
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 0.5 // 長押しの認識に必要な時間
         mapView?.addGestureRecognizer(longPressGesture)
@@ -48,6 +49,7 @@ class MapManager: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
+            print("hi")
             let location = gestureRecognizer.location(in: mapView)
             let coordinate = mapView?.convert(location, toCoordinateFrom: mapView)
             delegate?.mapManager(self, didLongPressAt: coordinate)

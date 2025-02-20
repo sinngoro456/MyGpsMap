@@ -26,7 +26,6 @@ class ViewController: UIViewController {
     private var profileButton: UIButton!
     private var radikoButton: UIButton!
     private var destinationTextField: UITextField!
-    
     private var customPanGesture: UIPanGestureRecognizer!
     private var customPinchGesture: UIPinchGestureRecognizer!
 
@@ -49,7 +48,7 @@ class ViewController: UIViewController {
         // PinManagerのインスタンスを起動
         let _ = PinManager.shared
         Task {
-            await setupManagers()
+            setupManagers()
             setupUI()
             setupMapView()
             setupGestures()
@@ -57,22 +56,21 @@ class ViewController: UIViewController {
                 _ = await PinManager.shared.loadPins()
                 _ = await FriendManager.shared.loadFriendsFromDynamoDB()
             }
+            PinViewManager.shared.configure(mapView: mapView, containerView: mapView)
         }
     }
     
-
-    
     // MARK: - Setup Methods
-    private func setupManagers() async {
+    private func setupManagers() {
         mapManager = MapManager.shared // シングルトンインスタンスを取得
         mapManager.configure(with: mapView) // マップビューを設定
         mapManager.delegate = self
+//        PinViewManager.shared.updatePinViews(for: PinManager.shared.pins)
         uiSetupManager = UISetupManager()
     }
     
     private func setupMapView() {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "featureAnnotation")
-        mapView.delegate = mapManager
     }
     
     private func setupUI() {
@@ -208,6 +206,7 @@ extension ViewController: UIGestureRecognizerDelegate {
 extension ViewController : MapManagerDelegate {
     func mapManager(_ manager: MapManager, didLongPressAt coordinate: CLLocationCoordinate2D?) {
         print("長押しされました: \(String(describing: coordinate?.latitude)), \(coordinate!.longitude)")
+        PinViewManager.shared.addNewPinView(coordinate:coordinate!)
     }
 }
 

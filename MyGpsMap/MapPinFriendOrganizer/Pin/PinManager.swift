@@ -21,11 +21,10 @@ class PinManager {
     private init() {
         let localPinSaver = LocalSave() // LocalSave のインスタンスを作成
         if let (loadedPins, writtenDateTime_Local) = localPinSaver.loadPins() { // タプルからピンの配列を取得
-            pins = loadedPins // 読み込んだピンを設定
+            addPins(loadedPins) // 読み込んだピンを設定
             writtenDateTime = writtenDateTime_Local
         }
         printPins()
-        print("init")
     }
     
     // 指定されたピンをpinsに追加するメソッド
@@ -75,7 +74,8 @@ class PinManager {
     }
     
     func updatePinViews() {
-        PinViewManager.shared.updatePinViews(for: self.pins)
+//        PinViewManager.shared.updatePinViews(for: self.pins)
+        print("updatePinViews")
     }
     
     // pinsを各種DB,Localに保存するメソッド(S3(画像)をclearする)
