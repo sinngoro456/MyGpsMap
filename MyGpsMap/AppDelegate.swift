@@ -12,7 +12,7 @@ import AWSCognitoAuthPlugin
 import AWSCore
 import AWSS3
 
-@main
+//@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var authService = AuthService() // AuthServiceのインスタンスを作成
