@@ -10,27 +10,30 @@ import Amplify
 import AWSCognitoAuthPlugin
 import AWSCore
 import AWSS3
+import os.log
 
 @main
 struct MyGpsMapApp: App {
-    init() {
-        print("MyGpsMapApp initialized")
-        configureAmplify()
-    }
+    
+    /// SwiftUI 版でも AppDelegate のような処理をしたい場合は、
+    /// UIApplicationDelegateAdaptor を使ってラップできます。
+    @UIApplicationDelegateAdaptor(AppDelegateAdaptor.self) var appDelegate
+    
+    // ここでApp全体に持たせたいステートやサービスを定義してもOK
+    // 例:
+    // @StateObject private var authService = AuthService()
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }
-    }
-    
-    private func configureAmplify() {
-        do {
-            try Amplify.add(plugin: AWSCognitoAuthPlugin())
-            try Amplify.configure()
-            print("Amplify configured successfully")
-        } catch {
-            print("Failed to configure Amplify: \(error)")
+            // 起動直後に表示されるコンテンツ(画面)を指定
+            // 例として、あなたが今お使いのトップ画面(ViewControllerに相当するSwiftUIビュー)を指定する
+            // とりあえず既存の"SignInView"をSwiftUI化するならば、SwiftUIのViewとしてここで指定する形になります。
+            // もし既にある程度SwiftUIのビューがあるならそれを使い、なければ新規でContentViewを作成してください。
+            
+            ContentView() // 例: SwiftUIで作った最初の画面
+                .onAppear {
+                    // 画面が表示されるタイミングで何か処理したい場合はここへ
+                }
         }
     }
 }

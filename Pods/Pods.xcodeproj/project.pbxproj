@@ -97,7 +97,7 @@
 		5A826BB5B73271818C31CE9BE9174A32 /* AWSTaskCompletionSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 154802EC3B2F6CCE66B155780E88F226 /* AWSTaskCompletionSource.m */; };
 		5ABDF47FC0D60B701B5A8E767DC1314F /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE987C251136C0902EECFE52FB528BCE /* EventMonitor.swift */; };
 		5B8632CB315EC5C2F5A7EEB41D17CABF /* AWSS3TransferUtility+EnumerateBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A2FE68777ECED022D762A925670589E /* AWSS3TransferUtility+EnumerateBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5CD127F101529C336A07D45CE1106A54 /* Alamofire-Alamofire in Resources */ = {isa = PBXBuildFile; fileRef = 085DBCE7DD98588B2ED103B1C1F36026 /* Alamofire-Alamofire */; };
+		5CD127F101529C336A07D45CE1106A54 /* Alamofire.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 085DBCE7DD98588B2ED103B1C1F36026 /* Alamofire.bundle */; };
 		5DB81F3C0D9966251B7AE0911B7F0738 /* AWSCore-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF025AD8C27534BE6617A28E0B0655E /* AWSCore-dummy.m */; };
 		5DE102A26BCF12D0E84457A5BEB84420 /* AWSS3TransferUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7397EB33FA097EE6A5E11553BB8930DD /* AWSS3TransferUtility.m */; };
 		5FC19227246DC212F97D8A97A1B4726B /* AWSDDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A1D213DC0599D56741BB0DCB754118 /* AWSDDContextFilterLogFormatter.m */; };
@@ -357,7 +357,7 @@
 		07577982B922B66B1239B3C9AC31585E /* AWSIdentityProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSIdentityProvider.h; path = AWSCore/Authentication/AWSIdentityProvider.h; sourceTree = "<group>"; };
 		075E73AF43FAB02CA1F7CA0795FB1627 /* AWSDDFileLogger+Buffering.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "AWSDDFileLogger+Buffering.m"; path = "AWSCore/Logging/Extensions/AWSDDFileLogger+Buffering.m"; sourceTree = "<group>"; };
 		07830CA10996527E41AE4F5CE383E96E /* AWSCore-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AWSCore-umbrella.h"; sourceTree = "<group>"; };
-		085DBCE7DD98588B2ED103B1C1F36026 /* Alamofire-Alamofire */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Alamofire-Alamofire"; path = Alamofire.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		085DBCE7DD98588B2ED103B1C1F36026 /* Alamofire.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Alamofire.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		08C1FB62CB355DF1F2D1C431A4980A67 /* AWSTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSTask.h; path = AWSCore/Bolts/AWSTask.h; sourceTree = "<group>"; };
 		0A2FE68777ECED022D762A925670589E /* AWSS3TransferUtility+EnumerateBlocks.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "AWSS3TransferUtility+EnumerateBlocks.h"; path = "AWSS3/AWSS3TransferUtility+EnumerateBlocks.h"; sourceTree = "<group>"; };
 		0A30504A3F856006F8E7559638EAD16E /* Pods-MyGpsMap-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MyGpsMap-Info.plist"; sourceTree = "<group>"; };
@@ -976,7 +976,7 @@
 			isa = PBXGroup;
 			children = (
 				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */,
-				085DBCE7DD98588B2ED103B1C1F36026 /* Alamofire-Alamofire */,
+				085DBCE7DD98588B2ED103B1C1F36026 /* Alamofire.bundle */,
 				CCFB8F03867DB892EFC47B53186590C4 /* AWSCore */,
 				B503A98A6B050C9CA04E233C1FD1F329 /* AWSCore-AWSCore */,
 				1D216CE4A8B6F50D603960D17EE072C6 /* AWSS3 */,
@@ -1422,7 +1422,7 @@
 			);
 			name = "Alamofire-Alamofire";
 			productName = Alamofire;
-			productReference = 085DBCE7DD98588B2ED103B1C1F36026 /* Alamofire-Alamofire */;
+			productReference = 085DBCE7DD98588B2ED103B1C1F36026 /* Alamofire.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		9A2B09350FF347DCCD120269B9AFE97D /* AWSS3-AWSS3 */ = {
@@ -1560,7 +1560,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CD127F101529C336A07D45CE1106A54 /* Alamofire-Alamofire in Resources */,
+				5CD127F101529C336A07D45CE1106A54 /* Alamofire.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2002,7 +2002,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Alamofire";
 				IBSC_MODULE = Alamofire;
 				INFOPLIST_FILE = "Target Support Files/Alamofire/ResourceBundle-Alamofire-Alamofire-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				PRODUCT_NAME = Alamofire;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2566,7 +2566,7 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Alamofire";
 				IBSC_MODULE = Alamofire;
 				INFOPLIST_FILE = "Target Support Files/Alamofire/ResourceBundle-Alamofire-Alamofire-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				PRODUCT_NAME = Alamofire;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
