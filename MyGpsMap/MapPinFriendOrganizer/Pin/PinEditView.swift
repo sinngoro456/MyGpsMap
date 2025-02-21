@@ -102,5 +102,6 @@ struct PinEditView: View {
         pinData.date = localDate
         pinData.visibility = localIsPublic ? "public" : "private"
         pinData.images = localImages
+        PinManager.shared.addPins([pinData])
     }
 }
