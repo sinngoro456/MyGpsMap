@@ -24,7 +24,7 @@ struct MyPageView: View {
                 VStack(spacing: 16) {
                     
                     // 1) プロフィール画像 & オンラインステータス
-                    ProfileSection(isLoggedIn: UserSessionManager.shared.isLoggedIn)
+                    ProfileSection(isSignedIn: authService.isSignedIn)
                     
                     // 2) ユーザーID表示
                     Text("UserID: \(UserSessionManager.shared.user_id ?? "未設定")")
@@ -37,11 +37,11 @@ struct MyPageView: View {
                             await toggleSignInOut()
                         }
                     }) {
-                        Text(UserSessionManager.shared.isLoggedIn ? "ログアウト🐻" : "ログイン🦔")
+                        Text(authService.isSignedIn ? "ログアウト🐻" : "ログイン🦔")
                             .font(.headline)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(UserSessionManager.shared.isLoggedIn ? Color.red : Color.blue)
+                            .background(authService.isSignedIn ? Color.red : Color.blue)
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
@@ -110,13 +110,8 @@ struct MyPageView: View {
         if UserSessionManager.shared.user_id == nil {
             // 未ログイン → ログイン
             Task {
-                                        // ★ signInに必要なpresentationAnchorを渡す
-                                        if let scene = UIApplication.shared.connectedScenes
-                                            .first as? UIWindowScene,
-                                           let window = scene.windows.first {
-                                            await authService.signIn(anchor: window)
-                                        }
-                                    }
+                await authService.signIn()
+            }
             if let userId = UserSessionManager.shared.user_id {
                 await UserSessionManager.shared.login(userId: userId, token: nil)
             }
@@ -142,19 +137,19 @@ struct MyPageView: View {
     }
 }
 struct ProfileSection: View {
-    var isLoggedIn: Bool
+    var isSignedIn: Bool
     
     var body: some View {
         ZStack {
             // 大きい丸いアイコン
-            Image(systemName: isLoggedIn ? "person.circle.fill" : "person.circle")
+            Image(systemName: isSignedIn ? "person.circle.fill" : "person.circle")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80)
                 .foregroundColor(.gray)
             
             // オンラインステータス: 小さい丸を右下に重ねる
-            if isLoggedIn {
+            if isSignedIn {
                 Circle()
                     .fill(Color.white)
                     .frame(width: 12, height: 12)
@@ -180,4 +175,5 @@ struct ProfileSection: View {
         .padding(.vertical, 8)
     }
 }
+
 

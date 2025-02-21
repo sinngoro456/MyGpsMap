@@ -66,12 +66,12 @@ struct BoardView: View {
             .padding()
     }
 }
-
-struct MyPageView: View {
-    var body: some View {
-        Text("マイページ画面です")
-            .font(.title)
-            .padding()
-    }
-}
+//
+//struct MyPageView: View {
+//    var body: some View {
+//        Text("マイページ画面です")
+//            .font(.title)
+//            .padding()
+//    }
+//}
 

@@ -10,8 +10,7 @@ import Combine
 
 class UserSessionManager {
     static let shared = UserSessionManager()
-    
-    @Published private(set) var isLoggedIn: Bool = false
+
     @Published private(set) var user_id: String?
     @Published private(set) var cognitoToken: String?
     
@@ -22,14 +21,12 @@ class UserSessionManager {
     }
     
     func login(userId: String?,token: String?) async {
-        isLoggedIn = true
         user_id = userId
         UserSessionManager.shared.cognitoToken = token
         await FriendManager.shared.loadFriendsFromDynamoDB()
     }
     
     func logout() {
-        isLoggedIn = false
         user_id = nil
         UserSessionManager.shared.cognitoToken = nil
     }

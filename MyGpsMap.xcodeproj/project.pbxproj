@@ -16,10 +16,10 @@
 		CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967DB2D67857B004BBE38 /* RideView.swift */; };
 		CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */; };
 		CA40FD052D11B742002052C1 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD042D11B742002052C1 /* Amplify */; };
+		CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */; };
 		CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */; };
 		CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1932CAC23030060B8BB /* AppDelegate.swift */; };
 		CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1952CAC23030060B8BB /* SceneDelegate.swift */; };
-		CA68F19B2CAC23030060B8BB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CA68F19A2CAC23030060B8BB /* Base */; };
 		CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */; };
 		CA68F1A02CAC23050060B8BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA68F19F2CAC23050060B8BB /* Assets.xcassets */; };
 		CA68F1A32CAC23050060B8BB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CA68F1A22CAC23050060B8BB /* Base */; };
@@ -82,15 +82,14 @@
 		CA06CE242CAED9BF0073950D /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		CA3967D92D676D00004BBE38 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		CA3967DB2D67857B004BBE38 /* RideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideView.swift; sourceTree = "<group>"; };
+		CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_Login.swift; sourceTree = "<group>"; };
 		CA68F1902CAC23030060B8BB /* MyGpsMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGpsMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA68F1932CAC23030060B8BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA68F1952CAC23030060B8BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CA68F19A2CAC23030060B8BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA68F19D2CAC23030060B8BB /* MyGpsMap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyGpsMap.xcdatamodel; sourceTree = "<group>"; };
 		CA68F19F2CAC23050060B8BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA68F1A22CAC23050060B8BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		CA68F1A42CAC23050060B8BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA68F1A92CAC23060060B8BB /* MyGpsMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyGpsMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA68F1AD2CAC23060060B8BB /* MyGpsMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapTests.swift; sourceTree = "<group>"; };
 		CA68F1B32CAC23060060B8BB /* MyGpsMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyGpsMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -237,15 +236,14 @@
 				CAB28B412D67653000975D6F /* MapViewController.swift */,
 				CAB28B392D674EC200975D6F /* ContentView.swift */,
 				CA3967D92D676D00004BBE38 /* MapView.swift */,
+				CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */,
 				CA3967DB2D67857B004BBE38 /* RideView.swift */,
 				CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */,
 				CA68F1952CAC23030060B8BB /* SceneDelegate.swift */,
 				CAE18A8B2D298E3A006D59F2 /* MapPinFriendOrganizer */,
 				CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */,
-				CA68F1992CAC23030060B8BB /* Main.storyboard */,
 				CA68F19F2CAC23050060B8BB /* Assets.xcassets */,
 				CA68F1A12CAC23050060B8BB /* LaunchScreen.storyboard */,
-				CA68F1A42CAC23050060B8BB /* Info.plist */,
 				CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */,
 			);
 			path = MyGpsMap;
@@ -475,7 +473,6 @@
 			files = (
 				CA68F1A02CAC23050060B8BB /* Assets.xcassets in Resources */,
 				CA68F1A32CAC23050060B8BB /* Base in Resources */,
-				CA68F19B2CAC23030060B8BB /* Base in Resources */,
 				99D2DFC54C0CE7054BEAC45A /* awsconfiguration.json in Resources */,
 				8E3E8F69BA4BD062519D89BC /* amplifyconfiguration.json in Resources */,
 			);
@@ -615,6 +612,7 @@
 				CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */,
 				CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */,
 				CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */,
+				CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */,
 				CAFD51052D231BD700D544FF /* S3Save.swift in Sources */,
 				CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */,
 				CAE18A882D298D93006D59F2 /* MapPinFriendOrganizer.swift in Sources */,
@@ -658,14 +656,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		CA68F1992CAC23030060B8BB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CA68F19A2CAC23030060B8BB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CA68F1A12CAC23050060B8BB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

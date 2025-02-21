@@ -22,7 +22,6 @@ class ViewController_Config: UIViewController {
 
     func showSignInView() {
         let signInView = SignInView()
-        signInView.auth = auth
         
         addChild(signInView)
         view.addSubview(signInView.view)

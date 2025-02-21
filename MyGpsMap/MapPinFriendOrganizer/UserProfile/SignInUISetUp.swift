@@ -8,7 +8,7 @@
 import UIKit
 
 class SignInView: UIViewController {
-    var auth: AuthService?
+    var authService: AuthService?
     
     private var authButton: UIButton!
     private var profileImageView: UIImageView!
@@ -186,12 +186,12 @@ class SignInView: UIViewController {
    @objc private func authButtonTapped() {
       Task {
          if UserSessionManager.shared.user_id == nil {
-            await auth?.signIn()
+            await authService?.signIn()
             if let userId = UserSessionManager.shared.user_id {
                await UserSessionManager.shared.login(userId: userId, token: nil)
             }
          } else {
-            await auth?.signOut()
+            await authService?.signOut()
             UserSessionManager.shared.logout()
          }
          updateAuthButtonState()
@@ -217,7 +217,7 @@ class SignInView: UIViewController {
    }
     
     private func updateAuthButtonState() {
-        if UserSessionManager.shared.isLoggedIn {
+        if ((authService?.isSignedIn) != nil) {
             profileImageView.image = UIImage(systemName: "person.circle.fill")
             authButton.setTitle("ログアウト🐻", for: .normal)
             onlineStatusView.backgroundColor = UIColor(red: 0, green: 0.8, blue: 0, alpha: 1.0)
