@@ -13,6 +13,7 @@
 		9B33BE16E871E8295C7B07E6 /* Pods_MyGpsMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299802AAF90E1DB8A1FB7D7 /* Pods_MyGpsMapUITests.framework */; };
 		CA06CE252CAED9BF0073950D /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA06CE242CAED9BF0073950D /* MapManager.swift */; };
 		CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967D92D676D00004BBE38 /* MapView.swift */; };
+		CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967DB2D67857B004BBE38 /* RideView.swift */; };
 		CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */; };
 		CA40FD052D11B742002052C1 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD042D11B742002052C1 /* Amplify */; };
 		CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */; };
@@ -80,6 +81,7 @@
 		C889174FA7233287F07A05BD /* Pods-MyGpsMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapTests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapTests/Pods-MyGpsMapTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CA06CE242CAED9BF0073950D /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		CA3967D92D676D00004BBE38 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		CA3967DB2D67857B004BBE38 /* RideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideView.swift; sourceTree = "<group>"; };
 		CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_Login.swift; sourceTree = "<group>"; };
 		CA68F1902CAC23030060B8BB /* MyGpsMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGpsMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA68F1932CAC23030060B8BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				CAB28B412D67653000975D6F /* MapViewController.swift */,
 				CAB28B392D674EC200975D6F /* ContentView.swift */,
 				CA3967D92D676D00004BBE38 /* MapView.swift */,
+				CA3967DB2D67857B004BBE38 /* RideView.swift */,
 				CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */,
 				CA68F1952CAC23030060B8BB /* SceneDelegate.swift */,
 				CAE18A8B2D298E3A006D59F2 /* MapPinFriendOrganizer */,
@@ -589,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */,
 				CADB0BEA2D0AA8EF001C175D /* SignInUISetUp.swift in Sources */,
 				CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */,
 				CAFD51032D2318B700D544FF /* LocalSave.swift in Sources */,

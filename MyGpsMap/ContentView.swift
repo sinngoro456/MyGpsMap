@@ -59,14 +59,6 @@ struct HomeView: View {
     }
 }
 
-struct RideView: View {
-    var body: some View {
-        Text("ライド画面です")
-            .font(.title)
-            .padding()
-    }
-}
-
 struct BoardView: View {
     var body: some View {
         Text("掲示板画面です")
