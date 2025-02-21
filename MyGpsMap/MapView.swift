@@ -7,31 +7,30 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
+
+struct Data_NewPin {
+    var coordinate: CLLocationCoordinate2D
+}
 
 struct MapViewWrapper: UIViewRepresentable {
+    
+    // 親Viewからバインドでもらう
+    @Binding var carAnnotationData: Data_NewPin?
+    @Binding var trackingMode: MKUserTrackingMode  // <-- 追加
+    
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView(frame: .zero)
+        
+        // ユーザ位置やコンパスなど、いままでの設定はお好みで
         mapView.showsUserLocation = true
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "featureAnnotation")
-        mapView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: -30, right: 0)
-        let longPressGesture = UILongPressGestureRecognizer(
-            target: context.coordinator,
-            action: #selector(Coordinator.handleLongPress(_:))
-        )
-        mapView.addGestureRecognizer(longPressGesture)
-        
-        mapView.delegate = context.coordinator
-        // 1) デフォルトコンパス非表示
         mapView.showsCompass = false
+        mapView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: -30, right: 0)
         
-        // 2) カスタムコンパスボタン作成
+        // カスタムコンパスの追加（省略可）
         let compassButton = MKCompassButton(mapView: mapView)
         compassButton.compassVisibility = .visible
-        
-        // 3) mapView のサブビューとして追加
         mapView.addSubview(compassButton)
-        
-        // 4) Auto Layout constraints で位置指定（例: 右上）
         compassButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             compassButton.topAnchor.constraint(
@@ -43,48 +42,63 @@ struct MapViewWrapper: UIViewRepresentable {
                 constant: -16
             )
         ])
+        
+        // ロングプレスの設定
+        let longPressGesture = UILongPressGestureRecognizer(
+            target: context.coordinator,
+            action: #selector(Coordinator.handleLongPress(_:))
+        )
+        mapView.addGestureRecognizer(longPressGesture)
+        
+        mapView.delegate = context.coordinator
+        
         return mapView
     }
     
+    // View更新のたびに呼ばれる
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        // 更新処理はここに
+        // 既存の注釈を消して、最新の注釈だけ追加
+        uiView.removeAnnotations(uiView.annotations)
+        
+        // carAnnotationData があれば反映
+        if let carData = carAnnotationData {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = carData.coordinate
+            uiView.addAnnotation(annotation)
+        }
+        
+        // SwiftUIのトラッキングモードを実際のMKMapViewへ反映
+        uiView.setUserTrackingMode(trackingMode, animated: true)
     }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
+    // MARK: - Coordinator
     class Coordinator: NSObject, MKMapViewDelegate {
-        var parent: MapViewWrapper  // ★ここをMapViewWrapperに
-        
-        var isInitialLoad = true
+        var parent: MapViewWrapper
         
         init(_ parent: MapViewWrapper) {
             self.parent = parent
         }
         
+        // MARK: - Handle Long Press
         @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-            if gesture.state == .began {
-                print("Long Press Detected")
-            }
+            guard gesture.state == .began else { return }
+            
+            // タップしたスクリーン座標を地図座標に変換
+            let mapView = gesture.view as! MKMapView
+            let point = gesture.location(in: mapView)
+            let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
+
+            parent.carAnnotationData = Data_NewPin(coordinate: coordinate)
         }
         
-        func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-            if isInitialLoad {
-                centerMapOnUserLocation(mapView)
-                isInitialLoad = false
-            }
-        }
-        
-        private func centerMapOnUserLocation(_ mapView: MKMapView) {
-            if let userLocation = mapView.userLocation.location {
-                let region = MKCoordinateRegion(
-                    center: userLocation.coordinate,
-                    latitudinalMeters: 1000,
-                    longitudinalMeters: 1000
-                )
-                mapView.setRegion(region, animated: true)
-            }
+        // MARK: - MKMapViewDelegate
+        func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+            // MKMapViewのトラッキングモードが変化したらSwiftUIの状態を更新
+            parent.trackingMode = mode
         }
     }
 }
@@ -94,10 +108,13 @@ struct MapView: View {
     
     @State private var destinationText: String = ""
     @State private var trackingMode = MKUserTrackingMode.none
+    @State private var carAnnotationData: Data_NewPin? = nil
     
     var body: some View {
         ZStack {
-            MapViewWrapper()  // ← 先ほど作った UIViewRepresentable
+            // トラッキングモードをBindingで渡す
+            MapViewWrapper(carAnnotationData: $carAnnotationData,
+                           trackingMode: $trackingMode)
             
             VStack {
                 // 上部ボタン類
@@ -114,8 +131,9 @@ struct MapView: View {
                     .background(Color.white.opacity(0.8))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .shadow(radius: 2)
+                    
                     HStack {
-                        // 左側: コンパス/トラッキング
+                        // 左側: 音楽・ラジオボタン
                         HStack {
                             VStack{
                                 Button {
@@ -142,6 +160,7 @@ struct MapView: View {
                                 Spacer()
                                     .frame(height: 40)
                                 Button {
+                                    // トラッキングモードを切り替え
                                     switch trackingMode {
                                     case .none:
                                         trackingMode = .follow

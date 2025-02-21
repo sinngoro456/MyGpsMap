@@ -13,6 +13,8 @@ struct RideView: View {
     @State private var timerCount: Int = 0
     /// タイマーが動いているかどうか
     @State private var isTimerRunning: Bool = false
+    @State private var carAnnotationData: Data_NewPin? = nil
+    @State private var trackingMode = MKUserTrackingMode.none
     
     /// SwiftUIのTimer publisher
     private let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
@@ -23,7 +25,9 @@ struct RideView: View {
             // --- 1) 上: 地図 (UIViewRepresentable) ---
             ZStack {
                 // MapViewWrapper: MKMapView をラップしたビュー
-                MapViewWrapper()
+                
+                MapViewWrapper(carAnnotationData: $carAnnotationData,
+                                       trackingMode: $trackingMode)
                 
                 // ここに、もし上部にテキストフィールドやボタンを重ねたい場合は
                 // ZStack内でさらにVStackなどを置いてOK
