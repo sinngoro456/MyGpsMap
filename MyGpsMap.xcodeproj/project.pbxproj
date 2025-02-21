@@ -11,7 +11,6 @@
 		8E3E8F69BA4BD062519D89BC /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 496DD731DC8AA533FE5C0E9E /* amplifyconfiguration.json */; };
 		99D2DFC54C0CE7054BEAC45A /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = DEBBCC96568A13679E716D0A /* awsconfiguration.json */; };
 		9B33BE16E871E8295C7B07E6 /* Pods_MyGpsMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299802AAF90E1DB8A1FB7D7 /* Pods_MyGpsMapUITests.framework */; };
-		CA06CE252CAED9BF0073950D /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA06CE242CAED9BF0073950D /* MapManager.swift */; };
 		CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967D92D676D00004BBE38 /* MapView.swift */; };
 		CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967DB2D67857B004BBE38 /* RideView.swift */; };
 		CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */; };
@@ -19,7 +18,6 @@
 		CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */; };
 		CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */; };
 		CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1932CAC23030060B8BB /* AppDelegate.swift */; };
-		CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1952CAC23030060B8BB /* SceneDelegate.swift */; };
 		CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */; };
 		CA68F1A02CAC23050060B8BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA68F19F2CAC23050060B8BB /* Assets.xcassets */; };
 		CA68F1AE2CAC23060060B8BB /* MyGpsMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1AD2CAC23060060B8BB /* MyGpsMapTests.swift */; };
@@ -30,7 +28,6 @@
 		CA7019BD2D66FD5A004C3646 /* PinViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7019BC2D66FD5A004C3646 /* PinViewManager.swift */; };
 		CAB28B3A2D674EC200975D6F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B392D674EC200975D6F /* ContentView.swift */; };
 		CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */; };
-		CAB28B422D67653000975D6F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B412D67653000975D6F /* MapViewController.swift */; };
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
 		CADB0BEA2D0AA8EF001C175D /* SignInUISetUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE92D0AA8EF001C175D /* SignInUISetUp.swift */; };
 		CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A802D2723AF006D59F2 /* Data_Friend.swift */; };
@@ -40,7 +37,6 @@
 		CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFC2D14081D003620BF /* PinManager.swift */; };
 		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
 		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
-		CAE89DF32CB1BB6D001F9DA3 /* MainUISetUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */; };
 		CAE89DF52CB254E0001F9DA3 /* ViewController_PinEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */; };
 		CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */; };
 		CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */; };
@@ -78,7 +74,6 @@
 		7A7784B5558F1E65D883A8B5 /* Pods-MyGpsMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMap.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMap/Pods-MyGpsMap.debug.xcconfig"; sourceTree = "<group>"; };
 		C76CAF91FE9B18AC9A500EC9 /* Pods-MyGpsMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapUITests.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMapUITests/Pods-MyGpsMapUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C889174FA7233287F07A05BD /* Pods-MyGpsMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapTests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapTests/Pods-MyGpsMapTests.debug.xcconfig"; sourceTree = "<group>"; };
-		CA06CE242CAED9BF0073950D /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		CA3967D92D676D00004BBE38 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		CA3967DB2D67857B004BBE38 /* RideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideView.swift; sourceTree = "<group>"; };
 		CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -86,7 +81,6 @@
 		CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_Login.swift; sourceTree = "<group>"; };
 		CA68F1902CAC23030060B8BB /* MyGpsMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGpsMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA68F1932CAC23030060B8BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CA68F1952CAC23030060B8BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CA68F19D2CAC23030060B8BB /* MyGpsMap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyGpsMap.xcdatamodel; sourceTree = "<group>"; };
 		CA68F19F2CAC23050060B8BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA68F1A92CAC23060060B8BB /* MyGpsMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyGpsMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,7 +93,6 @@
 		CA7019BC2D66FD5A004C3646 /* PinViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewManager.swift; sourceTree = "<group>"; };
 		CAB28B392D674EC200975D6F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapApp.swift; sourceTree = "<group>"; };
-		CAB28B412D67653000975D6F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		CADB0BE92D0AA8EF001C175D /* SignInUISetUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUISetUp.swift; sourceTree = "<group>"; };
 		CAE18A802D2723AF006D59F2 /* Data_Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_Friend.swift; sourceTree = "<group>"; };
@@ -109,7 +102,6 @@
 		CAE82BFC2D14081D003620BF /* PinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
 		CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Design.swift; sourceTree = "<group>"; };
 		CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Main.swift; sourceTree = "<group>"; };
-		CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUISetUpManager.swift; sourceTree = "<group>"; };
 		CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_PinEdit.swift; sourceTree = "<group>"; };
 		CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISetUpManager_NewPin.swift; sourceTree = "<group>"; };
 		CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_Pin.swift; sourceTree = "<group>"; };
@@ -187,7 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				CAE18A8C2D299C79006D59F2 /* Definition */,
-				CA06CE242CAED9BF0073950D /* MapManager.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -232,16 +223,12 @@
 			children = (
 				CAE89DED2CB1B1A2001F9DA3 /* Constant */,
 				CA68F1932CAC23030060B8BB /* AppDelegate.swift */,
-				CAB28B412D67653000975D6F /* MapViewController.swift */,
 				CAB28B392D674EC200975D6F /* ContentView.swift */,
 				CA3967D92D676D00004BBE38 /* MapView.swift */,
 				CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */,
 				CA3967DB2D67857B004BBE38 /* RideView.swift */,
-				CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */,
-				CA68F1952CAC23030060B8BB /* SceneDelegate.swift */,
 				CA5B7F782D686CB500EC14AA /* Info.plist */,
 				CAE18A8B2D298E3A006D59F2 /* MapPinFriendOrganizer */,
-				CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */,
 				CA68F19F2CAC23050060B8BB /* Assets.xcassets */,
 				CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */,
 			);
@@ -328,6 +315,7 @@
 		CAE89DED2CB1B1A2001F9DA3 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
+				CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */,
 				CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */,
 				CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */,
 			);
@@ -597,7 +585,6 @@
 				CAE18A832D272570006D59F2 /* FriendManager.swift in Sources */,
 				CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */,
 				CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */,
-				CAE89DF32CB1BB6D001F9DA3 /* MainUISetUpManager.swift in Sources */,
 				CAFD51072D231BFE00D544FF /* DynamoDBSave.swift in Sources */,
 				CAE18A862D27794D006D59F2 /* UserSessionManager.swift in Sources */,
 				CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */,
@@ -605,9 +592,7 @@
 				CAB28B3A2D674EC200975D6F /* ContentView.swift in Sources */,
 				CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */,
 				CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */,
-				CA06CE252CAED9BF0073950D /* MapManager.swift in Sources */,
 				CA7019BD2D66FD5A004C3646 /* PinViewManager.swift in Sources */,
-				CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */,
 				CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */,
 				CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */,
 				CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */,
@@ -616,7 +601,6 @@
 				CAE18A882D298D93006D59F2 /* MapPinFriendOrganizer.swift in Sources */,
 				CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */,
 				CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */,
-				CAB28B422D67653000975D6F /* MapViewController.swift in Sources */,
 				CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
