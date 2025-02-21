@@ -9,77 +9,127 @@ import SwiftUI
 import MapKit
 
 struct RideView: View {
-    /// タイマー表示用
     @State private var timerCount: Int = 0
-    /// タイマーが動いているかどうか
     @State private var isTimerRunning: Bool = false
     @State private var carAnnotationData: Data_NewPin? = nil
-    @State private var trackingMode = MKUserTrackingMode.none
+    @State private var trackingMode = MKUserTrackingMode.follow
+    @State private var averageSpeed = 0.0
+    @State private var distance = 0.0
+    @State private var lapTimes: [Int] = []
     
-    /// SwiftUIのTimer publisher
     private let timer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
+    
+    private var formattedTime: String {
+        formatTime(timerCount)
+    }
+    
+    private func formatTime(_ time: Int) -> String {
+        let hours = time / 3600
+        let minutes = (time % 3600) / 60
+        let seconds = time % 60
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
 
     var body: some View {
-        VStack(spacing: 0) {
-            
-            // --- 1) 上: 地図 (UIViewRepresentable) ---
-            ZStack {
-                // MapViewWrapper: MKMapView をラップしたビュー
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                // タイマー表示
+                VStack(spacing: 0) {
+                    Text("タイム")
+                        .font(.system(size: 15))
+                    Text(formattedTime)
+                        .font(.system(size: 70, weight: .regular))
+                }
+                .frame(height: geometry.size.height * 0.2)
                 
-                MapViewWrapper(carAnnotationData: $carAnnotationData,
-                                       trackingMode: $trackingMode)
-                
-                // ここに、もし上部にテキストフィールドやボタンを重ねたい場合は
-                // ZStack内でさらにVStackなどを置いてOK
-            }
-            .frame(height: 300) // 上半分の高さを固定or可変
-            
-            // --- 2) 下: タイマーUI ---
-            VStack {
-                Text("Timer: \(timerCount)秒")
-                    .font(.largeTitle)
-                    .padding(.top, 20)
-                
-                HStack {
-                    Button(action: {
-                        isTimerRunning = true
-                    }) {
-                        Text("Start")
-                            .padding()
-                            .background(Color.blue.opacity(0.7))
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
+                // ラップタイム表示
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(Array(lapTimes.enumerated()), id: \.offset) { index, lapTime in
+                            Text("ラップ\(index + 1): \(formatTime(lapTime))")
+                                .font(.system(size: 15))
+                        }
                     }
-                    
-                    Button(action: {
-                        isTimerRunning = false
-                    }) {
-                        Text("Stop")
-                            .padding()
-                            .background(Color.red.opacity(0.7))
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
+                    .padding(.horizontal)
+                }
+                .frame(height: 30)
+                
+                // 平均速度、距離
+                HStack(spacing: 20) {
+                    VStack(alignment: .center, spacing: 0) {
+                        Text("平均速度")
+                            .font(.system(size: 15))
+                        HStack(alignment: .lastTextBaseline, spacing: 2) {
+                            Text("\(String(format: "%.1f", averageSpeed))")
+                                .font(.system(size: 50, weight: .regular))
+                            Text("km/h")
+                                .font(.system(size: 20))
+                                .offset(y: 5)
+                        }
                     }
-                    
+                    Spacer().frame(width: 10)
+                    VStack(alignment: .center, spacing: 0) {
+                        Text("距離")
+                            .font(.system(size: 15))
+                        HStack(alignment: .lastTextBaseline, spacing: 2) {
+                            Text("\(String(format: "%.1f", distance))")
+                                .font(.system(size: 50, weight: .regular))
+                            Text("km")
+                                .font(.system(size: 20))
+                                .offset(y: 5)
+                        }
+                    }
+                }
+                .frame(height: geometry.size.height * 0.15)
+                
+                // 地図表示
+                ZStack {
+                    MapViewWrapper(carAnnotationData: $carAnnotationData,
+                                   trackingMode: $trackingMode)
+                }
+                .frame(height: geometry.size.height * 0.5)
+                
+                Spacer()
+                
+                // ボタン
+                HStack(spacing: 20) {
                     Button(action: {
-                        timerCount = 0
+                        if isTimerRunning {
+                            // ラップ
+                            lapTimes.append(timerCount)
+                        } else {
+                            // リセット
+                            timerCount = 0
+                            lapTimes.removeAll()
+                        }
                     }) {
-                        Text("Reset")
+                        Text(isTimerRunning ? "ラップ" : "リセット")
+                            .font(.system(size: 18, weight: .medium))
                             .padding()
+                            .frame(width: 100)
                             .background(Color.gray.opacity(0.7))
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                    
+                    Button(action: {
+                        isTimerRunning.toggle()
+                    }) {
+                        Text(isTimerRunning ? "停止" : "開始")
+                            .font(.system(size: 18, weight: .medium))
+                            .padding()
+                            .frame(width: 100)
+                            .background(isTimerRunning ? Color.red.opacity(0.7) : Color.green.opacity(0.7))
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
                 }
                 .padding(.bottom, 20)
             }
-            .frame(maxWidth: .infinity)
-            .background(Color(UIColor.systemBackground))
-        }
-        // --- 3) タイマーを受け取り、カウントを進める ---
-        .onReceive(timer) { _ in
-            if isTimerRunning {
-                timerCount += 1
+            .onReceive(timer) { _ in
+                if isTimerRunning {
+                    timerCount += 1
+                }
             }
         }
     }

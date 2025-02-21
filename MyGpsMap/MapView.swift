@@ -26,6 +26,7 @@ struct MapViewWrapper: UIViewRepresentable {
         mapView.showsUserLocation = true
         mapView.showsCompass = false
         mapView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: -30, right: 0)
+        mapView.setUserTrackingMode(trackingMode, animated: true)
         
         // カスタムコンパスの追加（省略可）
         let compassButton = MKCompassButton(mapView: mapView)
@@ -78,7 +79,7 @@ struct MapViewWrapper: UIViewRepresentable {
     // MARK: - Coordinator
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapViewWrapper
-        
+        @State private var tempTrackingMode: MKUserTrackingMode = .none
         init(_ parent: MapViewWrapper) {
             self.parent = parent
         }
@@ -97,8 +98,7 @@ struct MapViewWrapper: UIViewRepresentable {
         
         // MARK: - MKMapViewDelegate
         func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
-            // MKMapViewのトラッキングモードが変化したらSwiftUIの状態を更新
-            parent.trackingMode = mode
+            tempTrackingMode = mode
         }
     }
 }
@@ -107,7 +107,7 @@ struct MapViewWrapper: UIViewRepresentable {
 struct MapView: View {
     
     @State private var destinationText: String = ""
-    @State private var trackingMode = MKUserTrackingMode.none
+    @State private var trackingMode = MKUserTrackingMode.follow
     @State private var carAnnotationData: Data_NewPin? = nil
     
     var body: some View {
@@ -169,7 +169,7 @@ struct MapView: View {
                                     case .followWithHeading:
                                         trackingMode = .none
                                     @unknown default:
-                                        trackingMode = .none
+                                        trackingMode = .follow
                                     }
                                 } label: {
                                     Image(systemName: {
