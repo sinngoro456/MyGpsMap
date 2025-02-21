@@ -22,7 +22,6 @@
 		CA68F1962CAC23030060B8BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1952CAC23030060B8BB /* SceneDelegate.swift */; };
 		CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */; };
 		CA68F1A02CAC23050060B8BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA68F19F2CAC23050060B8BB /* Assets.xcassets */; };
-		CA68F1A32CAC23050060B8BB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CA68F1A22CAC23050060B8BB /* Base */; };
 		CA68F1AE2CAC23060060B8BB /* MyGpsMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1AD2CAC23060060B8BB /* MyGpsMapTests.swift */; };
 		CA68F1B82CAC23060060B8BB /* MyGpsMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */; };
 		CA68F1BA2CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */; };
@@ -83,13 +82,13 @@
 		CA3967D92D676D00004BBE38 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		CA3967DB2D67857B004BBE38 /* RideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideView.swift; sourceTree = "<group>"; };
 		CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		CA5B7F782D686CB500EC14AA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_Login.swift; sourceTree = "<group>"; };
 		CA68F1902CAC23030060B8BB /* MyGpsMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGpsMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA68F1932CAC23030060B8BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA68F1952CAC23030060B8BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CA68F19D2CAC23030060B8BB /* MyGpsMap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyGpsMap.xcdatamodel; sourceTree = "<group>"; };
 		CA68F19F2CAC23050060B8BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CA68F1A22CAC23050060B8BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA68F1A92CAC23060060B8BB /* MyGpsMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyGpsMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA68F1AD2CAC23060060B8BB /* MyGpsMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapTests.swift; sourceTree = "<group>"; };
 		CA68F1B32CAC23060060B8BB /* MyGpsMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyGpsMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,10 +239,10 @@
 				CA3967DB2D67857B004BBE38 /* RideView.swift */,
 				CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */,
 				CA68F1952CAC23030060B8BB /* SceneDelegate.swift */,
+				CA5B7F782D686CB500EC14AA /* Info.plist */,
 				CAE18A8B2D298E3A006D59F2 /* MapPinFriendOrganizer */,
 				CAE89DF22CB1BB6D001F9DA3 /* MainUISetUpManager.swift */,
 				CA68F19F2CAC23050060B8BB /* Assets.xcassets */,
-				CA68F1A12CAC23050060B8BB /* LaunchScreen.storyboard */,
 				CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */,
 			);
 			path = MyGpsMap;
@@ -472,7 +471,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA68F1A02CAC23050060B8BB /* Assets.xcassets in Resources */,
-				CA68F1A32CAC23050060B8BB /* Base in Resources */,
 				99D2DFC54C0CE7054BEAC45A /* awsconfiguration.json in Resources */,
 				8E3E8F69BA4BD062519D89BC /* amplifyconfiguration.json in Resources */,
 			);
@@ -654,17 +652,6 @@
 			targetProxy = CA68F1B42CAC23060060B8BB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		CA68F1A12CAC23050060B8BB /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CA68F1A22CAC23050060B8BB /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		CA68F1BB2CAC23060060B8BB /* Debug */ = {
