@@ -16,6 +16,8 @@
 		CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */; };
 		CA40FD052D11B742002052C1 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD042D11B742002052C1 /* Amplify */; };
 		CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */; };
+		CA5B7F7B2D68DBC700EC14AA /* PinEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */; };
+		CA5B7F7D2D68EAE500EC14AA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F7C2D68EAE500EC14AA /* ImagePicker.swift */; };
 		CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */; };
 		CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1932CAC23030060B8BB /* AppDelegate.swift */; };
 		CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */; };
@@ -24,8 +26,6 @@
 		CA68F1B82CAC23060060B8BB /* MyGpsMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */; };
 		CA68F1BA2CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */; };
 		CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA68F1C72CAC25500060B8BB /* MapKit.framework */; };
-		CA7019BB2D66F9D7004C3646 /* View_Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7019BA2D66F9D7004C3646 /* View_Pin.swift */; };
-		CA7019BD2D66FD5A004C3646 /* PinViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7019BC2D66FD5A004C3646 /* PinViewManager.swift */; };
 		CAB28B3A2D674EC200975D6F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B392D674EC200975D6F /* ContentView.swift */; };
 		CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */; };
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
@@ -78,6 +78,8 @@
 		CA3967DB2D67857B004BBE38 /* RideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideView.swift; sourceTree = "<group>"; };
 		CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		CA5B7F782D686CB500EC14AA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinEditView.swift; sourceTree = "<group>"; };
+		CA5B7F7C2D68EAE500EC14AA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_Login.swift; sourceTree = "<group>"; };
 		CA68F1902CAC23030060B8BB /* MyGpsMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGpsMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA68F1932CAC23030060B8BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -89,8 +91,6 @@
 		CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITests.swift; sourceTree = "<group>"; };
 		CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CA68F1C72CAC25500060B8BB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		CA7019BA2D66F9D7004C3646 /* View_Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_Pin.swift; sourceTree = "<group>"; };
-		CA7019BC2D66FD5A004C3646 /* PinViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewManager.swift; sourceTree = "<group>"; };
 		CAB28B392D674EC200975D6F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapApp.swift; sourceTree = "<group>"; };
 		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -329,7 +329,8 @@
 				CAFD51092D2329FA00D544FF /* Definition */,
 				CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */,
 				CAE82BFC2D14081D003620BF /* PinManager.swift */,
-				CA7019BC2D66FD5A004C3646 /* PinViewManager.swift */,
+				CA5B7F7C2D68EAE500EC14AA /* ImagePicker.swift */,
+				CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */,
 			);
 			path = Pin;
 			sourceTree = "<group>";
@@ -338,7 +339,6 @@
 			isa = PBXGroup;
 			children = (
 				CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */,
-				CA7019BA2D66F9D7004C3646 /* View_Pin.swift */,
 			);
 			path = Definition;
 			sourceTree = "<group>";
@@ -581,7 +581,6 @@
 				CAFD51032D2318B700D544FF /* LocalSave.swift in Sources */,
 				CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */,
 				CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */,
-				CA7019BB2D66F9D7004C3646 /* View_Pin.swift in Sources */,
 				CAE18A832D272570006D59F2 /* FriendManager.swift in Sources */,
 				CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */,
 				CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */,
@@ -592,13 +591,14 @@
 				CAB28B3A2D674EC200975D6F /* ContentView.swift in Sources */,
 				CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */,
 				CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */,
-				CA7019BD2D66FD5A004C3646 /* PinViewManager.swift in Sources */,
+				CA5B7F7D2D68EAE500EC14AA /* ImagePicker.swift in Sources */,
 				CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */,
 				CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */,
 				CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */,
 				CAFD51052D231BD700D544FF /* S3Save.swift in Sources */,
 				CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */,
 				CAE18A882D298D93006D59F2 /* MapPinFriendOrganizer.swift in Sources */,
+				CA5B7F7B2D68DBC700EC14AA /* PinEditView.swift in Sources */,
 				CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */,
 				CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */,
 				CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */,
@@ -772,8 +772,6 @@
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "アプリがバックグラウンドで位置情報を使用します。";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "アプリが動作中に位置情報を取得します。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -806,8 +804,6 @@
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "アプリがバックグラウンドで位置情報を使用します。";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "アプリが動作中に位置情報を取得します。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

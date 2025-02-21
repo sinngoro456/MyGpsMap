@@ -8,10 +8,74 @@
 import SwiftUI
 import MapKit
 
+struct RideMapViewWrapper: UIViewRepresentable {
+    
+    // 親Viewからバインドでもらう
+    @Binding var trackingMode: MKUserTrackingMode
+    @State private var selectedPinData: Data_Pin? = nil
+    
+    func makeUIView(context: Context) -> MKMapView {
+        let mapView = MKMapView(frame: .zero)
+        
+        // ユーザ位置やコンパスなど、いままでの設定はお好みで
+        mapView.showsUserLocation = true
+        mapView.showsCompass = false
+        mapView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: -30, right: 0)
+        mapView.setUserTrackingMode(trackingMode, animated: true)
+        
+        // カスタムコンパスの追加（省略可）
+        let compassButton = MKCompassButton(mapView: mapView)
+        compassButton.compassVisibility = .visible
+        mapView.addSubview(compassButton)
+        compassButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            compassButton.topAnchor.constraint(
+                equalTo: mapView.safeAreaLayoutGuide.topAnchor,
+                constant: 70
+            ),
+            compassButton.trailingAnchor.constraint(
+                equalTo: mapView.safeAreaLayoutGuide.trailingAnchor,
+                constant: -16
+            )
+        ])
+        
+        mapView.delegate = context.coordinator
+        
+        return mapView
+    }
+    
+    // View更新のたびに呼ばれる
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        // 既存の注釈を消して、最新の注釈だけ追加
+        uiView.removeAnnotations(uiView.annotations)
+        
+        // SwiftUIのトラッキングモードを実際のMKMapViewへ反映
+        uiView.setUserTrackingMode(trackingMode, animated: true)
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    // MARK: - Coordinator
+    class Coordinator: NSObject, MKMapViewDelegate {
+        var parent: RideMapViewWrapper
+        @State private var tempTrackingMode: MKUserTrackingMode = .follow
+        init(_ parent: RideMapViewWrapper) {
+            self.parent = parent
+        }
+        
+        // MARK: - MKMapViewDelegate
+        func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+            tempTrackingMode = mode
+        }
+
+    }
+}
+
 struct RideView: View {
     @State private var timerCount: Int = 0
     @State private var isTimerRunning: Bool = false
-    @State private var carAnnotationData: Data_NewPin? = nil
     @State private var trackingMode = MKUserTrackingMode.follow
     @State private var averageSpeed = 0.0
     @State private var distance = 0.0
@@ -84,8 +148,7 @@ struct RideView: View {
                 
                 // 地図表示
                 ZStack {
-                    MapViewWrapper(carAnnotationData: $carAnnotationData,
-                                   trackingMode: $trackingMode)
+                    RideMapViewWrapper(trackingMode: $trackingMode)
                 }
                 .frame(height: geometry.size.height * 0.5)
                 

@@ -243,3 +243,9 @@ extension Data_Pin {
         return true
     }
 }
+extension Data_Pin: Identifiable {
+    var id: Int {
+        // pin_id が nil の場合は 0、または -1 等にしておく
+        pin_id ?? 0
+    }
+}

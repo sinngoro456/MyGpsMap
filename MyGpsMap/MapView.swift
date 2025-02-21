@@ -9,15 +9,10 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-struct Data_NewPin {
-    var coordinate: CLLocationCoordinate2D
-}
-
 struct MapViewWrapper: UIViewRepresentable {
-    
     // 親Viewからバインドでもらう
-    @Binding var carAnnotationData: Data_NewPin?
-    @Binding var trackingMode: MKUserTrackingMode  // <-- 追加
+    @Binding var trackingMode: MKUserTrackingMode
+    @Binding var editingPin: Data_Pin?
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView(frame: .zero)
@@ -61,10 +56,10 @@ struct MapViewWrapper: UIViewRepresentable {
         // 既存の注釈を消して、最新の注釈だけ追加
         uiView.removeAnnotations(uiView.annotations)
         
-        // carAnnotationData があれば反映
-        if let carData = carAnnotationData {
+        // newPinData があれば反映
+        for pin in PinManager.shared.pins{
             let annotation = MKPointAnnotation()
-            annotation.coordinate = carData.coordinate
+            annotation.coordinate = pin.coordinate
             uiView.addAnnotation(annotation)
         }
         
@@ -79,7 +74,7 @@ struct MapViewWrapper: UIViewRepresentable {
     // MARK: - Coordinator
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapViewWrapper
-        @State private var tempTrackingMode: MKUserTrackingMode = .none
+        @State private var tempTrackingMode: MKUserTrackingMode = .follow
         init(_ parent: MapViewWrapper) {
             self.parent = parent
         }
@@ -93,12 +88,46 @@ struct MapViewWrapper: UIViewRepresentable {
             let point = gesture.location(in: mapView)
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
 
-            parent.carAnnotationData = Data_NewPin(coordinate: coordinate)
+            parent.editingPin = Data_Pin(
+                pin_id: 0,
+                coordinate: coordinate,
+                title: "",
+                description: "",
+                color: .purple,
+                images: [],
+                date: Date(),
+                category: "",
+                tags: [],
+                visibility: "private"
+            )
         }
         
         // MARK: - MKMapViewDelegate
         func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
             tempTrackingMode = mode
+        }
+
+        // MARK: - ピンをタップしたとき
+        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+            guard let annotation = view.annotation else { return }
+            
+            // 例: annotation -> Data_Pin を取り出す（何らかの仕組みが必要）
+            // ここではサンプルとしてダミーを生成
+            let dummyPin = Data_Pin(
+                pin_id: 0,
+                coordinate: annotation.coordinate,
+                title: "",
+                description: "",
+                color: .purple,
+                images: [],
+                date: Date(),
+                category: "",
+                tags: [],
+                visibility: "private"
+            )
+            
+            // SwiftUI の State を更新して、シートを呼び出す
+            parent.editingPin = dummyPin
         }
     }
 }
@@ -108,13 +137,13 @@ struct MapView: View {
     
     @State private var destinationText: String = ""
     @State private var trackingMode = MKUserTrackingMode.follow
-    @State private var carAnnotationData: Data_NewPin? = nil
+    @State private var selectedPinData: Data_Pin? = nil
+    @State private var editingPin: Data_Pin? = nil
     
     var body: some View {
         ZStack {
             // トラッキングモードをBindingで渡す
-            MapViewWrapper(carAnnotationData: $carAnnotationData,
-                           trackingMode: $trackingMode)
+            MapViewWrapper(trackingMode: $trackingMode, editingPin: $editingPin)
             
             VStack {
                 // 上部ボタン類
@@ -194,6 +223,10 @@ struct MapView: View {
                 
                 Spacer()
             }
+        }
+        // sheetを定義：selectedPinDataに値がある場合だけ表示
+        .sheet(item: $editingPin) { pinData in
+            PinEditView(pinData: pinData)
         }
     }
 }

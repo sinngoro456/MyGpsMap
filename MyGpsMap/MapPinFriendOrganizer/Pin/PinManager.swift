@@ -37,7 +37,6 @@ class PinManager {
             pins.append(pin)
         }
         removeSameIdPins() // 重複IDの削除
-        PinViewManager.shared.addPinViews(for: newPins)
         print("addPins")
     }
     
@@ -64,7 +63,6 @@ class PinManager {
         pins.removeAll { pin in
             pinIdsToRemove.contains(pin.pin_id!) // 削除対象のIDリストに含まれているか
         }
-        PinViewManager.shared.removePinViews(for: pinIdsToRemove)
     }
     
     // すべてのピンを削除するメソッド
