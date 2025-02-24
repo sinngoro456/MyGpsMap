@@ -48,8 +48,6 @@ struct MapView: View {
                             }
                             Spacer()
                             VStack{
-                                Spacer()
-                                    .frame(height: 40)
                                 Button {
                                     // トラッキングモードを切り替え
                                     switch trackingMode {
@@ -76,6 +74,8 @@ struct MapView: View {
                                     .clipShape(Circle())
                                     .shadow(radius: 2)
                                 }
+                                Spacer()
+                                    .frame(height: 40)
                             }
                         }
                     }
