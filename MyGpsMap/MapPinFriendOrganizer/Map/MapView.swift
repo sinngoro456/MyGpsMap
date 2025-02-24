@@ -9,8 +9,6 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
-    
-    @State private var destinationText: String = ""
     @State private var trackingMode = MKUserTrackingMode.none
     @State private var selectedPinData: Data_Pin? = nil
     @State private var editingPin: Data_Pin? = nil
