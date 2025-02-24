@@ -11,7 +11,7 @@ import MapKit
 struct MapView: View {
     
     @State private var destinationText: String = ""
-    @State private var trackingMode = MKUserTrackingMode.follow
+    @State private var trackingMode = MKUserTrackingMode.none
     @State private var selectedPinData: Data_Pin? = nil
     @State private var editingPin: Data_Pin? = nil
     
@@ -23,19 +23,6 @@ struct MapView: View {
             VStack {
                 // 上部ボタン類
                 VStack(spacing: 20) {
-                    // 検索テキストフィールド
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                        TextField("目的地を入力", text: $destinationText)
-                            .textFieldStyle(PlainTextFieldStyle())
-                    }
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 12)
-                    .background(Color.white.opacity(0.8))
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    .shadow(radius: 2)
-                    
                     HStack {
                         // 左側: 音楽・ラジオボタン
                         HStack {

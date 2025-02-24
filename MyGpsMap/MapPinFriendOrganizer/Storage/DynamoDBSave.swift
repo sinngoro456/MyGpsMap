@@ -78,7 +78,7 @@ class DynamoDBSave {
                            let pinsData = body["pins"] as? [[String: Any]] {
                             
                             let newPins = pinsData.compactMap { pinData -> Data_Pin? in
-                                guard let pinId = pinData["pin_id"] as? Int,
+                                guard let pinId = pinData["pin_id"] as? String,
                                       let userId = pinData["user_id"] as? String,
                                       let latitudeInt = pinData["latitude"] as? Int,
                                       let longitudeInt = pinData["longitude"] as? Int,
@@ -149,7 +149,7 @@ class DynamoDBSave {
                            let pinsData = body["pins"] as? [[String: Any]] {
                             
                             let newPins = pinsData.compactMap { pinData -> Data_Pin? in
-                                guard let pinId = pinData["pin_id"] as? Int,
+                                guard let pinId = pinData["pin_id"] as? String,
                                       let userId = pinData["user_id"] as? String,
                                       let latitudeInt = pinData["latitude"] as? Int,
                                       let longitudeInt = pinData["longitude"] as? Int,

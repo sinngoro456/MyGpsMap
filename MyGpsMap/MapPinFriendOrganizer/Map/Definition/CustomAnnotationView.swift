@@ -1,57 +1,73 @@
-//　画像登録時のアイコンアノテーションを作成
-
 import MapKit
 
 class CustomAnnotationView: MKAnnotationView {
-    private lazy var containerView: UIView = {
-        let view = UIView(frame: CGRect(x: -41, y: -90, width: 80, height: 80))
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 16.0
-        return view
-    }()
-    
-    private lazy var imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 8.0
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10 // 画像を角丸にする
         return imageView
     }()
-    
-    private lazy var bottomCornerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 4.0
-        return view
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.textColor = .white
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        label.textAlignment = .center
+        label.layer.cornerRadius = 4
+        label.clipsToBounds = true
+        return label
     }()
-    
-    override var annotation: MKAnnotation? {
-        willSet {
-            guard let customAnnotation = newValue as? CustomAnnotation else { return }
-            canShowCallout = true
-            addSubview(containerView)
-            containerView.addSubview(bottomCornerView)
-            containerView.addSubview(imageView)
-            
-            // Configure imageView
-            imageView.image = customAnnotation.image
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8.0),
-                imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8.0),
-                imageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8.0),
-                imageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8.0)
-            ])
-            
-            // Configure bottomCornerView
-            bottomCornerView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15.0).isActive = true
-            bottomCornerView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-            bottomCornerView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-            bottomCornerView.heightAnchor.constraint(equalToConstant: 24).isActive = true
-            
-            let angle = (39.0 * CGFloat.pi) / 180
-            bottomCornerView.transform = CGAffineTransform(rotationAngle: angle)
+
+    // 隠し情報を保持するプロパティ
+    var user_id: String?
+    var pin_id: String?
+
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        setupView()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupView() {
+        // 画像とタイトルを表示するためのUIを追加
+        addSubview(imageView)
+        addSubview(titleLabel)
+
+        // レイアウト制約を設定
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: 50),
+            imageView.heightAnchor.constraint(equalToConstant: 50),
+            imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 20),
+            titleLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 100)
+        ])
+    }
+
+    func configure(with pin: Data_Pin) {
+        // ピンの画像を設定
+        if let firstImage = pin.images.first {
+            imageView.image = firstImage
+        } else {
+            imageView.image = UIImage(systemName: "photo") // デフォルト画像
         }
+
+        // ピンのタイトルを設定
+        titleLabel.text = pin.title
+
+        // 隠し情報を保持
+        user_id = pin.user_id
+        pin_id = pin.pin_id
     }
 }

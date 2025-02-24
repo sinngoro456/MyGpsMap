@@ -16,7 +16,7 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
     var titleTextField: UITextField!
     var descriptionTextField: UITextField!
     var tappedUserId: String? = nil
-    var tappedId: Int = 0
+    var tappedId: String? = nil
     var tappedCoordinate: CLLocationCoordinate2D?
     var tappedTitle: String = ""
     var tappedDescription: String = ""
@@ -43,7 +43,7 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
     init(pinData: Data_Pin) {
         super.init(nibName: nil, bundle: nil)
         self.tappedUserId = pinData.user_id ?? ""
-        self.tappedId = pinData.pin_id ?? 0
+        self.tappedId = pinData.pin_id ?? ""
         self.tappedCoordinate = pinData.coordinate
         self.tappedTitle = pinData.title ?? ""
         self.tappedDescription = pinData.description ?? ""
@@ -165,7 +165,7 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
         }
         
         let pinData = Data_Pin(user_id: tappedUserId,
-                               pin_id: tappedId,
+                               pin_id: tappedId ?? "",
                                coordinate: coordinate,
                                title: titleTextField.text,
                                description: descriptionTextField.text,
@@ -188,7 +188,7 @@ class ViewController_PinEdit: UIViewController, UITextFieldDelegate, UIImagePick
         }
         
         let pinData = Data_Pin(user_id: tappedUserId,
-                               pin_id: tappedId,
+                               pin_id: tappedId ?? "",
                                coordinate: coordinate,
                                title: titleTextField.text,
                                description: descriptionTextField.text,

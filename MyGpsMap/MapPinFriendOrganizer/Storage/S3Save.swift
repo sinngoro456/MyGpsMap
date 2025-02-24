@@ -147,7 +147,7 @@ extension S3Save{
                 if let userId = key.split(separator: "/").first,
                    let pinIdStr = key.split(separator: "/").dropFirst().first?.split(separator: "_").first,
                    let pinId = Int(pinIdStr),
-                   let index = pins.firstIndex(where: { $0.user_id == String(userId) && $0.pin_id == pinId }) {
+                   let index = pins.firstIndex(where: { $0.user_id == String(userId) && $0.pin_id == String(pinId) }) {
                     sortedKeys[index].append(key)
                 }
             }

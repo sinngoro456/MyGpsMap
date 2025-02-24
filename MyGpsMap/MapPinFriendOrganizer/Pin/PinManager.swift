@@ -12,6 +12,7 @@ class PinManager {
     var cognitoToken: String? // 外部から読み書き可能なcognitoIdTokenプロパティ
     var writtenDateTime: Date? // 外部から読み書き可能な更新日時プロパティ
     static let shared = PinManager() // シングルトンインスタンス
+    static let pinUpdatedNotification = Notification.Name("PinUpdatedNotification")
     private(set) var pins: [Data_Pin] = [] // 外部からは読み取り専用
     private var dynamoDBSave = DynamoDBSave()
     private var s3Save = S3Save()
@@ -30,13 +31,14 @@ class PinManager {
     // 指定されたピンをpinsに追加するメソッド
     func addPins(_ newPins: [Data_Pin]) {
         for pin in newPins {
-            if pin.pin_id == 0 {
-                pin.pin_id = generateUniqueId()
+            if pin.pin_id == "" {
+                pin.pin_id = UUID().uuidString
             }
             deletePins([pin.coordinate])
             pins.append(pin)
         }
         removeSameIdPins() // 重複IDの削除
+        notifyPinUpdated(newPins)
         print("addPins")
     }
     
@@ -71,9 +73,8 @@ class PinManager {
         print("All pins have been cleared.") // デバッグ用メッセージ
     }
     
-    func updatePinViews() {
-//        PinViewManager.shared.updatePinViews(for: self.pins)
-        print("updatePinViews")
+    func notifyPinUpdated(_ pins: [Data_Pin]) {
+        NotificationCenter.default.post(name: .pinDataUpdated, object: nil)
     }
     
     // pinsを各種DB,Localに保存するメソッド(S3(画像)をclearする)
@@ -104,7 +105,7 @@ class PinManager {
                     DispatchQueue.main.async {
                         // UIWindowSceneを取得
                         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                              let topViewController = windowScene.windows.first?.rootViewController else {
+                            let topViewController = windowScene.windows.first?.rootViewController else {
                             continuation.resume(returning: false)
                             return
                         }
@@ -173,28 +174,10 @@ extension PinManager {
             return friendUserIds.contains(pinUserId)
         }
     }
-    
-    // ユニークなIDを生成する関数
-    private func generateUniqueId() -> Int {
-        var availableIds: [Int]  // 利用可能なIDの配列
-        var currentIndex: Int = 0
-        availableIds = Array(1...Constants_Main.Nmax_pin)
-        availableIds.shuffle()  // 配列をシャッフルしてランダム性を持たせる
-        while currentIndex < availableIds.count {
-            let newId = availableIds[currentIndex]  // 現在のインデックスからIDを取得
-            currentIndex += 1  // インデックスを進める
-            
-            // pins内に同じIDが存在しないか確認
-            if !pins.contains(where: { $0.pin_id == newId }) {
-                return newId  // ユニークなIDが見つかった場合、返す
-            }
-        }
-        return 0
-    }
 
     // pinsから重複するIDを持つピンを削除するメソッド
     func removeSameIdPins() {
-        var seenIds: Set<Int> = [] // 見たIDの集合
+        var seenIds: Set<String> = [] // 見たIDの集合
         var uniquePins: [Data_Pin] = [] // 重複を除いたピンの配列
         
         // pins配列を逆順でループ（最後尾から先頭へ）
@@ -236,7 +219,7 @@ extension PinManager {
         print("---------------pin-----------------")
         for pin in pins {
             print("user_id: \(pin.user_id ?? "No user_id")")
-            print("pin_id: \(pin.pin_id != 0 ? String(pin.pin_id!) : "pin_id")")
+            print("pin_id: \(pin.pin_id ?? "No pin_id")")
             print("Title: \(pin.title ?? "No Title")")
             print("Description: \(pin.description ?? "No Description")")
             print("Coordinate: \(pin.coordinate.latitude), \(pin.coordinate.longitude)")
@@ -247,5 +230,13 @@ extension PinManager {
             print("Visibility: \(pin.visibility ?? "No Visibility")\n\n")
         }
         print("----------------------------------")
+    }
+}
+extension PinManager {
+    /// user_idとpin_idが一致するData_Pinを取得する関数
+    func getPin(pinID: String) -> Data_Pin? {
+        return pins.first { pin in
+            pin.pin_id == pinID
+        }
     }
 }

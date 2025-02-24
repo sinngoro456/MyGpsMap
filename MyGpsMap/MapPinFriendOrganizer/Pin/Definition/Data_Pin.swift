@@ -22,7 +22,7 @@ class Data_Pin: Codable, Equatable {
     }
     
     var user_id: String?
-    var pin_id: Int?
+    var pin_id: String?
     var latitude: Double
     var longitude: Double
     var title: String?
@@ -46,7 +46,7 @@ class Data_Pin: Codable, Equatable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         user_id = try container.decodeIfPresent(String.self, forKey: .user_id)
-        pin_id = try container.decodeIfPresent(Int.self, forKey: .pin_id)
+        pin_id = try container.decodeIfPresent(String.self, forKey: .pin_id)
         
         // 緯度と経度を個別にデコード
         latitude = try container.decode(Double.self, forKey: .latitude)
@@ -120,7 +120,7 @@ class Data_Pin: Codable, Equatable {
     }
 
     init(user_id: String? = UserSessionManager.shared.user_id,
-         pin_id: Int = 0,
+         pin_id: String = "",
          coordinate: CLLocationCoordinate2D,
          title: String? = "新しいピン",
          description: String? = nil,
@@ -168,7 +168,7 @@ extension Data_Pin {
     func toDictionary() -> [String: Any] {
         var dict: [String: Any] = [:]
         dict["user_id"] = user_id
-        dict["pin_id"] = Int(pin_id ?? 0)
+        dict["pin_id"] = pin_id
         dict["latitude"] = Int(latitude * 1e13)
         dict["longitude"] = Int(longitude * 1e13)
         print(latitude)
@@ -210,7 +210,7 @@ extension Data_Pin {
         
         self.init(coordinate: coordinate)
         user_id = dict["user_id"] as? String
-        pin_id = (dict["pin_id"] as! Int)
+        pin_id = (dict["pin_id"] as! String)
         title = dict["title"] as? String
         description = dict["description"] as? String
         if let colorDict = dict["color"] as? [String: CGFloat] {
@@ -244,8 +244,8 @@ extension Data_Pin {
     }
 }
 extension Data_Pin: Identifiable {
-    var id: Int {
+    var id: String {
         // pin_id が nil の場合は 0、または -1 等にしておく
-        pin_id ?? 0
+        pin_id ?? ""
     }
 }
