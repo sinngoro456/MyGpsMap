@@ -42,7 +42,7 @@ class S3Save {
                         contentType: "image/png",
                         expression: expression // PNG形式なのでcontentTypeはimage/png
                     ) { task, error in
-                        if let error = error as NSError? {
+                        if let error = error as! NSError? {
                             print("アップロードエラー (Pin ID \(String(describing: pinId)), Image Index \(index + 1)): \(error.localizedDescription)")
                             
                             // 詳細なエラー情報を出力

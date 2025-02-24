@@ -12,11 +12,13 @@ struct MapView: View {
     @State private var trackingMode = MKUserTrackingMode.none
     @State private var selectedPinData: Data_Pin? = nil
     @State private var editingPin: Data_Pin? = nil
+    @State private var isSearchViewPresented = false // 検索画面の表示状態を管理
+    @State private var searchCoordinate: CLLocationCoordinate2D? = nil // 検索結果の座標を管理
     
     var body: some View {
         ZStack {
             // トラッキングモードをBindingで渡す
-            MapViewWrapper(trackingMode: $trackingMode, editingPin: $editingPin)
+            MapViewWrapper(trackingMode: $trackingMode, editingPin: $editingPin, searchCoordinate: $searchCoordinate)
             
             VStack {
                 // 上部ボタン類
@@ -82,11 +84,31 @@ struct MapView: View {
                 .padding(.top, 20)
                 
                 Spacer()
+                                
+                // 右下に検索ボタンを追加
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        isSearchViewPresented = true
+                    }) {
+                        Image(systemName: "magnifyingglass")
+                            .frame(width: 42, height: 42)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 2)
+                    }
+                    .padding(.trailing, 20)
+                    .padding(.bottom, 20)
+                }
             }
         }
         // sheetを定義：selectedPinDataに値がある場合だけ表示
         .sheet(item: $editingPin) { pinData in
             PinEditView(pinData: pinData)
+        }
+        // 検索画面をモーダル表示
+        .sheet(isPresented: $isSearchViewPresented) {
+            SearchView(searchCoordinate: $searchCoordinate)
         }
     }
 }

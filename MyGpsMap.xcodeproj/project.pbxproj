@@ -13,6 +13,9 @@
 		9B33BE16E871E8295C7B07E6 /* Pods_MyGpsMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299802AAF90E1DB8A1FB7D7 /* Pods_MyGpsMapUITests.framework */; };
 		CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967D92D676D00004BBE38 /* MapView.swift */; };
 		CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967DB2D67857B004BBE38 /* RideView.swift */; };
+		CA404DA12D6CD517008538C2 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA404DA02D6CD517008538C2 /* SpotView.swift */; };
+		CA404DA32D6CD978008538C2 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA404DA22D6CD978008538C2 /* SearchView.swift */; };
+		CA404DA52D6CDC65008538C2 /* iconForMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA404DA42D6CDC65008538C2 /* iconForMapItem.swift */; };
 		CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */; };
 		CA40FD052D11B742002052C1 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD042D11B742002052C1 /* Amplify */; };
 		CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */; };
@@ -36,12 +39,7 @@
 		CAE18A862D27794D006D59F2 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A852D27794D006D59F2 /* UserSessionManager.swift */; };
 		CAE18A882D298D93006D59F2 /* MapPinFriendOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A872D298D93006D59F2 /* MapPinFriendOrganizer.swift */; };
 		CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE82BFC2D14081D003620BF /* PinManager.swift */; };
-		CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */; };
-		CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */; };
-		CAE89DF52CB254E0001F9DA3 /* ViewController_PinEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */; };
-		CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */; };
 		CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */; };
-		CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */; };
 		CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */; };
 		CAFD51032D2318B700D544FF /* LocalSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFD51022D2318B700D544FF /* LocalSave.swift */; };
 		CAFD51052D231BD700D544FF /* S3Save.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFD51042D231BD700D544FF /* S3Save.swift */; };
@@ -77,6 +75,9 @@
 		C889174FA7233287F07A05BD /* Pods-MyGpsMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapTests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapTests/Pods-MyGpsMapTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CA3967D92D676D00004BBE38 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		CA3967DB2D67857B004BBE38 /* RideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideView.swift; sourceTree = "<group>"; };
+		CA404DA02D6CD517008538C2 /* SpotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
+		CA404DA22D6CD978008538C2 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		CA404DA42D6CDC65008538C2 /* iconForMapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iconForMapItem.swift; sourceTree = "<group>"; };
 		CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		CA5B7F782D686CB500EC14AA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinEditView.swift; sourceTree = "<group>"; };
@@ -102,12 +103,7 @@
 		CAE18A852D27794D006D59F2 /* UserSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
 		CAE18A872D298D93006D59F2 /* MapPinFriendOrganizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinFriendOrganizer.swift; sourceTree = "<group>"; };
 		CAE82BFC2D14081D003620BF /* PinManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinManager.swift; sourceTree = "<group>"; };
-		CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Design.swift; sourceTree = "<group>"; };
-		CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant_Main.swift; sourceTree = "<group>"; };
-		CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_PinEdit.swift; sourceTree = "<group>"; };
-		CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISetUpManager_NewPin.swift; sourceTree = "<group>"; };
 		CAE89DFB2CB2F094001F9DA3 /* Data_Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_Pin.swift; sourceTree = "<group>"; };
-		CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		CAFD51022D2318B700D544FF /* LocalSave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSave.swift; sourceTree = "<group>"; };
 		CAFD51042D231BD700D544FF /* S3Save.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Save.swift; sourceTree = "<group>"; };
@@ -183,6 +179,7 @@
 				CA3967D92D676D00004BBE38 /* MapView.swift */,
 				CA5B7F802D69037500EC14AA /* MapViewWrapper.swift */,
 				CAE18A8C2D299C79006D59F2 /* Definition */,
+				CA404DA42D6CDC65008538C2 /* iconForMapItem.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -226,9 +223,10 @@
 		CA68F1922CAC23030060B8BB /* MyGpsMap */ = {
 			isa = PBXGroup;
 			children = (
-				CAE89DED2CB1B1A2001F9DA3 /* Constant */,
 				CA68F1932CAC23030060B8BB /* AppDelegate.swift */,
 				CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */,
+				CA404DA22D6CD978008538C2 /* SearchView.swift */,
+				CA404DA02D6CD517008538C2 /* SpotView.swift */,
 				CAB28B392D674EC200975D6F /* ContentView.swift */,
 				CA3967DB2D67857B004BBE38 /* RideView.swift */,
 				CA5B7F782D686CB500EC14AA /* Info.plist */,
@@ -302,7 +300,6 @@
 		CAE18A8C2D299C79006D59F2 /* Definition */ = {
 			isa = PBXGroup;
 			children = (
-				CAE89DFF2CB2F8E3001F9DA3 /* CustomAnnotation.swift */,
 				CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */,
 			);
 			path = Definition;
@@ -316,21 +313,10 @@
 			path = Definition;
 			sourceTree = "<group>";
 		};
-		CAE89DED2CB1B1A2001F9DA3 /* Constant */ = {
-			isa = PBXGroup;
-			children = (
-				CAE89DEE2CB1B1BC001F9DA3 /* Constant_Design.swift */,
-				CAE89DF02CB1B359001F9DA3 /* Constant_Main.swift */,
-			);
-			path = Constant;
-			sourceTree = "<group>";
-		};
 		CAE89DF62CB2D6EE001F9DA3 /* Pin */ = {
 			isa = PBXGroup;
 			children = (
-				CAE89DF72CB2D723001F9DA3 /* UISetUpManager_NewPin.swift */,
 				CAFD51092D2329FA00D544FF /* Definition */,
-				CAE89DF42CB254E0001F9DA3 /* ViewController_PinEdit.swift */,
 				CAE82BFC2D14081D003620BF /* PinManager.swift */,
 				CA5B7F7C2D68EAE500EC14AA /* ImagePicker.swift */,
 				CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */,
@@ -580,17 +566,17 @@
 			files = (
 				CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */,
 				CADB0BEA2D0AA8EF001C175D /* SignInUISetUp.swift in Sources */,
-				CAE89DF82CB2D723001F9DA3 /* UISetUpManager_NewPin.swift in Sources */,
 				CAFD51032D2318B700D544FF /* LocalSave.swift in Sources */,
-				CAE89E002CB2F8E3001F9DA3 /* CustomAnnotation.swift in Sources */,
 				CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */,
+				CA404DA12D6CD517008538C2 /* SpotView.swift in Sources */,
 				CAE18A832D272570006D59F2 /* FriendManager.swift in Sources */,
 				CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */,
 				CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */,
+				CA404DA32D6CD978008538C2 /* SearchView.swift in Sources */,
 				CAFD51072D231BFE00D544FF /* DynamoDBSave.swift in Sources */,
 				CAE18A862D27794D006D59F2 /* UserSessionManager.swift in Sources */,
 				CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */,
-				CAE89DF52CB254E0001F9DA3 /* ViewController_PinEdit.swift in Sources */,
+				CA404DA52D6CDC65008538C2 /* iconForMapItem.swift in Sources */,
 				CAB28B3A2D674EC200975D6F /* ContentView.swift in Sources */,
 				CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */,
 				CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */,
@@ -600,12 +586,10 @@
 				CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */,
 				CAFD51052D231BD700D544FF /* S3Save.swift in Sources */,
 				CA5B7F812D69037500EC14AA /* MapViewWrapper.swift in Sources */,
-				CAE89DF12CB1B359001F9DA3 /* Constant_Main.swift in Sources */,
 				CAE18A882D298D93006D59F2 /* MapPinFriendOrganizer.swift in Sources */,
 				CA5B7F7B2D68DBC700EC14AA /* PinEditView.swift in Sources */,
 				CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */,
 				CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */,
-				CAE89DEF2CB1B1BC001F9DA3 /* Constant_Design.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

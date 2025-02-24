@@ -31,11 +31,10 @@ struct ContentView: View {
                     Label("ライド", systemImage: "bicycle")
                 }
 
-            // 掲示板タブ
-            BoardView()
+            // スポットタブ
+            SpotView()
                 .tabItem {
-                    // "text.bubble" が吹き出しアイコン
-                    Label("掲示板", systemImage: "text.bubble")
+                    Label("スポット", systemImage: "mappin.circle") // スポット用のアイコン
                 }
 
             // マイページタブ
@@ -58,20 +57,3 @@ struct HomeView: View {
             .padding()
     }
 }
-
-struct BoardView: View {
-    var body: some View {
-        Text("掲示板画面です")
-            .font(.title)
-            .padding()
-    }
-}
-//
-//struct MyPageView: View {
-//    var body: some View {
-//        Text("マイページ画面です")
-//            .font(.title)
-//            .padding()
-//    }
-//}
-
