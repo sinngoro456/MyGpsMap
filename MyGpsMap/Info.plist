@@ -7,5 +7,9 @@
 		<key>UIColorName</key>
 		<string>SystemWhite</string>
 	</dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>このアプリは位置情報を使用して、地図上に現在地を表示します。</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>このアプリはバックグラウンドでも位置情報を使用します。</string>
 </dict>
 </plist>

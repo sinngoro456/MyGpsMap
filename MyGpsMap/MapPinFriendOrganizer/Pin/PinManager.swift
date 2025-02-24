@@ -92,7 +92,7 @@ class PinManager {
             let (initialLoadedPins, writtenDateTimeDB) = try await DynamoDBSave().loadPinsfromDynamoDB()
             
             // 新しいwrittenDateTimeが現在のものより新しい場合のみ更新
-            if writtenDateTimeDB <= self.writtenDateTime! {
+            if let currentWrittenDateTime = self.writtenDateTime, writtenDateTimeDB <= currentWrittenDateTime {
                 print("ローカルのデータが最新です。")
                 self.saveAllPins()
                 self.printPins()

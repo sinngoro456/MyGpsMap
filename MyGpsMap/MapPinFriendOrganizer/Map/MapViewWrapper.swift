@@ -38,11 +38,11 @@ struct MapViewWrapper: UIViewRepresentable {
         )
         mapView.addGestureRecognizer(longPressGesture)
 
-        // タップジェスチャーを追加
-        let tapGesture = UITapGestureRecognizer(
-            target: context.coordinator,
-            action: #selector(Coordinator.handleTap(_:)))
-        mapView.addGestureRecognizer(tapGesture)
+//        // タップジェスチャーを追加
+//        let tapGesture = UITapGestureRecognizer(
+//            target: context.coordinator,
+//            action: #selector(Coordinator.handleTap(_:)))
+//        mapView.addGestureRecognizer(tapGesture)
 
         mapView.delegate = context.coordinator
         context.coordinator.mapView = mapView
@@ -121,73 +121,70 @@ struct MapViewWrapper: UIViewRepresentable {
             )
         }
 
-        // タップジェスチャーのハンドラ
-                @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-                    guard let mapView = mapView else { return }
-
-                    let point = gesture.location(in: mapView)
-                    let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
-
-                    // 既存の選択中アノテーションを削除
-                    if let selectedAnnotation = selectedPOIAnnotation {
-                        mapView.removeAnnotation(selectedAnnotation)
-                        selectedPOIAnnotation = nil
-                    }
-
-                    // 最寄りのPOIを検索
-                    findNearestPOI(coordinate: coordinate) { poi in
-                        guard let poi = poi else {
-                            print("No POI found nearby.")
-                            return
-                        }
-
-                        // 新しいカスタムアノテーションを追加
-                        let annotation = MKPointAnnotation()
-                        annotation.coordinate = poi.placemark.coordinate
-                        annotation.title = poi.placemark.name ?? "Selected POI"
-                        mapView.addAnnotation(annotation)
-                        self.selectedPOIAnnotation = annotation
-
-                        // マップをタップされた座標に移動
-                        let region = MKCoordinateRegion(center: poi.placemark.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
-                        mapView.setRegion(region, animated: true)
-                    }
-                }
-                
-                // 最寄りのPOIを検索する関数
-                func findNearestPOI(coordinate: CLLocationCoordinate2D, completion: @escaping (MKMapItem?) -> Void) {
-                    let request = MKLocalSearch.Request()
-                    request.naturalLanguageQuery = "Point of Interest" // POIを検索
-                    request.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-
-                    let search = MKLocalSearch(request: request)
-                    search.start { response, error in
-                        guard let response = response else {
-                            print("Error searching for POI: \(error?.localizedDescription ?? "Unknown error")")
-                            completion(nil)
-                            return
-                        }
-
-                        // 最も近いPOIを検索
-                        let nearestPOI = response.mapItems.min { item1, item2 in
-                            let distance1 = CLLocation(latitude: item1.placemark.coordinate.latitude, longitude: item1.placemark.coordinate.longitude).distance(from: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-                            let distance2 = CLLocation(latitude: item2.placemark.coordinate.latitude, longitude: item2.placemark.coordinate.longitude).distance(from: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-                            return distance1 < distance2
-                        }
-
-                        completion(nearestPOI)
-                    }
-                }
-
+//        // タップジェスチャーのハンドラ
+//        @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+//            guard let mapView = mapView else { return }
+//
+//            let point = gesture.location(in: mapView)
+//            let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
+//
+//            // 既存の選択中アノテーションを削除
+//            if let selectedAnnotation = selectedPOIAnnotation {
+//                mapView.removeAnnotation(selectedAnnotation)
+//                selectedPOIAnnotation = nil
+//            }
+//
+//            // タップされた座標周辺のPOIを検索
+//            searchNearbyPOIs(at: coordinate) { [weak self] (poi) in
+//                guard let self = self, let poi = poi else { return }
+//
+//                // 新しいカスタムアノテーションを追加
+//                let annotation = MKPointAnnotation()
+//                annotation.coordinate = poi.placemark.coordinate
+//                annotation.title = poi.name
+//                mapView.addAnnotation(annotation)
+//                self.selectedPOIAnnotation = annotation
+//
+//                // マップを最寄りのPOIの座標に移動
+//                let region = MKCoordinateRegion(center: poi.placemark.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+//                mapView.setRegion(region, animated: true)
+//            }
+//        }
+//
+//        // タップされた座標周辺のPOIを検索する関数
+//        func searchNearbyPOIs(at coordinate: CLLocationCoordinate2D, completion: @escaping (MKMapItem?) -> Void) {
+//            let request = MKLocalSearch.Request()
+//            request.naturalLanguageQuery = "Point of Interest" // POIを検索
+//            request.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000) // 検索範囲
+//
+//            let search = MKLocalSearch(request: request)
+//            search.start { (response, error) in
+//                guard let response = response, error == nil else {
+//                    print("POI検索エラー: \(String(describing: error))")
+//                    completion(nil)
+//                    return
+//                }
+//
+//                // 最も近いPOIを取得
+//                let nearestPOI = response.mapItems.min(by: { (item1, item2) -> Bool in
+//                    let location1 = CLLocation(latitude: item1.placemark.coordinate.latitude, longitude: item1.placemark.coordinate.longitude)
+//                    let location2 = CLLocation(latitude: item2.placemark.coordinate.latitude, longitude: item2.placemark.coordinate.longitude)
+//                    let tapLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+//                    return location1.distance(from: tapLocation) < location2.distance(from: tapLocation)
+//                })
+//
+//                completion(nearestPOI)
+//            }
+//        }
+        
         func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
         }
 
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            print("hi")
             guard let customAnnotationView = view as? CustomAnnotationView else { return }
 
-            if let user_id = customAnnotationView.user_id, let pin_id = customAnnotationView.pin_id {
-                print("Selected Pin - User ID: \(user_id), Pin ID: \(pin_id)")
+            if let pin_id = customAnnotationView.pin_id {
+                print("Selected Pin - Pin ID: \(pin_id)")
 
                 if let pin = PinManager.shared.getPin(pinID: pin_id) {
                     self.parent.editingPin = pin

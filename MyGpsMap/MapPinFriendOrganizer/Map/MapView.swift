@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+    @StateObject private var locationManager = LocationManager()
     @State private var trackingMode = MKUserTrackingMode.none
     @State private var selectedPinData: Data_Pin? = nil
     @State private var editingPin: Data_Pin? = nil
@@ -101,6 +102,9 @@ struct MapView: View {
                     .padding(.bottom, 20)
                 }
             }
+        }
+        .onAppear {
+            locationManager.requestLocationPermission() // 位置情報の許可をリクエスト
         }
         // sheetを定義：selectedPinDataに値がある場合だけ表示
         .sheet(item: $editingPin) { pinData in

@@ -52,5 +52,67 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C3CB125C-DF29-41E1-9353-543CF3BC8F58"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyGpsMap/MapPinFriendOrganizer/Pin/PinManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "loadPins()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "548567E8-9DE7-41EA-A4C9-77303BADF654"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "loadPinImagesFromS3(user_ids:pins:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "548567E8-9DE7-41EA-A4C9-77303BADF654 - bf002258885dd20b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for MyGpsMap.S3Save.loadPinImagesFromS3(user_ids: Swift.Array&lt;Swift.String&gt;, pins: Swift.Array&lt;MyGpsMap.Data_Pin&gt;) async -&gt; Swift.Array&lt;MyGpsMap.Data_Pin&gt;"
+                  moduleName = "MyGpsMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap2/MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "173"
+                  endingLineNumber = "173">
+               </Location>
+               <Location
+                  uuid = "548567E8-9DE7-41EA-A4C9-77303BADF654 - b9decebc6e348e09"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for MyGpsMap.S3Save.loadPinImagesFromS3(user_ids: Swift.Array&lt;Swift.String&gt;, pins: Swift.Array&lt;MyGpsMap.Data_Pin&gt;) async -&gt; Swift.Array&lt;MyGpsMap.Data_Pin&gt;"
+                  moduleName = "MyGpsMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kawabuchy/Public/Swift/MyGpsMap2/MyGpsMap/MapPinFriendOrganizer/Storage/S3Save.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "173"
+                  endingLineNumber = "173">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
