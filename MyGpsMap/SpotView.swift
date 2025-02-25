@@ -3,149 +3,217 @@
 //  MyGpsMap
 //
 //  Created by 川渕悟郎 on 2025/02/25.
-//
+// fsq3xtMD6Rzwra7u0csfWJOsrwx006yRHusCNu8wca4sDfc=
 
-import CoreLocation
 import SwiftUI
+import CoreLocation
 
-// スポット画面
+// 場所の情報を表すモデル
+struct FoursquarePlace: Identifiable, Decodable {
+    let fsq_id: String
+    let name: String
+    let location: FoursquareLocation
+    let categories: [FoursquareCategory]
+    
+    // Identifiableに準拠するためにidをfsq_idにマッピング
+    var id: String { fsq_id }
+    
+    var primaryCategory: String {
+        return categories.first?.name ?? "Unknown"
+    }
+}
+
+struct FoursquareLocation: Decodable {
+    let formatted_address: String?
+    let locality: String?
+    let region: String?
+}
+
+struct FoursquareCategory: Decodable {
+    let name: String
+}
+
+struct FoursquareIcon: Decodable {
+    let prefix: String
+    let suffix: String
+}
+
+
+// APIレスポンスのモデル
+struct FoursquareNearbyResponse: Decodable {
+    let results: [FoursquarePlace]
+}
+
+// 写真の情報を表すモデル
+struct FoursquarePhoto: Identifiable, Decodable {
+    let id: String
+    let prefix: String
+    let suffix: String
+    let width: Int
+    let height: Int
+    
+    var imageUrl: String {
+        return "\(prefix)original\(suffix)"
+    }
+}
+
+struct FoursquarePhotoResponse: Decodable {
+    let photos: [FoursquarePhoto]
+}
+
+class FoursquareService {
+    private let apiKey = "fsq3xtMD6Rzwra7u0csfWJOsrwx006yRHusCNu8wca4sDfc="
+    
+    // 現在地近くの場所を取得
+    func fetchNearbyPlaces(location: CLLocationCoordinate2D, completion: @escaping ([FoursquarePlace]?) -> Void) {
+            let urlString = "https://api.foursquare.com/v3/places/nearby?ll=\(location.latitude),\(location.longitude)"
+            guard let url = URL(string: urlString) else {
+                completion(nil)
+                return
+            }
+            
+            var request = URLRequest(url: url)
+            request.setValue(apiKey, forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "accept")
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    completion(nil)
+                    return
+                }
+                
+                // // デバッグ用: APIレスポンスを出力
+                // if let jsonString = String(data: data, encoding: .utf8) {
+                //     print("APIレスポンス: \(jsonString)")
+                // }
+                
+                // FoursquareNearbyResponseをデコード
+                do {
+                    let decodedResponse = try JSONDecoder().decode(FoursquareNearbyResponse.self, from: data)
+                    completion(decodedResponse.results)
+                } catch {
+                    print("デコードに失敗しました: \(error)")
+                    completion(nil)
+                }
+            }.resume()
+        }
+    
+    func fetchPhotos(fsqId: String, completion: @escaping ([FoursquarePhoto]?) -> Void) {
+        let urlString = "https://api.foursquare.com/v3/places/\(fsqId)/photos"
+        guard let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.setValue(apiKey, forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "accept")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                completion(nil)
+                return
+            }
+            
+            // // デバッグ用: APIレスポンスを出力
+            // if let jsonString = String(data: data, encoding: .utf8) {
+            //     print("APIレスポンス: \(jsonString)")
+            // }
+            
+            // 直接 [FoursquarePhoto] としてデコード
+            do {
+                let decodedResponse = try JSONDecoder().decode([FoursquarePhoto].self, from: data)
+                completion(decodedResponse)
+            } catch {
+                print("デコードに失敗しました: \(error)")
+                completion(nil)
+            }
+        }.resume()
+    }
+}
+
 struct SpotView: View {
     @State private var searchText: String = ""
-    @State private var selectedDistance: DistanceFilter = .all
-    @State private var selectedCategory: CategoryFilter = .all
-    @State var userLocation: CLLocationCoordinate2D? = nil
-
-    // スポットのサンプルデータ
-    @State private var spots: [Spot] = [
-        Spot(name: "東京タワー", description: "有名な観光地です", coordinate: .init(latitude: 35.6586, longitude: 139.7454), category: .landmark),
-        Spot(name: "浅草寺", description: "歴史的な寺院", coordinate: .init(latitude: 35.7148, longitude: 139.7967), category: .landmark),
-        Spot(name: "渋谷スクランブル交差点", description: "賑やかな交差点", coordinate: .init(latitude: 35.6595, longitude: 139.7006), category: .landmark),
-        Spot(name: "ローソン 渋谷店", description: "コンビニ", coordinate: .init(latitude: 35.6615, longitude: 139.6985), category: .convenienceStore),
-        Spot(name: "スターバックス 新宿店", description: "カフェ", coordinate: .init(latitude: 35.6895, longitude: 139.7007), category: .food)
-    ]
-
+    @State private var userLocation: CLLocationCoordinate2D? = nil
+    @State private var places: [FoursquarePlace] = []
+    @State private var photos: [String: [FoursquarePhoto]] = [:] // Key: fsq_id, Value: 写真の配列
+    
+    private let foursquareService = FoursquareService()
+    
     var body: some View {
-        NavigationView { // NavigationViewでラップ
-            VStack {
-                // 検索バー
-                TextField("スポットを検索", text: $searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-
-                // フィルター選択
-                HStack {
-                    Picker("距離", selection: $selectedDistance) {
-                        ForEach(DistanceFilter.allCases, id: \.self) { distance in
-                            Text(distance.rawValue).tag(distance)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-
-                    Picker("カテゴリー", selection: $selectedCategory) {
-                        ForEach(CategoryFilter.allCases, id: \.self) { category in
-                            Text(category.rawValue).tag(category)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                }
-                .padding(.horizontal)
-
-                // スポットリスト
-                List {
-                    ForEach(filteredSpots) { spot in
-                        VStack(alignment: .leading) {
-                            Text(spot.name)
+        VStack {
+            // 検索バー
+            TextField("スポットを検索", text: $searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            // スクロールビューで場所と写真を表示
+            ScrollView {
+                VStack(spacing: 20) {
+                    ForEach(places) { place in
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(place.name)
                                 .font(.headline)
-                            Text(spot.description)
+                            Text(place.primaryCategory)
                                 .font(.subheadline)
-                                .foregroundColor(.gray)
-                            Text("カテゴリー: \(spot.category.rawValue)")
+                            Text(place.location.formatted_address ?? "住所不明")
                                 .font(.caption)
-                                .foregroundColor(.blue)
-                            if let distance = spot.distanceFromUser {
-                                Text("距離: \(String(format: "%.2f", distance)) km")
-                                    .font(.caption)
-                                    .foregroundColor(.green)
+                            
+                            // 写真を表示
+                            if let placePhotos = photos[place.id] {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack {
+                                        ForEach(placePhotos) { photo in
+                                            AsyncImage(url: URL(string: photo.imageUrl)) { image in
+                                                image.resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(height: 150)
+                                                    .cornerRadius(10)
+                                            } placeholder: {
+                                                ProgressView()
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                ProgressView()
                             }
                         }
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                    }
+                }
+                .padding()
+            }
+        }
+        .navigationTitle("スポット")
+        .onAppear {
+            // ユーザーの現在地を取得（シミュレーション）
+            userLocation = CLLocationCoordinate2D(latitude: LocationManager.shared.currentCoordinate?.latitude ?? 35.681236, longitude: LocationManager.shared.currentCoordinate?.longitude ?? 139.767125)
+            
+            // 現在地近くの場所を取得
+            if let location = userLocation {
+                fetchNearbyPlaces(location: location)
+            }
+        }
+    }
+    
+    private func fetchNearbyPlaces(location: CLLocationCoordinate2D) {
+        foursquareService.fetchNearbyPlaces(location: location) { fetchedPlaces in
+            if let fetchedPlaces = fetchedPlaces {
+                places = fetchedPlaces
+                
+                // 各場所の写真を取得
+                for place in fetchedPlaces {
+                    foursquareService.fetchPhotos(fsqId: place.id) { fetchedPhotos in
+                        if let fetchedPhotos = fetchedPhotos {
+                            photos[place.id] = fetchedPhotos
+                        }
                     }
                 }
             }
-            .navigationTitle("スポット")
-        }
-        .onAppear {
-            // ユーザーの現在地を取得（シミュレーション）
-            userLocation = CLLocationCoordinate2D(latitude: 35.6895, longitude: 139.6917) // 東京駅付近
         }
     }
-
-    // フィルタリングされたスポット
-    var filteredSpots: [Spot] {
-        spots.filter { spot in
-            // 検索テキストでフィルタリング
-            let matchesSearchText = searchText.isEmpty || spot.name.localizedCaseInsensitiveContains(searchText)
-
-            // 距離でフィルタリング
-            let matchesDistance: Bool
-            if let userLocation = userLocation {
-                let spotLocation = CLLocation(latitude: spot.coordinate.latitude, longitude: spot.coordinate.longitude)
-                let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-                let distance = spotLocation.distance(from: userCLLocation) / 1000 // km単位に変換
-
-                switch selectedDistance {
-                case .all:
-                    matchesDistance = true
-                case .near:
-                    matchesDistance = distance <= 1
-                case .medium:
-                    matchesDistance = distance > 1 && distance <= 10
-                case .far:
-                    matchesDistance = distance > 10 && distance <= 50
-                case .veryFar:
-                    matchesDistance = distance > 50 && distance <= 100
-                }
-            } else {
-                matchesDistance = true
-            }
-
-            // カテゴリーでフィルタリング
-            let matchesCategory = selectedCategory == .all || spot.category == selectedCategory
-
-            return matchesSearchText && matchesDistance && matchesCategory
-        }
-    }
-}
-
-// スポットのデータモデル
-struct Spot: Identifiable {
-    let id = UUID()
-    let name: String
-    let description: String
-    let coordinate: CLLocationCoordinate2D
-    let category: CategoryFilter
-
-    // ユーザーからの距離を計算
-    var distanceFromUser: Double? {
-        guard let userLocation = SpotView().userLocation else { return nil }
-        let spotLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        let userCLLocation = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
-        return spotLocation.distance(from: userCLLocation) / 1000 // km単位
-    }
-}
-
-// 距離フィルター
-enum DistanceFilter: String, CaseIterable {
-    case all = "すべて"
-    case near = "~1km"
-    case medium = "~10km"
-    case far = "~50km"
-    case veryFar = "~100km"
-}
-
-// カテゴリーフィルター
-enum CategoryFilter: String, CaseIterable {
-    case all = "すべて"
-    case landmark = "観光名所"
-    case food = "フード"
-    case convenienceStore = "コンビニ"
 }

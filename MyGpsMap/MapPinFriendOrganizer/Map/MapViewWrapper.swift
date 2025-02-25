@@ -60,7 +60,7 @@ struct MapViewWrapper: UIViewRepresentable {
             uiView.setRegion(region, animated: true)
         }
     }
-
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }

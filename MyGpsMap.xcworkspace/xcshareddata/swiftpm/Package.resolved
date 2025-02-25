@@ -1,5 +1,5 @@
 {
-  "originHash" : "8579f076f505c39a6a57ae7cb76ff734c44eaa3eec116550d20264066e884060",
+  "originHash" : "4165fade608f19aac814a044b5b4262aacc25621a33e592fe2a31d618e0968ff",
   "pins" : [
     {
       "identity" : "amplify-ios",
@@ -35,6 +35,15 @@
       "state" : {
         "revision" : "c6c1064da9bfccb119a7a8ab9ba636fb3bbfa6f5",
         "version" : "1.0.47"
+      }
+    },
+    {
+      "identity" : "ios-places-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/googlemaps/ios-places-sdk",
+      "state" : {
+        "revision" : "d4f4b9b3b6c45452f94cee45d64cf60f2fa174dc",
+        "version" : "9.3.0"
       }
     },
     {

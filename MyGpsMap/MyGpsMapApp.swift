@@ -53,6 +53,7 @@ class AppDelegateAdaptor: NSObject, UIApplicationDelegate {
         // Taskを使って非同期処理を呼ぶ
         Task {
             await authService.checkSessionStatus() // セッション状態を確認
+            LocationManager()
         }
         
         return true

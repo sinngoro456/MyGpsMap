@@ -12,6 +12,7 @@
 		99D2DFC54C0CE7054BEAC45A /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = DEBBCC96568A13679E716D0A /* awsconfiguration.json */; };
 		9B33BE16E871E8295C7B07E6 /* Pods_MyGpsMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299802AAF90E1DB8A1FB7D7 /* Pods_MyGpsMapUITests.framework */; };
 		CA33928E2D6CFBAF00F77832 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA33928D2D6CFBAF00F77832 /* LocationManager.swift */; };
+		CA3392912D6E16B400F77832 /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CA3392902D6E16B400F77832 /* GooglePlacesSwift */; };
 		CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967D92D676D00004BBE38 /* MapView.swift */; };
 		CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967DB2D67857B004BBE38 /* RideView.swift */; };
 		CA404DA12D6CD517008538C2 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA404DA02D6CD517008538C2 /* SpotView.swift */; };
@@ -121,6 +122,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */,
+				CA3392912D6E16B400F77832 /* GooglePlacesSwift in Frameworks */,
 				CA40FD052D11B742002052C1 /* Amplify in Frameworks */,
 				CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */,
 				E37E8CD4F84F14D197A2AE88 /* Pods_MyGpsMap.framework in Frameworks */,
@@ -356,6 +358,7 @@
 			packageProductDependencies = (
 				CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */,
 				CA40FD042D11B742002052C1 /* Amplify */,
+				CA3392902D6E16B400F77832 /* GooglePlacesSwift */,
 			);
 			productName = MyGpsMap;
 			productReference = CA68F1902CAC23030060B8BB /* MyGpsMap.app */;
@@ -433,6 +436,7 @@
 			mainGroup = CA68F1872CAC23030060B8BB;
 			packageReferences = (
 				CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */,
+				CA33928F2D6E16B400F77832 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 			);
 			productRefGroup = CA68F1912CAC23030060B8BB /* Products */;
 			projectDirPath = "";
@@ -935,6 +939,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CA33928F2D6E16B400F77832 /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.3.0;
+			};
+		};
 		CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
@@ -946,6 +958,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CA3392902D6E16B400F77832 /* GooglePlacesSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA33928F2D6E16B400F77832 /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlacesSwift;
+		};
 		CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CADB0BE22D0AA36D001C175D /* XCRemoteSwiftPackageReference "amplify-ios" */;
