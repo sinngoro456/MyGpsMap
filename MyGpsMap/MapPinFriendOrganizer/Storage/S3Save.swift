@@ -7,6 +7,7 @@
 
 import Foundation
 import AWSS3
+import UIKit
 
 class S3Save {
     let bucket = "mygpsmapdb"
@@ -145,8 +146,7 @@ extension S3Save{
             
             for key in s3Keys {
                 if let userId = key.split(separator: "/").first,
-                   let pinIdStr = key.split(separator: "/").dropFirst().first?.split(separator: "_").first,
-                   let pinId = Int(pinIdStr),
+                   let pinId = key.split(separator: "/").dropFirst().first?.split(separator: "_").first,
                    let index = pins.firstIndex(where: { $0.user_id == String(userId) && $0.pin_id == String(pinId) }) {
                     sortedKeys[index].append(key)
                 }
