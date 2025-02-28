@@ -11,7 +11,7 @@ struct ContentView: View {
     var body: some View {
         TabView {
             // ホームタブ
-            HomeView()
+            SpotView()
                 .tabItem {
                     // systemImage: "house" が家のアイコン
                     Label("ホーム", systemImage: "house")

@@ -13,19 +13,17 @@
 		9B33BE16E871E8295C7B07E6 /* Pods_MyGpsMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299802AAF90E1DB8A1FB7D7 /* Pods_MyGpsMapUITests.framework */; };
 		CA33928E2D6CFBAF00F77832 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA33928D2D6CFBAF00F77832 /* LocationManager.swift */; };
 		CA3392912D6E16B400F77832 /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CA3392902D6E16B400F77832 /* GooglePlacesSwift */; };
+		CA3392932D6F3EF100F77832 /* iconForMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3392922D6F3EF100F77832 /* iconForMapItem.swift */; };
 		CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967D92D676D00004BBE38 /* MapView.swift */; };
 		CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3967DB2D67857B004BBE38 /* RideView.swift */; };
 		CA404DA12D6CD517008538C2 /* SpotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA404DA02D6CD517008538C2 /* SpotView.swift */; };
 		CA404DA32D6CD978008538C2 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA404DA22D6CD978008538C2 /* SearchView.swift */; };
-		CA404DA52D6CDC65008538C2 /* iconForMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA404DA42D6CDC65008538C2 /* iconForMapItem.swift */; };
 		CA40FD032D11B742002052C1 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD022D11B742002052C1 /* AWSCognitoAuthPlugin */; };
 		CA40FD052D11B742002052C1 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = CA40FD042D11B742002052C1 /* Amplify */; };
 		CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */; };
 		CA5B7F7B2D68DBC700EC14AA /* PinEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */; };
 		CA5B7F7D2D68EAE500EC14AA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F7C2D68EAE500EC14AA /* ImagePicker.swift */; };
 		CA5B7F812D69037500EC14AA /* MapViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5B7F802D69037500EC14AA /* MapViewWrapper.swift */; };
-		CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */; };
-		CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1932CAC23030060B8BB /* AppDelegate.swift */; };
 		CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA68F19C2CAC23030060B8BB /* MyGpsMap.xcdatamodeld */; };
 		CA68F1A02CAC23050060B8BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA68F19F2CAC23050060B8BB /* Assets.xcassets */; };
 		CA68F1AE2CAC23060060B8BB /* MyGpsMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1AD2CAC23060060B8BB /* MyGpsMapTests.swift */; };
@@ -35,7 +33,6 @@
 		CAB28B3A2D674EC200975D6F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B392D674EC200975D6F /* ContentView.swift */; };
 		CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */; };
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
-		CADB0BEA2D0AA8EF001C175D /* SignInUISetUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE92D0AA8EF001C175D /* SignInUISetUp.swift */; };
 		CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A802D2723AF006D59F2 /* Data_Friend.swift */; };
 		CAE18A832D272570006D59F2 /* FriendManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A822D272570006D59F2 /* FriendManager.swift */; };
 		CAE18A862D27794D006D59F2 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAE18A852D27794D006D59F2 /* UserSessionManager.swift */; };
@@ -76,19 +73,17 @@
 		C76CAF91FE9B18AC9A500EC9 /* Pods-MyGpsMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapUITests.release.xcconfig"; path = "Target Support Files/Pods-MyGpsMapUITests/Pods-MyGpsMapUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C889174FA7233287F07A05BD /* Pods-MyGpsMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyGpsMapTests.debug.xcconfig"; path = "Target Support Files/Pods-MyGpsMapTests/Pods-MyGpsMapTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CA33928D2D6CFBAF00F77832 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		CA3392922D6F3EF100F77832 /* iconForMapItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iconForMapItem.swift; sourceTree = "<group>"; };
 		CA3967D92D676D00004BBE38 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		CA3967DB2D67857B004BBE38 /* RideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideView.swift; sourceTree = "<group>"; };
 		CA404DA02D6CD517008538C2 /* SpotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotView.swift; sourceTree = "<group>"; };
 		CA404DA22D6CD978008538C2 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		CA404DA42D6CDC65008538C2 /* iconForMapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iconForMapItem.swift; sourceTree = "<group>"; };
 		CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		CA5B7F782D686CB500EC14AA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinEditView.swift; sourceTree = "<group>"; };
 		CA5B7F7C2D68EAE500EC14AA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		CA5B7F802D69037500EC14AA /* MapViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewWrapper.swift; sourceTree = "<group>"; };
-		CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_Login.swift; sourceTree = "<group>"; };
 		CA68F1902CAC23030060B8BB /* MyGpsMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGpsMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA68F1932CAC23030060B8BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CA68F19D2CAC23030060B8BB /* MyGpsMap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyGpsMap.xcdatamodel; sourceTree = "<group>"; };
 		CA68F19F2CAC23050060B8BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA68F1A92CAC23060060B8BB /* MyGpsMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyGpsMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,7 +95,6 @@
 		CAB28B392D674EC200975D6F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapApp.swift; sourceTree = "<group>"; };
 		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
-		CADB0BE92D0AA8EF001C175D /* SignInUISetUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUISetUp.swift; sourceTree = "<group>"; };
 		CAE18A802D2723AF006D59F2 /* Data_Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data_Friend.swift; sourceTree = "<group>"; };
 		CAE18A822D272570006D59F2 /* FriendManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendManager.swift; sourceTree = "<group>"; };
 		CAE18A852D27794D006D59F2 /* UserSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
@@ -180,10 +174,9 @@
 		CA06CE1A2CAED7B90073950D /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				CA3967D92D676D00004BBE38 /* MapView.swift */,
+				CA5B7F7C2D68EAE500EC14AA /* ImagePicker.swift */,
 				CA5B7F802D69037500EC14AA /* MapViewWrapper.swift */,
 				CAE18A8C2D299C79006D59F2 /* Definition */,
-				CA404DA42D6CDC65008538C2 /* iconForMapItem.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -191,13 +184,24 @@
 		CA06CE1D2CAED7E30073950D /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
-				CADB0BE92D0AA8EF001C175D /* SignInUISetUp.swift */,
-				CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */,
-				CA6056322D0BF07600CFC5C3 /* ViewController_Login.swift */,
 				CADB0BE72D0AA7C9001C175D /* AuthService.swift */,
 				CAE18A852D27794D006D59F2 /* UserSessionManager.swift */,
 			);
 			path = UserProfile;
+			sourceTree = "<group>";
+		};
+		CA3392942D71974500F77832 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CA404DA22D6CD978008538C2 /* SearchView.swift */,
+				CA404DA02D6CD517008538C2 /* SpotView.swift */,
+				CA3967D92D676D00004BBE38 /* MapView.swift */,
+				CA3967DB2D67857B004BBE38 /* RideView.swift */,
+				CA5B7F6D2D685A7700EC14AA /* MyPageView.swift */,
+				CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */,
+				CAB28B392D674EC200975D6F /* ContentView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		CA68F1872CAC23030060B8BB = {
@@ -227,13 +231,8 @@
 		CA68F1922CAC23030060B8BB /* MyGpsMap */ = {
 			isa = PBXGroup;
 			children = (
-				CA68F1932CAC23030060B8BB /* AppDelegate.swift */,
+				CA3392942D71974500F77832 /* View */,
 				CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */,
-				CA404DA22D6CD978008538C2 /* SearchView.swift */,
-				CA404DA02D6CD517008538C2 /* SpotView.swift */,
-				CAB28B392D674EC200975D6F /* ContentView.swift */,
-				CA33928D2D6CFBAF00F77832 /* LocationManager.swift */,
-				CA3967DB2D67857B004BBE38 /* RideView.swift */,
 				CA5B7F782D686CB500EC14AA /* Info.plist */,
 				CAE18A8B2D298E3A006D59F2 /* MapPinFriendOrganizer */,
 				CA68F19F2CAC23050060B8BB /* Assets.xcassets */,
@@ -293,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				CAE18A872D298D93006D59F2 /* MapPinFriendOrganizer.swift */,
+				CA33928D2D6CFBAF00F77832 /* LocationManager.swift */,
 				CA06CE1D2CAED7E30073950D /* UserProfile */,
 				CAE18A842D27262A006D59F2 /* Storage */,
 				CAE18A7F2D272366006D59F2 /* Friend */,
@@ -305,6 +305,7 @@
 		CAE18A8C2D299C79006D59F2 /* Definition */ = {
 			isa = PBXGroup;
 			children = (
+				CA3392922D6F3EF100F77832 /* iconForMapItem.swift */,
 				CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */,
 			);
 			path = Definition;
@@ -323,8 +324,6 @@
 			children = (
 				CAFD51092D2329FA00D544FF /* Definition */,
 				CAE82BFC2D14081D003620BF /* PinManager.swift */,
-				CA5B7F7C2D68EAE500EC14AA /* ImagePicker.swift */,
-				CA5B7F7A2D68DBC700EC14AA /* PinEditView.swift */,
 			);
 			path = Pin;
 			sourceTree = "<group>";
@@ -572,9 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA3967DC2D67857B004BBE38 /* RideView.swift in Sources */,
-				CADB0BEA2D0AA8EF001C175D /* SignInUISetUp.swift in Sources */,
 				CAFD51032D2318B700D544FF /* LocalSave.swift in Sources */,
-				CA6056332D0BF07600CFC5C3 /* ViewController_Login.swift in Sources */,
 				CA404DA12D6CD517008538C2 /* SpotView.swift in Sources */,
 				CAE18A832D272570006D59F2 /* FriendManager.swift in Sources */,
 				CA3967DA2D676D00004BBE38 /* MapView.swift in Sources */,
@@ -582,8 +579,6 @@
 				CA404DA32D6CD978008538C2 /* SearchView.swift in Sources */,
 				CAFD51072D231BFE00D544FF /* DynamoDBSave.swift in Sources */,
 				CAE18A862D27794D006D59F2 /* UserSessionManager.swift in Sources */,
-				CA68F1942CAC23030060B8BB /* AppDelegate.swift in Sources */,
-				CA404DA52D6CDC65008538C2 /* iconForMapItem.swift in Sources */,
 				CAB28B3A2D674EC200975D6F /* ContentView.swift in Sources */,
 				CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */,
 				CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */,
@@ -595,6 +590,7 @@
 				CA5B7F812D69037500EC14AA /* MapViewWrapper.swift in Sources */,
 				CAE18A882D298D93006D59F2 /* MapPinFriendOrganizer.swift in Sources */,
 				CA5B7F7B2D68DBC700EC14AA /* PinEditView.swift in Sources */,
+				CA3392932D6F3EF100F77832 /* iconForMapItem.swift in Sources */,
 				CA68F19E2CAC23030060B8BB /* MyGpsMap.xcdatamodeld in Sources */,
 				CAE89E022CB2F8FB001F9DA3 /* CustomAnnotationView.swift in Sources */,
 				CA33928E2D6CFBAF00F77832 /* LocationManager.swift in Sources */,

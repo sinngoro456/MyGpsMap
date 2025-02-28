@@ -3,7 +3,7 @@
 //  MyGpsMap
 //
 //  Created by 川渕悟郎 on 2025/02/25.
-// fsq3xtMD6Rzwra7u0csfWJOsrwx006yRHusCNu8wca4sDfc=
+// 
 
 import SwiftUI
 import CoreLocation
@@ -62,7 +62,7 @@ struct FoursquarePhotoResponse: Decodable {
 }
 
 class FoursquareService {
-    private let apiKey = "fsq3xtMD6Rzwra7u0csfWJOsrwx006yRHusCNu8wca4sDfc="
+    private let apiKey = ""
     
     // 現在地近くの場所を取得
     func fetchNearbyPlaces(location: CLLocationCoordinate2D, completion: @escaping ([FoursquarePlace]?) -> Void) {

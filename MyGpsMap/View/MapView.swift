@@ -59,7 +59,7 @@ struct MapView: View {
                                     case .followWithHeading:
                                         trackingMode = .none
                                     @unknown default:
-                                        trackingMode = .follow
+                                        trackingMode = .none
                                     }
                                 } label: {
                                     Image(systemName: {

@@ -53,12 +53,13 @@ struct MapViewWrapper: UIViewRepresentable {
     func updateUIView(_ uiView: MKMapView, context: Context) {
         uiView.removeAnnotations(uiView.annotations)
         addPins(pins: PinManager.shared.pins, to: uiView)
-        uiView.setUserTrackingMode(.follow, animated: true)
+        uiView.setUserTrackingMode(trackingMode, animated: true)
 
         if let coordinate = searchCoordinate {
             let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
             uiView.setRegion(region, animated: true)
         }
+        searchCoordinate = nil
     }
     
     func makeCoordinator() -> Coordinator {

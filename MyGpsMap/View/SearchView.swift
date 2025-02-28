@@ -13,6 +13,7 @@ struct SearchView: View {
     @State private var searchResults: [MKMapItem] = []
     @Binding var searchCoordinate: CLLocationCoordinate2D?
     @Environment(\.presentationMode) var presentationMode
+    @FocusState private var isTextFieldFocused: Bool  // フォーカス状態を管理
 
     var body: some View {
         VStack {
@@ -21,6 +22,10 @@ struct SearchView: View {
             })
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding()
+            .focused($isTextFieldFocused)  // フォーカス制御
+            .onAppear {
+                isTextFieldFocused = true  // 画面表示時にフォーカス
+            }
 
             List(searchResults, id: \.self) { item in
                 HStack {
