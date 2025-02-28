@@ -22,9 +22,11 @@ class FriendManager: ObservableObject {
     func loadFriendsFromDynamoDB() async {
         do {
             let friendsData = try await DynamoDBSave().loadFriendsfromDynamoDB()
-            self.friends = friendsData[0]
-            self.friendsILike = friendsData[1]
-            self.friendsLikeMe = friendsData[2]
+            DispatchQueue.main.async {
+                self.friends = friendsData[0]
+                self.friendsILike = friendsData[1]
+                self.friendsLikeMe = friendsData[2]
+            }
             print("DynamoDBから友達データを読み込みました。")
             print(self.friends)
             print(self.friendsILike)
@@ -40,12 +42,11 @@ class FriendManager: ObservableObject {
             let currentDateTime = ISO8601DateFormatter().string(from: Date())
             let (newFriendsList, newFriendsILikeList, alreadyFriendsList, alreadyFriendsILikeList, nonExistentUsersList) = try await DynamoDBSave().addFriendsfromDynamoDB(friend_ids: friendIds, writtenDateTime: currentDateTime)
             
-            // 新しい友達と「いいね」した友達を追加
-            self.friends.append(contentsOf: newFriendsList)
-            self.friendsILike.append(contentsOf: newFriendsILikeList)
+            // メインスレッドで @Published プロパティを更新
+            await loadFriendsFromDynamoDB()
             
             // ポップアップメッセージの作成
-            var message = ""
+            var message = "友達が追加されました。"
             
             if !alreadyFriendsList.isEmpty {
                 message = "既に友達に追加されています: \(alreadyFriendsList.map { $0.user_id }.joined(separator: ", "))\n"
@@ -74,6 +75,12 @@ class FriendManager: ObservableObject {
     func clearFriends() {
         friends.removeAll()
         print("すべての友達がクリアされました。")
+        do {
+            DispatchQueue.main.async {
+                self.friends=[]
+                self.friendsILike=[]
+            }
+        }
     }
     
     // ユーザーIDのリストを取得するメソッド

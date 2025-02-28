@@ -210,18 +210,6 @@ struct MyPageView: View {
         // friendsList更新
         friendsList = FriendManager.shared.getFriendUserIdList()
     }
-    
-    /// フレンド追加
-    private func addFriend() async {
-        guard !newFriendId.isEmpty else { return }
-        do {
-            await FriendManager.shared.addFriends([newFriendId])
-            print("フレンドが追加されました：\(newFriendId)")
-            // リスト更新
-            friendsList = FriendManager.shared.getFriendUserIdList()
-            newFriendId = ""
-        }
-    }
 }
 
 struct ProfileSection: View {
@@ -359,6 +347,7 @@ struct FriendView: View {
             DispatchQueue.main.async {
                 alertMessage = message
                 isShowAlert = true
+                friendManager.objectWillChange.send() // 手動でビューを更新
             }
         }
     }
