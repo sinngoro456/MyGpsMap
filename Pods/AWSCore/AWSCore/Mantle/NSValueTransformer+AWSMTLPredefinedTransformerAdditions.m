@@ -11,7 +11,7 @@
 #import "AWSMTLModel.h"
 #import "AWSMTLValueTransformer.h"
 
-void awsmtl_loadMTLPredefinedTransformerAdditions(void){
+void awsmtl_loadMTLPredefinedTransformerAdditions(){
 }
 
 NSString * const AWSMTLURLValueTransformerName = @"AWSMTLURLValueTransformerName";

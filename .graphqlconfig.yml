@@ -1,0 +1,16 @@
+projects:
+  MyGpsMapAPI:
+    schemaPath: graphql/schema.json
+    includes:
+      - graphql/queries/schema.graphql
+    excludes:
+      - ./amplify/**
+      - API.swift
+    extensions:
+      amplify:
+        codeGenTarget: swift
+        generatedFileName: API.swift
+        docsFilePath: graphql/queries
+        region: ap-northeast-1
+        apiId: zjci2srwl5cxnloned2krglf7a
+        maxDepth: 2

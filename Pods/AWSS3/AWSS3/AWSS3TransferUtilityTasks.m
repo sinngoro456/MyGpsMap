@@ -19,8 +19,119 @@
 #import "AWSS3PreSignedURL.h"
 #import <AWSCore/AWSFMDB.h>
 
-#import "AWSS3TransferUtilityTasks+Completion.h"
-#import "AWSS3TransferUtility_private.h"
+
+@interface AWSS3TransferUtilityExpression()
+@property (strong, nonatomic) NSMutableDictionary<NSString *, NSString *> *internalRequestHeaders;
+
+@property (strong, nonatomic) NSMutableDictionary<NSString *, NSString *> *internalRequestParameters;
+
+- (void)assignRequestParameters:(AWSS3GetPreSignedURLRequest *)getPreSignedURLRequest;
+- (void)assignRequestHeaders:(AWSS3GetPreSignedURLRequest *)getPreSignedURLRequest;
+@end
+
+@interface AWSS3TransferUtilityUploadExpression()
+@property (copy, atomic) AWSS3TransferUtilityUploadCompletionHandlerBlock completionHandler;
+@end
+
+@interface AWSS3TransferUtilityMultiPartUploadExpression()
+@property (strong, nonatomic) NSMutableDictionary<NSString *, NSString *> *internalRequestHeaders;
+@property (strong, nonatomic) NSMutableDictionary<NSString *, NSString *> *internalRequestParameters;
+- (void)assignRequestParameters:(AWSS3GetPreSignedURLRequest *)getPreSignedURLRequest;
+@property (copy, atomic) AWSS3TransferUtilityMultiPartUploadCompletionHandlerBlock completionHandler;
+@end
+
+
+@interface AWSS3TransferUtilityDownloadExpression()
+@property (copy, atomic) AWSS3TransferUtilityDownloadCompletionHandlerBlock completionHandler;
+@end
+
+
+@interface AWSS3TransferUtilityTask()
+
+@property (strong, nonatomic) NSURLSessionTask *sessionTask;
+@property (strong, nonatomic) NSString *transferID;
+@property (strong, nonatomic) NSString *bucket;
+@property (strong, nonatomic) NSString *key;
+@property (strong, nonatomic) NSData *data;
+@property (strong, nonatomic) NSURL *location;
+@property (strong, nonatomic) NSError *error;
+@property int retryCount;
+@property NSString *nsURLSessionID;
+@property NSString *file;
+@property NSString *transferType;
+@property AWSS3TransferUtilityTransferStatusType status;
+@property (strong) AWSFMDatabaseQueue *databaseQueue;
+@end
+
+@interface AWSS3TransferUtilityUploadTask()
+
+@property (strong, nonatomic) AWSS3TransferUtilityUploadExpression *expression;
+@property NSString *responseData;
+@property (atomic) BOOL cancelled;
+@property BOOL temporaryFileCreated;
+@end
+
+@interface AWSS3TransferUtilityMultiPartUploadTask()
+
+@property (strong, nonatomic) AWSS3TransferUtilityMultiPartUploadExpression *expression;
+@property NSString * uploadID;
+@property BOOL cancelled;
+@property BOOL temporaryFileCreated;
+@property (strong, atomic) NSMutableDictionary <NSNumber *, AWSS3TransferUtilityUploadSubTask *> *waitingPartsDictionary;
+@property (strong, atomic) NSMutableDictionary <NSNumber *, AWSS3TransferUtilityUploadSubTask *> *completedPartsDictionary;
+@property (strong, atomic) NSMutableDictionary <NSNumber *, AWSS3TransferUtilityUploadSubTask *> *inProgressPartsDictionary;
+@property int retryCount;
+@property int partNumber;
+@property NSString *file;
+@property NSString *transferType;
+@property NSString *nsURLSessionID;
+@property (strong) AWSFMDatabaseQueue *databaseQueue;
+@property (strong, nonatomic) NSError *error;
+@property (strong, nonatomic) NSString *bucket;
+@property (strong, nonatomic) NSString *key;
+@property (strong, nonatomic) NSString *transferID;
+@property AWSS3TransferUtilityTransferStatusType status;
+@property NSNumber *contentLength;
+@end
+
+@interface AWSS3TransferUtilityUploadSubTask()
+@property (strong, nonatomic) NSURLSessionTask *sessionTask;
+@property (strong, nonatomic) NSNumber *partNumber;
+@property (readwrite) NSUInteger taskIdentifier;
+@property (strong, nonatomic) NSString *eTag;
+@property int64_t totalBytesExpectedToSend;
+@property int64_t totalBytesSent;
+@property NSString *responseData;
+@property NSString *file;
+@property NSString *transferType;
+@property NSString *transferID;
+@property AWSS3TransferUtilityTransferStatusType status;
+@property NSString *uploadID;
+
+@end
+
+@interface AWSS3TransferUtilityDownloadTask()
+
+@property (strong, nonatomic) AWSS3TransferUtilityDownloadExpression *expression;
+@property BOOL cancelled;
+@property NSString *responseData;
+@end
+
+
+
+@interface AWSS3TransferUtilityDatabaseHelper()
+
++ (void) deleteTransferRequestFromDB:(NSString *) transferID
+                       databaseQueue: (AWSFMDatabaseQueue *) databaseQueue;
+
++ (void) updateTransferRequestInDB: (NSString *) transferID
+                        partNumber: (NSNumber *) partNumber
+                    taskIdentifier: (NSUInteger) taskIdentifier
+                              eTag: (NSString *) eTag
+                            status: (AWSS3TransferUtilityTransferStatusType) status
+                       retry_count: (NSUInteger) retryCount
+                     databaseQueue: (AWSFMDatabaseQueue *) databaseQueue;
+@end
 
 #pragma mark - AWSS3TransferUtilityTasks
 
@@ -108,10 +219,13 @@
 -(void) setCompletionHandler:(AWSS3TransferUtilityUploadCompletionHandlerBlock)completionHandler {
     
     self.expression.completionHandler = completionHandler;
-    //If the task has already completed successfully
-    //Or the task has completed with error, complete the task
-    if (self.status == AWSS3TransferUtilityTransferStatusCompleted || self.error) {
-        [self complete];
+    //If the task has already completed successfully, call the completion handler
+    if (self.status == AWSS3TransferUtilityTransferStatusCompleted ) {
+        _expression.completionHandler(self, nil);
+    }
+    //If the task has completed with error, call the completion handler
+    else if (self.error) {
+        _expression.completionHandler(self, self.error);
     }
 }
 
@@ -125,9 +239,10 @@
 
 - (instancetype)init {
     if (self = [super init]) {
+        _progress = [NSProgress new];
         _waitingPartsDictionary = [NSMutableDictionary new];
         _inProgressPartsDictionary = [NSMutableDictionary new];
-        _completedPartsSet = [NSMutableSet new];
+        _completedPartsDictionary = [NSMutableDictionary new];
     }
     return self;
 }
@@ -146,13 +261,8 @@
         AWSS3TransferUtilityUploadSubTask *subTask = [self.inProgressPartsDictionary objectForKey:key];
         [subTask.sessionTask cancel];
     }
-
-    for (NSNumber *key in [self.waitingPartsDictionary allKeys]) {
-        AWSS3TransferUtilityUploadSubTask *subTask = [self.waitingPartsDictionary objectForKey:key];
-        [subTask.sessionTask cancel];
-    }
-
-    [AWSS3TransferUtilityDatabaseHelper deleteTransferRequestFromDB:self.transferID databaseQueue:self.databaseQueue];
+    
+    [AWSS3TransferUtilityDatabaseHelper deleteTransferRequestFromDB:_transferID databaseQueue:self.databaseQueue];
 }
 
 - (void)resume {
@@ -217,10 +327,13 @@
 -(void) setCompletionHandler:(AWSS3TransferUtilityMultiPartUploadCompletionHandlerBlock)completionHandler {
     
     self.expression.completionHandler = completionHandler;
-    //If the task has already completed successfully
-    //Or the task has completed with error, complete the task
-    if (self.status == AWSS3TransferUtilityTransferStatusCompleted || self.error) {
-        [self complete];
+    //If the task has already completed successfully, call the completion handler
+    if (self.status == AWSS3TransferUtilityTransferStatusCompleted) {
+        _expression.completionHandler(self, nil);
+    }
+    //If the task has completed with error, call the completion handler
+    else if (self.error ) {
+        _expression.completionHandler(self, self.error);
     }
 }
 
@@ -249,10 +362,13 @@
 -(void) setCompletionHandler:(AWSS3TransferUtilityDownloadCompletionHandlerBlock)completionHandler {
     
     self.expression.completionHandler = completionHandler;
-    //If the task has already completed successfully
-    //Or the task has completed with error, complete the task
-    if (self.status == AWSS3TransferUtilityTransferStatusCompleted || self.error) {
-        [self complete];
+    //If the task has already completed successfully, call the completion handler
+    if (self.status == AWSS3TransferUtilityTransferStatusCompleted) {
+        _expression.completionHandler(self, self.location, self.data, nil);
+    }
+    //If the task has completed with error, call the completion handler
+    else if (self.error ) {
+        _expression.completionHandler(self, self.location, self.data, self.error);
     }
 }
 
@@ -326,7 +442,6 @@
     if (self = [super init]) {
         _internalRequestHeaders = [NSMutableDictionary new];
         _internalRequestParameters = [NSMutableDictionary new];
-        _useContentMD5 = false;
     }
     return self;
 }

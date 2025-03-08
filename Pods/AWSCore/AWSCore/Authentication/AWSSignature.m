@@ -43,7 +43,7 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
 }
 
 + (NSString *)hashString:(NSString *)stringToHash {
-    return [[NSString alloc] initWithData:[self hashData:[stringToHash dataUsingEncoding:NSUTF8StringEncoding]]
+    return [[NSString alloc] initWithData:[self hash:[stringToHash dataUsingEncoding:NSUTF8StringEncoding]]
                                  encoding:NSASCIIStringEncoding];
 }
 
@@ -57,19 +57,6 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
 
     CC_SHA256(cStr, (uint32_t)[dataToHash length], result);
 
-    return [[NSData alloc] initWithBytes:result length:CC_SHA256_DIGEST_LENGTH];
-}
-
-+ (NSData *)hashData:(NSData *)dataToHash {
-    if ([dataToHash length] > UINT32_MAX) {
-        return nil;
-    }
-    
-    const void *cStr = [dataToHash bytes];
-    unsigned char result[CC_SHA256_DIGEST_LENGTH];
-    
-    CC_SHA256(cStr, (uint32_t)[dataToHash length], result);
-    
     return [[NSData alloc] initWithBytes:result length:CC_SHA256_DIGEST_LENGTH];
 }
 
@@ -244,7 +231,7 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
         [urlRequest addValue:@"aws-chunked" forHTTPHeaderField:@"Content-Encoding"]; //add aws-chunked keyword for s3 chunk upload
         [urlRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)contentLength] forHTTPHeaderField:@"x-amz-decoded-content-length"];
     } else {
-        contentSha256 = [AWSSignatureSignerUtility hexEncode:[[NSString alloc] initWithData:[AWSSignatureSignerUtility hashData:[urlRequest HTTPBody]] encoding:NSASCIIStringEncoding]];
+        contentSha256 = [AWSSignatureSignerUtility hexEncode:[[NSString alloc] initWithData:[AWSSignatureSignerUtility hash:[urlRequest HTTPBody]] encoding:NSASCIIStringEncoding]];
         //using Content-Length with value of '0' cause auth issue, remove it.
         if (contentLength == 0) {
             [urlRequest setValue:nil forHTTPHeaderField:@"Content-Length"];
@@ -337,7 +324,7 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
         query = [NSString stringWithFormat:@""];
     }
 
-    NSString *contentSha256 = [AWSSignatureSignerUtility hexEncode:[[NSString alloc] initWithData:[AWSSignatureSignerUtility hashData:request.HTTPBody] encoding:NSASCIIStringEncoding]];
+    NSString *contentSha256 = [AWSSignatureSignerUtility hexEncode:[[NSString alloc] initWithData:[AWSSignatureSignerUtility hash:request.HTTPBody] encoding:NSASCIIStringEncoding]];
 
     NSString *canonicalRequest = [AWSSignatureV4Signer getCanonicalizedRequest:request.HTTPMethod
                                                                           path:path
@@ -351,7 +338,7 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
     NSString *scope = [NSString stringWithFormat:@"%@/%@/%@/%@",
                        dateStamp,
                        self.endpoint.regionName,
-                       self.endpoint.signingName,
+                       self.endpoint.serviceName,
                        AWSSignatureV4Terminator];
     NSString *signingCredentials = [NSString stringWithFormat:@"%@/%@",
                                     credentials.accessKey,
@@ -367,7 +354,7 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
     NSData *kSigning  = [AWSSignatureV4Signer getV4DerivedKey:credentials.secretKey
                                                          date:dateStamp
                                                        region:self.endpoint.regionName
-                                                      service:self.endpoint.signingName];
+                                                      service:self.endpoint.serviceName];
     NSData *signature = [AWSSignatureSignerUtility sha256HMacWithData:[stringToSign dataUsingEncoding:NSUTF8StringEncoding]
                                                               withKey:kSigning];
 
@@ -507,24 +494,13 @@ NSString *const AWSSignatureV4Terminator = @"aws4_request";
         } else {
             pathToEncode = urlComponents.path;
         }
-        
-        NSString *canonicalURI;
-        if ([[serviceName lowercaseString] isEqualToString:@"s3"]) {
-            canonicalURI = [NSString stringWithFormat:@"/%@", [pathToEncode aws_stringWithURLEncodingPath]];
-        } else {
-            NSCharacterSet *pathChars = [NSCharacterSet URLPathAllowedCharacterSet];
-            canonicalURI = [NSString stringWithFormat:@"/%@",
-                                     [[[[pathToEncode stringByRemovingPercentEncoding]
-                                        stringByRemovingPercentEncoding]
-                                       stringByAddingPercentEncodingWithAllowedCharacters: pathChars]
-                                      aws_stringWithURLEncodingPathWithoutPriorDecoding]];
-        }
+        NSString *canonicalURI = [NSString stringWithFormat:@"/%@", [pathToEncode aws_stringWithURLEncodingPath]];
 
         NSString *contentSha256;
         if(signBody && [request.HTTPMethod isEqualToString:@"GET"]){
             //in case of http get we sign the body as an empty string only if the sign body flag is set to true
             NSData *emptyData = [@"" dataUsingEncoding:NSUTF8StringEncoding];
-            NSData *emptyDataHash = [AWSSignatureSignerUtility hashData:emptyData];
+            NSData *emptyDataHash = [AWSSignatureSignerUtility hash:emptyData];
             NSString *emptyDataEncodedString = [[NSString alloc] initWithData:emptyDataHash
                                                                      encoding:NSASCIIStringEncoding];
             contentSha256 = [AWSSignatureSignerUtility hexEncode:emptyDataEncodedString];
@@ -945,7 +921,7 @@ static NSString *const emptyStringSha256 = @"e3b0c44298fc1c149afbf4c8996fb92427a
 
 // Signs data
 - (NSData *)getSignedChunk:(NSData *)data {
-    NSString *chunkSha256 = [self dataToHexString:[AWSSignatureSignerUtility hashData:data]];
+    NSString *chunkSha256 = [self dataToHexString:[AWSSignatureSignerUtility hash:data]];
     NSString *stringToSign = [NSString stringWithFormat:
                               @"%@\n%@\n%@\n%@\n%@\n%@",
                               @"AWS4-HMAC-SHA256-PAYLOAD",

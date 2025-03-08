@@ -67,13 +67,13 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
 
         //Device Details
         UIDevice* currentDevice = [UIDevice currentDevice];
-        NSString *autoUpdatingLocaleIdentifier = [[NSLocale autoupdatingCurrentLocale] localeIdentifier];
+        NSString *autoUpdatingLoaleIdentifier = [[NSLocale autoupdatingCurrentLocale] localeIdentifier];
         _devicePlatform = [currentDevice systemName] ? [currentDevice systemName] : AWSClientContextUnknown;
         _deviceModel = [currentDevice model] ? [currentDevice model] : AWSClientContextUnknown;
         _deviceModelVersion = [self deviceModelVersionCode] ? [self deviceModelVersionCode] : AWSClientContextUnknown;
         _devicePlatformVersion = [currentDevice systemVersion] ? [currentDevice systemVersion] : AWSClientContextUnknown;
         _deviceManufacturer = @"apple";
-        _deviceLocale = autoUpdatingLocaleIdentifier ? autoUpdatingLocaleIdentifier : AWSClientContextUnknown;
+        _deviceLocale = autoUpdatingLoaleIdentifier ? autoUpdatingLoaleIdentifier : AWSClientContextUnknown;
 
         _customAttributes = @{};
         _serviceDetails = [NSMutableDictionary new];
@@ -113,7 +113,6 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
                                                          error:&error];
     if (!JSONData) {
         AWSDDLogError(@"Failed to serialize JSON Data. [%@]", error);
-        return nil;
     }
 
     return [[NSString alloc] initWithData:JSONData

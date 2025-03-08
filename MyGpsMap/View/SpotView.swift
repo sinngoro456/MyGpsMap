@@ -62,7 +62,7 @@ struct FoursquarePhotoResponse: Decodable {
 }
 
 class FoursquareService {
-    private let apiKey = ""
+    private let apiKey = "fsq3hMiJOqmaHMk56yxpKqTb/rqkqST8WdI0A/C3MuygPKE="
     
     // 現在地近くの場所を取得
     func fetchNearbyPlaces(location: CLLocationCoordinate2D, completion: @escaping ([FoursquarePlace]?) -> Void) {

@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2024, Deusty, LLC
+// Copyright (c) 2010-2016, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -20,8 +20,6 @@
 
 #import "AWSDDLog.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  * This class provides an abstract implementation of a database logger.
  *
@@ -30,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  * and override the methods in the implementation file that are prefixed with "db_".
  **/
 @interface AWSDDAbstractDatabaseLogger : AWSDDAbstractLogger {
-
+    
 @protected
     NSUInteger _saveThreshold;
     NSTimeInterval _saveInterval;
@@ -38,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSTimeInterval _deleteInterval;
     BOOL _deleteOnEverySave;
     
-    NSInteger _saveTimerSuspended;
+    BOOL _saveTimerSuspended;
     NSUInteger _unsavedCount;
     dispatch_time_t _unsavedTime;
     dispatch_source_t _saveTimer;
@@ -123,5 +121,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteOldLogEntries;
 
 @end
-
-NS_ASSUME_NONNULL_END

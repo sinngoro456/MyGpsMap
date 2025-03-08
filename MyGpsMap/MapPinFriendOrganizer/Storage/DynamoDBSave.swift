@@ -32,10 +32,7 @@ class DynamoDBSave {
         ]
         
         // AWSのAPIをAlamofireで叩く
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
-            .uploadProgress { progress in
-                print("アップロード進捗: \(progress.fractionCompleted)")
-            }
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
             .responseData { response in
                 switch response.result {
                 case .success(let value):
@@ -65,7 +62,7 @@ class DynamoDBSave {
         ]
         
         return try await withCheckedThrowingContinuation { continuation in
-            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
                 .responseData { response in
                     switch response.result {
                     case .success(let value):
@@ -138,7 +135,7 @@ class DynamoDBSave {
         ]
         print(parameters)
         return try await withCheckedThrowingContinuation { continuation in
-            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
                 .responseData { response in
                     switch response.result {
                     case .success(let value):
@@ -209,7 +206,7 @@ class DynamoDBSave {
         ]
         
         return try await withCheckedThrowingContinuation { continuation in
-            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
                 .responseData { response in
                     switch response.result {
                     case .success(let value):
@@ -257,7 +254,7 @@ class DynamoDBSave {
         ]
 
         return try await withCheckedThrowingContinuation { continuation in
-            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
+            Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
                 .responseData { response in
                     switch response.result {
                     case .success(let value):

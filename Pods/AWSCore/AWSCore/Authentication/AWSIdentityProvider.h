@@ -22,7 +22,6 @@ FOUNDATION_EXPORT NSString *const AWSCognitoIdentityIdChangedNotification;
 FOUNDATION_EXPORT NSString *const AWSCognitoNotificationPreviousId;
 FOUNDATION_EXPORT NSString *const AWSCognitoNotificationNewId;
 
-FOUNDATION_EXPORT NSString *const AWSIdentityProviderApple;
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderDigits;
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderFacebook;
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderGoogle;
@@ -87,7 +86,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderHelperErrorType) {
 /**
  The identity id as determined by the Amazon Cognito service
  */
-@property (atomic, strong, nullable) NSString *identityId;
+@property (nonatomic, strong, nullable) NSString *identityId;
 
 /**
  */
@@ -123,7 +122,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderHelperErrorType) {
 /**
  The identity id as determined by the Amazon Cognito service
  */
-@property (atomic, strong, nullable) NSString *identityId;
+@property (nonatomic, strong, nullable) NSString *identityId;
 
 /**
  The identity provider manager that asynchronously returns `logins`.
@@ -132,7 +131,6 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderHelperErrorType) {
 
 @end
 
-@class AWSServiceConfiguration;
 /**
  An abstract implementation of the AWSCognitoCredentialsProviderHelper. Developers should extend this class when they want to implement developer authenticated identities and want to support the basic Amazon Cognito authflow in the same application.
  */
@@ -144,12 +142,6 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderHelperErrorType) {
                     identityPoolId:(NSString *)identityPoolId
                    useEnhancedFlow:(BOOL)useEnhancedFlow
            identityProviderManager:(nullable id<AWSIdentityProviderManager>)identityProviderManager;
-
-- (instancetype)initWithRegionType:(AWSRegionType)regionType
-                    identityPoolId:(NSString *)identityPoolId
-                   useEnhancedFlow:(BOOL)useEnhancedFlow
-           identityProviderManager:(nullable id<AWSIdentityProviderManager>)identityProviderManager
-         identityPoolConfiguration:(AWSServiceConfiguration *)configuration;
 @end
 
 NS_ASSUME_NONNULL_END

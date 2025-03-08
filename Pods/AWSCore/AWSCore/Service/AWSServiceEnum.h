@@ -56,10 +56,6 @@ typedef NS_ENUM(NSInteger, AWSRegionType) {
      */
     AWSRegionEUCentral1 NS_SWIFT_NAME(EUCentral1),
     /**
-     *  EU (Zurich)
-     */
-    AWSRegionEUCentral2 NS_SWIFT_NAME(EUCentral2),
-    /**
      *  Asia Pacific (Singapore)
      */
     AWSRegionAPSoutheast1 NS_SWIFT_NAME(APSoutheast1),
@@ -76,25 +72,9 @@ typedef NS_ENUM(NSInteger, AWSRegionType) {
      */
     AWSRegionAPSoutheast2 NS_SWIFT_NAME(APSoutheast2),
     /**
-     * Asia Pacific (Jakarta)
-     */
-    AWSRegionAPSoutheast3 NS_SWIFT_NAME(APSoutheast3),
-    /**
-     * Asia Pacific (Melbourne)
-     */
-    AWSRegionAPSoutheast4 NS_SWIFT_NAME(APSoutheast4),
-    /**
-     * Asia Pacific (Malaysia)
-     */
-    AWSRegionAPSoutheast5 NS_SWIFT_NAME(APSoutheast5),
-    /**
      *  Asia Pacific (Mumbai)
      */
     AWSRegionAPSouth1 NS_SWIFT_NAME(APSouth1),
-    /**
-     *  Asia Pacific (Hyderabad)
-     */
-    AWSRegionAPSouth2 NS_SWIFT_NAME(APSouth2),
     /**
      *  South America (Sao Paulo)
      */
@@ -107,10 +87,6 @@ typedef NS_ENUM(NSInteger, AWSRegionType) {
      *  Canada (Central)
      */
     AWSRegionCACentral1 NS_SWIFT_NAME(CACentral1),
-    /**
-     *  Canada West (Calgary)
-     */
-    AWSRegionCAWest1 NS_SWIFT_NAME(CAWest1),
     /**
      *  AWS GovCloud (US West)
      */
@@ -136,29 +112,9 @@ typedef NS_ENUM(NSInteger, AWSRegionType) {
      */
     AWSRegionAPEast1 NS_SWIFT_NAME(APEast1),
     /**
-     *  Middle East Central (UAE)
-     */
-    AWSRegionMECentral1 NS_SWIFT_NAME(MECentral1),
-    /**
      *  Middle East South (Bahrain)
      */
     AWSRegionMESouth1 NS_SWIFT_NAME(MESouth1),
-    /**
-     *  Africa (Cape Town)
-     */
-    AWSRegionAFSouth1 NS_SWIFT_NAME(AFSouth1),
-    /**
-     *  Europe (Milan)
-     */
-    AWSRegionEUSouth1 NS_SWIFT_NAME(EUSouth1),
-    /**
-     *  Europe (Spain)
-     */
-    AWSRegionEUSouth2 NS_SWIFT_NAME(EUSouth2),
-    /**
-     *  Israel (Tel Aviv)
-     */
-    AWSRegionILCentral1 NS_SWIFT_NAME(ILCentral1),
 };
 
 /**
@@ -249,10 +205,6 @@ typedef NS_ENUM(NSInteger, AWSServiceType) {
      */
     AWSServiceKinesisVideoSignaling NS_SWIFT_NAME(KinesisVideoSignaling),
     /**
-     *  Amazon Kinesis Web RTC Storage
-     */
-    AWSServiceKinesisVideoWebRTCStorage NS_SWIFT_NAME(KinesisVideoWebRTCStorage),
-    /**
      *  AWS Key Management Service (KMS)
      */
     AWSServiceKMS NS_SWIFT_NAME(KMS),
@@ -332,18 +284,7 @@ typedef NS_ENUM(NSInteger, AWSServiceType) {
      *  Amazon Translate
      */
     AWSServiceTranslate NS_SWIFT_NAME(Translate),
-    /**
-     *  Amazon Location
-     */
-    AWSServiceLocation NS_SWIFT_NAME(Location),
-    /**
-     *  Amazon Chime Messaging
-     */
-    AWSServiceChimeSDKMessaging NS_SWIFT_NAME(ChimeSDKMessaging),
-    /**
-     *  Amazon Chime Identity
-     */
-    AWSServiceChimeSDKIdentity NS_SWIFT_NAME(ChimeSDKIdentity),
+    
 };
 
 #endif

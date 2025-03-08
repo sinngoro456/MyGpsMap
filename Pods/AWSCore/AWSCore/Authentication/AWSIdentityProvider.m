@@ -21,7 +21,6 @@ NSString *const AWSCognitoCredentialsProviderHelperErrorDomain = @"com.amazonaws
 NSString *const AWSCognitoNotificationPreviousId = @"PREVID";
 NSString *const AWSCognitoNotificationNewId = @"NEWID";
 
-NSString *const AWSIdentityProviderApple = @"appleid.apple.com";
 NSString *const AWSIdentityProviderDigits = @"www.digits.com";
 NSString *const AWSIdentityProviderFacebook = @"graph.facebook.com";
 NSString *const AWSIdentityProviderGoogle = @"accounts.google.com";
@@ -41,7 +40,7 @@ NSString *const AWSIdentityProviderAmazonCognitoIdentity = @"cognito-identity.am
 
 @property (nonatomic, strong) id<AWSIdentityProviderManager> identityProviderManager;
 @property (nonatomic, strong) NSString *identityPoolId;
-@property (atomic, strong) NSDictionary *cachedLogins;
+@property (nonatomic, strong) NSDictionary *cachedLogins;
 
 @end
 
@@ -52,8 +51,6 @@ NSString *const AWSIdentityProviderAmazonCognitoIdentity = @"cognito-identity.am
 @end
 
 @implementation AWSAbstractCognitoCredentialsProviderHelper
-
-@synthesize identityId = _identityId;
 
 #pragma mark - AWSIdentityProvider
 
@@ -90,19 +87,11 @@ NSString *const AWSIdentityProviderAmazonCognitoIdentity = @"cognito-identity.am
     return [self.cachedLogins count] > 0;
 }
 
-- (NSString *)identityId {
-    @synchronized (self) {
-        return _identityId;
-    }
-}
-
 - (void)setIdentityId:(NSString *)identityId {
-    @synchronized (self) {
-        if (identityId && ![identityId isEqualToString:_identityId]) {
-            [self postIdentityIdChangedNotification:identityId];
-        }
-        _identityId = identityId;
+    if (identityId && ![identityId isEqualToString:_identityId]) {
+        [self postIdentityIdChangedNotification:identityId];
     }
+    _identityId = identityId;
 }
 
 - (void)postIdentityIdChangedNotification:(NSString *)newId {
@@ -136,8 +125,7 @@ NSString *const AWSIdentityProviderAmazonCognitoIdentity = @"cognito-identity.am
 - (instancetype)initWithRegionType:(AWSRegionType)regionType
                     identityPoolId:(NSString *)identityPoolId
                    useEnhancedFlow:(BOOL)useEnhancedFlow
-           identityProviderManager:(id<AWSIdentityProviderManager>)identityProviderManager
-         identityPoolConfiguration:(AWSServiceConfiguration *)configuration {
+           identityProviderManager:(id<AWSIdentityProviderManager>)identityProviderManager {
     if (self = [super init]) {
         _executor = [AWSExecutor executorWithOperationQueue:[NSOperationQueue new]];
         _count = 0;
@@ -145,26 +133,15 @@ NSString *const AWSIdentityProviderAmazonCognitoIdentity = @"cognito-identity.am
         _useEnhancedFlow = useEnhancedFlow;
         self.identityPoolId = identityPoolId;
         self.identityProviderManager = identityProviderManager;
+        
+        AWSAnonymousCredentialsProvider *credentialsProvider = [AWSAnonymousCredentialsProvider new];
+        AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:regionType
+                                                                             credentialsProvider:credentialsProvider];
         _cognitoIdentity = [[AWSCognitoIdentity alloc] initWithConfiguration:configuration];
     }
+    
     return self;
 }
-
-- (instancetype)initWithRegionType:(AWSRegionType)regionType
-                    identityPoolId:(NSString *)identityPoolId
-                   useEnhancedFlow:(BOOL)useEnhancedFlow
-           identityProviderManager:(id<AWSIdentityProviderManager>)identityProviderManager {
-
-    AWSAnonymousCredentialsProvider *credentialsProvider = [AWSAnonymousCredentialsProvider new];
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:regionType
-                                                                         credentialsProvider:credentialsProvider];
-    return [self initWithRegionType:regionType
-                     identityPoolId:identityPoolId
-                    useEnhancedFlow:useEnhancedFlow
-            identityProviderManager:identityProviderManager
-          identityPoolConfiguration:configuration];
-}
-
 
 #pragma mark - AWSIdentityProvider
 
@@ -282,10 +259,10 @@ NSString *const AWSIdentityProviderAmazonCognitoIdentity = @"cognito-identity.am
     if (self.identityProviderManager && self.useEnhancedFlow) {
         self.cachedLogins = nil;
         return [[self getIdentityId] continueWithSuccessBlock:^id _Nullable(AWSTask<NSString *> * _Nonnull task) {
-            NSDictionary *cachedLogins = self.cachedLogins;
-            if (cachedLogins) {
-                return [AWSTask taskWithResult:cachedLogins];
-            } else {
+            if(self.cachedLogins){
+                return [AWSTask taskWithResult:self.cachedLogins];
+            }
+            else {
                 return [self.identityProviderManager logins];
             }
         }];

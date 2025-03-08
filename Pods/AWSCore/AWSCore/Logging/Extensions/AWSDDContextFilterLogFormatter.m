@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2024, Deusty, LLC
+// Copyright (c) 2010-2016, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -13,22 +13,21 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+#import "AWSDDContextFilterLogFormatter.h"
+#import <libkern/OSAtomic.h>
+
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-#import <pthread/pthread.h>
-
-#import "AWSDDContextFilterLogFormatter.h"
-
 @interface AWSDDLoggingContextSet : NSObject
 
-@property (readonly, copy, nonnull) NSArray *currentSet;
+- (void)addToSet:(NSUInteger)loggingContext;
+- (void)removeFromSet:(NSUInteger)loggingContext;
 
-- (void)addToSet:(NSInteger)loggingContext;
-- (void)removeFromSet:(NSInteger)loggingContext;
+@property (readonly, copy) NSArray *currentSet;
 
-- (BOOL)isInSet:(NSInteger)loggingContext;
+- (BOOL)isInSet:(NSUInteger)loggingContext;
 
 @end
 
@@ -36,38 +35,41 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface AWSDDContextAllowlistFilterLogFormatter () {
+@interface AWSDDContextWhitelistFilterLogFormatter () {
     AWSDDLoggingContextSet *_contextSet;
 }
+
 @end
 
-@implementation AWSDDContextAllowlistFilterLogFormatter
+
+@implementation AWSDDContextWhitelistFilterLogFormatter
 
 - (instancetype)init {
     if ((self = [super init])) {
         _contextSet = [[AWSDDLoggingContextSet alloc] init];
     }
+
     return self;
 }
 
-- (void)addToAllowlist:(NSInteger)loggingContext {
+- (void)addToWhitelist:(NSUInteger)loggingContext {
     [_contextSet addToSet:loggingContext];
 }
 
-- (void)removeFromAllowlist:(NSInteger)loggingContext {
+- (void)removeFromWhitelist:(NSUInteger)loggingContext {
     [_contextSet removeFromSet:loggingContext];
 }
 
-- (NSArray *)allowlist {
+- (NSArray *)whitelist {
     return [_contextSet currentSet];
 }
 
-- (BOOL)isOnAllowlist:(NSInteger)loggingContext {
+- (BOOL)isOnWhitelist:(NSUInteger)loggingContext {
     return [_contextSet isInSet:loggingContext];
 }
 
 - (NSString *)formatLogMessage:(AWSDDLogMessage *)logMessage {
-    if ([self isOnAllowlist:logMessage->_context]) {
+    if ([self isOnWhitelist:logMessage->_context]) {
         return logMessage->_message;
     } else {
         return nil;
@@ -76,39 +78,45 @@
 
 @end
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface AWSDDContextDenylistFilterLogFormatter () {
+@interface AWSDDContextBlacklistFilterLogFormatter () {
     AWSDDLoggingContextSet *_contextSet;
 }
+
 @end
 
-@implementation AWSDDContextDenylistFilterLogFormatter
+
+@implementation AWSDDContextBlacklistFilterLogFormatter
 
 - (instancetype)init {
     if ((self = [super init])) {
         _contextSet = [[AWSDDLoggingContextSet alloc] init];
     }
+
     return self;
 }
 
-- (void)addToDenylist:(NSInteger)loggingContext {
+- (void)addToBlacklist:(NSUInteger)loggingContext {
     [_contextSet addToSet:loggingContext];
 }
 
-- (void)removeFromDenylist:(NSInteger)loggingContext {
+- (void)removeFromBlacklist:(NSUInteger)loggingContext {
     [_contextSet removeFromSet:loggingContext];
 }
 
-- (NSArray *)denylist {
+- (NSArray *)blacklist {
     return [_contextSet currentSet];
 }
 
-- (BOOL)isOnDenylist:(NSInteger)loggingContext {
+- (BOOL)isOnBlacklist:(NSUInteger)loggingContext {
     return [_contextSet isInSet:loggingContext];
 }
 
 - (NSString *)formatLogMessage:(AWSDDLogMessage *)logMessage {
-    if ([self isOnDenylist:logMessage->_context]) {
+    if ([self isOnBlacklist:logMessage->_context]) {
         return nil;
     } else {
         return logMessage->_message;
@@ -120,64 +128,63 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 @interface AWSDDLoggingContextSet () {
-    pthread_mutex_t _mutex;
+    OSSpinLock _lock;
     NSMutableSet *_set;
 }
+
 @end
+
 
 @implementation AWSDDLoggingContextSet
 
 - (instancetype)init {
     if ((self = [super init])) {
         _set = [[NSMutableSet alloc] init];
-        pthread_mutex_init(&_mutex, NULL);
+        _lock = OS_SPINLOCK_INIT;
     }
 
     return self;
 }
 
-- (void)dealloc {
-    pthread_mutex_destroy(&_mutex);
-}
-
-- (void)addToSet:(NSInteger)loggingContext {
-    pthread_mutex_lock(&_mutex);
+- (void)addToSet:(NSUInteger)loggingContext {
+    OSSpinLockLock(&_lock);
     {
         [_set addObject:@(loggingContext)];
     }
-    pthread_mutex_unlock(&_mutex);
+    OSSpinLockUnlock(&_lock);
 }
 
-- (void)removeFromSet:(NSInteger)loggingContext {
-    pthread_mutex_lock(&_mutex);
+- (void)removeFromSet:(NSUInteger)loggingContext {
+    OSSpinLockLock(&_lock);
     {
         [_set removeObject:@(loggingContext)];
     }
-    pthread_mutex_unlock(&_mutex);
+    OSSpinLockUnlock(&_lock);
 }
 
 - (NSArray *)currentSet {
     NSArray *result = nil;
 
-    pthread_mutex_lock(&_mutex);
+    OSSpinLockLock(&_lock);
     {
         result = [_set allObjects];
     }
-    pthread_mutex_unlock(&_mutex);
+    OSSpinLockUnlock(&_lock);
 
     return result;
 }
 
-- (BOOL)isInSet:(NSInteger)loggingContext {
-    __auto_type result = NO;
+- (BOOL)isInSet:(NSUInteger)loggingContext {
+    BOOL result = NO;
 
-    pthread_mutex_lock(&_mutex);
+    OSSpinLockLock(&_lock);
     {
         result = [_set containsObject:@(loggingContext)];
     }
-    pthread_mutex_unlock(&_mutex);
+    OSSpinLockUnlock(&_lock);
 
     return result;
 }

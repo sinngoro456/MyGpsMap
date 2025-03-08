@@ -15,29 +15,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AWSSynchronizedMutableDictionary<KeyType, ObjectType> : NSObject
-
-@property (readonly, copy) NSArray<KeyType> *allKeys;
-@property (readonly, copy) NSArray<ObjectType> *allValues;
-@property (readonly, nonatomic, strong) NSUUID *instanceKey;
-
-/// Create new instance.
-- (instancetype)init;
-
-/// Creates another dictionary which syncs on the same queue.
-- (instancetype)syncedDictionary;
+@interface AWSSynchronizedMutableDictionary : NSObject
 
 - (id)objectForKey:(id)aKey;
-- (void)setObject:(id)anObject forKey:(id <NSCopying>)aKey;
-
-- (void)removeObject:(id)object;
 - (void)removeObjectForKey:(id)aKey;
-- (void)removeAllObjects;
-
-- (void)mutateWithBlock:(void (^)(NSMutableDictionary *))block;
-+ (void)mutateSyncedDictionaries:(NSArray<AWSSynchronizedMutableDictionary *> *)dictionaries
-                       withBlock:(void (^)(NSUUID *, NSMutableDictionary *))block;
-
-- (BOOL)isEqualToAWSSynchronizedMutableDictionary:(AWSSynchronizedMutableDictionary *)other;
+- (void)removeObject:(id)object;
+- (void)setObject:(id)anObject forKey:(id <NSCopying>)aKey;
+- (NSArray *)allKeys;
 
 @end

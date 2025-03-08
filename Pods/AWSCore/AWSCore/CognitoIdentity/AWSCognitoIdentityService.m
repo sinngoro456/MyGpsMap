@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -231,15 +231,8 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         _configuration.baseURL = _configuration.endpoint.URL;
         _configuration.retryHandler = [[AWSCognitoIdentityRequestRetryHandler alloc] initWithMaximumRetryCount:_configuration.maxRetryCount];
-
-        if (_configuration.headers == nil) {
-            _configuration.headers = @{@"Content-Type" : @"application/x-amz-json-1.1"};
-        } else {
-            NSMutableDictionary *headers = [[NSMutableDictionary alloc] initWithDictionary:_configuration.headers];
-            headers[@"Content-Type"] = @"application/x-amz-json-1.1";
-            _configuration.headers = headers;
-        }
-
+        _configuration.headers = @{@"Content-Type" : @"application/x-amz-json-1.1"}; 
+		
         _networking = [[AWSNetworking alloc] initWithConfiguration:_configuration];
     }
     
@@ -510,29 +503,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
-- (AWSTask<AWSCognitoIdentityGetPrincipalTagAttributeMapResponse *> *)getPrincipalTagAttributeMap:(AWSCognitoIdentityGetPrincipalTagAttributeMapInput *)request {
-    return [self invokeRequest:request
-                    HTTPMethod:AWSHTTPMethodPOST
-                     URLString:@""
-                  targetPrefix:@"AWSCognitoIdentityService"
-                 operationName:@"GetPrincipalTagAttributeMap"
-                   outputClass:[AWSCognitoIdentityGetPrincipalTagAttributeMapResponse class]];
-}
-
-- (void)getPrincipalTagAttributeMap:(AWSCognitoIdentityGetPrincipalTagAttributeMapInput *)request
-     completionHandler:(void (^)(AWSCognitoIdentityGetPrincipalTagAttributeMapResponse *response, NSError *error))completionHandler {
-    [[self getPrincipalTagAttributeMap:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityGetPrincipalTagAttributeMapResponse *> * _Nonnull task) {
-        AWSCognitoIdentityGetPrincipalTagAttributeMapResponse *result = task.result;
-        NSError *error = task.error;
-
-        if (completionHandler) {
-            completionHandler(result, error);
-        }
-
-        return nil;
-    }];
-}
-
 - (AWSTask<AWSCognitoIdentityListIdentitiesResponse *> *)listIdentities:(AWSCognitoIdentityListIdentitiesInput *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -664,29 +634,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (completionHandler) {
             completionHandler(error);
-        }
-
-        return nil;
-    }];
-}
-
-- (AWSTask<AWSCognitoIdentitySetPrincipalTagAttributeMapResponse *> *)setPrincipalTagAttributeMap:(AWSCognitoIdentitySetPrincipalTagAttributeMapInput *)request {
-    return [self invokeRequest:request
-                    HTTPMethod:AWSHTTPMethodPOST
-                     URLString:@""
-                  targetPrefix:@"AWSCognitoIdentityService"
-                 operationName:@"SetPrincipalTagAttributeMap"
-                   outputClass:[AWSCognitoIdentitySetPrincipalTagAttributeMapResponse class]];
-}
-
-- (void)setPrincipalTagAttributeMap:(AWSCognitoIdentitySetPrincipalTagAttributeMapInput *)request
-     completionHandler:(void (^)(AWSCognitoIdentitySetPrincipalTagAttributeMapResponse *response, NSError *error))completionHandler {
-    [[self setPrincipalTagAttributeMap:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentitySetPrincipalTagAttributeMapResponse *> * _Nonnull task) {
-        AWSCognitoIdentitySetPrincipalTagAttributeMapResponse *result = task.result;
-        NSError *error = task.error;
-
-        if (completionHandler) {
-            completionHandler(result, error);
         }
 
         return nil;

@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2024, Deusty, LLC
+// Copyright (c) 2010-2016, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -22,10 +22,8 @@
 
 #import "AWSDDLog.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
- * This class provides a log formatter that filters log statements from a logging context not on the allowlist.
+ * This class provides a log formatter that filters log statements from a logging context not on the whitelist.
  *
  * A log formatter can be added to any logger to format and/or filter its output.
  * You can learn more about log formatters here:
@@ -43,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
  * For example, logically separate parts of your app each have a different logging context.
  * Also 3rd party frameworks that make use of Lumberjack generally use their own dedicated logging context.
  **/
-@interface AWSDDContextAllowlistFilterLogFormatter : NSObject <AWSDDLogFormatter>
+@interface AWSDDContextWhitelistFilterLogFormatter : NSObject <AWSDDLogFormatter>
 
 /**
  *  Designated default initializer
@@ -51,67 +49,69 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**
- *  Add a context to the allowlist
+ *  Add a context to the whitelist
  *
  *  @param loggingContext the context
  */
-- (void)addToAllowlist:(NSInteger)loggingContext;
+- (void)addToWhitelist:(NSUInteger)loggingContext;
 
 /**
- *  Remove context from allowlist
+ *  Remove context from whitelist
  *
  *  @param loggingContext the context
  */
-- (void)removeFromAllowlist:(NSInteger)loggingContext;
+- (void)removeFromWhitelist:(NSUInteger)loggingContext;
 
 /**
- *  Return the allowlist
+ *  Return the whitelist
  */
-@property (nonatomic, readonly, copy) NSArray<NSNumber *> *allowlist;
+@property (readonly, copy) NSArray<NSNumber *> *whitelist;
 
 /**
- *  Check if a context is on the allowlist
+ *  Check if a context is on the whitelist
  *
  *  @param loggingContext the context
  */
-- (BOOL)isOnAllowlist:(NSInteger)loggingContext;
+- (BOOL)isOnWhitelist:(NSUInteger)loggingContext;
 
 @end
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * This class provides a log formatter that filters log statements from a logging context on the denylist.
+ * This class provides a log formatter that filters log statements from a logging context on the blacklist.
  **/
-@interface AWSDDContextDenylistFilterLogFormatter : NSObject <AWSDDLogFormatter>
+@interface AWSDDContextBlacklistFilterLogFormatter : NSObject <AWSDDLogFormatter>
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /**
- *  Add a context to the denylist
+ *  Add a context to the blacklist
  *
  *  @param loggingContext the context
  */
-- (void)addToDenylist:(NSInteger)loggingContext;
+- (void)addToBlacklist:(NSUInteger)loggingContext;
 
 /**
- *  Remove context from denylist
+ *  Remove context from blacklist
  *
  *  @param loggingContext the context
  */
-- (void)removeFromDenylist:(NSInteger)loggingContext;
+- (void)removeFromBlacklist:(NSUInteger)loggingContext;
 
 /**
- *  Return the denylist
+ *  Return the blacklist
  */
-@property (readonly, copy) NSArray<NSNumber *> *denylist;
+@property (readonly, copy) NSArray<NSNumber *> *blacklist;
+
 
 /**
- *  Check if a context is on the denylist
+ *  Check if a context is on the blacklist
  *
  *  @param loggingContext the context
  */
-- (BOOL)isOnDenylist:(NSInteger)loggingContext;
+- (BOOL)isOnBlacklist:(NSUInteger)loggingContext;
 
 @end
-
-NS_ASSUME_NONNULL_END

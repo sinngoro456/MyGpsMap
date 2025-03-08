@@ -12,7 +12,7 @@
 #import "AWSMTLReflection.h"
 #import <objc/runtime.h>
 
-void awsmtl_loadMTLNSCoding(void){
+void awsmtl_loadMTLNSCoding(){
 }
 
 // Used in archives to store the modelVersion of the archived instance.

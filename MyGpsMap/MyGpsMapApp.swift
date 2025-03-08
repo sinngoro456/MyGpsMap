@@ -43,6 +43,7 @@ struct MyGpsMapApp: App {
 class AppDelegateAdaptor: NSObject, UIApplicationDelegate {
     
     var authService = AuthService() // AuthServiceのインスタンスを作成
+    var timer: Timer?
     
     func application(
         _ application: UIApplication,
@@ -55,10 +56,22 @@ class AppDelegateAdaptor: NSObject, UIApplicationDelegate {
             await authService.checkSessionStatus() // セッション状態を確認
             LocationManager()
         }
+
+        startTimer()
         
         return true
     }
     
+    private func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+            // Taskを使って非同期関数を呼び出す
+            Task {
+                await FriendManager.shared.loadFriendsFromDynamoDB()
+                await PinManager.shared.loadFriendsPinsDynamoDB()
+            }
+        }
+    }
+
     /// Amplifyの初期化処理（AppDelegateのconfigureAmplifyを移植）
     private func configureAmplify() {
         do {

@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2024, Deusty, LLC
+// Copyright (c) 2010-2016, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -13,45 +13,29 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
+#import "AWSDDDispatchQueueLogFormatter.h"
+#import <libkern/OSAtomic.h>
+#import <objc/runtime.h>
+
+
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-#import <pthread/pthread.h>
-#import <stdatomic.h>
-#import <sys/qos.h>
-
-#import "AWSDDDispatchQueueLogFormatter.h"
-
-AWSDDQualityOfServiceName const AWSDDQualityOfServiceUserInteractive = @"UI";
-AWSDDQualityOfServiceName const AWSDDQualityOfServiceUserInitiated   = @"IN";
-AWSDDQualityOfServiceName const AWSDDQualityOfServiceDefault         = @"DF";
-AWSDDQualityOfServiceName const AWSDDQualityOfServiceUtility         = @"UT";
-AWSDDQualityOfServiceName const AWSDDQualityOfServiceBackground      = @"BG";
-AWSDDQualityOfServiceName const AWSDDQualityOfServiceUnspecified     = @"UN";
-
-static AWSDDQualityOfServiceName _qos_name(NSUInteger qos) {
-    switch ((qos_class_t) qos) {
-        case QOS_CLASS_USER_INTERACTIVE: return AWSDDQualityOfServiceUserInteractive;
-        case QOS_CLASS_USER_INITIATED:   return AWSDDQualityOfServiceUserInitiated;
-        case QOS_CLASS_DEFAULT:          return AWSDDQualityOfServiceDefault;
-        case QOS_CLASS_UTILITY:          return AWSDDQualityOfServiceUtility;
-        case QOS_CLASS_BACKGROUND:       return AWSDDQualityOfServiceBackground;
-        default:                         return AWSDDQualityOfServiceUnspecified;
-    }
-}
-
-#pragma mark - AWSDDDispatchQueueLogFormatter
-
 @interface AWSDDDispatchQueueLogFormatter () {
-    NSDateFormatter *_dateFormatter;      // Use [self stringFromDate]
-
-    pthread_mutex_t _mutex;
-
+    AWSDDDispatchQueueLogFormatterMode _mode;
+    NSString *_dateFormatterKey;
+    
+    int32_t _atomicLoggerCount;
+    NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
+    
+    OSSpinLock _lock;
+    
     NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
     NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
     NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
 }
+
 @end
 
 
@@ -59,12 +43,31 @@ static AWSDDQualityOfServiceName _qos_name(NSUInteger qos) {
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _dateFormatter = [self createDateFormatter];
+        _mode = AWSDDDispatchQueueLogFormatterModeShareble;
 
-        pthread_mutex_init(&_mutex, NULL);
+        // We need to carefully pick the name for storing in thread dictionary to not
+        // use a formatter configured by subclass and avoid surprises.
+        Class cls = [self class];
+        Class superClass = class_getSuperclass(cls);
+        SEL configMethodName = @selector(configureDateFormatter:);
+        Method configMethod = class_getInstanceMethod(cls, configMethodName);
+        while (class_getInstanceMethod(superClass, configMethodName) == configMethod) {
+            cls = superClass;
+            superClass = class_getSuperclass(cls);
+        }
+        // now `cls` is the class that provides implementation for `configureDateFormatter:`
+        _dateFormatterKey = [NSString stringWithFormat:@"%s_NSDateFormatter", class_getName(cls)];
+
+        _atomicLoggerCount = 0;
+        _threadUnsafeDateFormatter = nil;
+
+        _minQueueLength = 0;
+        _maxQueueLength = 0;
+        _lock = OS_SPINLOCK_INIT;
         _replacements = [[NSMutableDictionary alloc] init];
 
         // Set default replacements:
+
         _replacements[@"com.apple.main-thread"] = @"main";
     }
 
@@ -72,11 +75,10 @@ static AWSDDQualityOfServiceName _qos_name(NSUInteger qos) {
 }
 
 - (instancetype)initWithMode:(AWSDDDispatchQueueLogFormatterMode)mode {
-    return [self init];
-}
-
-- (void)dealloc {
-    pthread_mutex_destroy(&_mutex);
+    if ((self = [self init])) {
+        _mode = mode;
+    }
+    return self;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,17 +91,17 @@ static AWSDDQualityOfServiceName _qos_name(NSUInteger qos) {
 - (NSString *)replacementStringForQueueLabel:(NSString *)longLabel {
     NSString *result = nil;
 
-    pthread_mutex_lock(&_mutex);
+    OSSpinLockLock(&_lock);
     {
         result = _replacements[longLabel];
     }
-    pthread_mutex_unlock(&_mutex);
+    OSSpinLockUnlock(&_lock);
 
     return result;
 }
 
 - (void)setReplacementString:(NSString *)shortLabel forQueueLabel:(NSString *)longLabel {
-    pthread_mutex_lock(&_mutex);
+    OSSpinLockLock(&_lock);
     {
         if (shortLabel) {
             _replacements[longLabel] = shortLabel;
@@ -107,7 +109,7 @@ static AWSDDQualityOfServiceName _qos_name(NSUInteger qos) {
             [_replacements removeObjectForKey:longLabel];
         }
     }
-    pthread_mutex_unlock(&_mutex);
+    OSSpinLockUnlock(&_lock);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,117 +126,153 @@ static AWSDDQualityOfServiceName _qos_name(NSUInteger qos) {
     [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];
     [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"]];
-    [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]];
+
+    NSString *calendarIdentifier = nil;
+#if defined(__IPHONE_8_0) || defined(__MAC_10_10)
+    calendarIdentifier = NSCalendarIdentifierGregorian;
+#else
+    calendarIdentifier = NSGregorianCalendar;
+#endif
+
+    [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:calendarIdentifier]];
 }
 
 - (NSString *)stringFromDate:(NSDate *)date {
-    return [_dateFormatter stringFromDate:date];
+
+    NSDateFormatter *dateFormatter = nil;
+    if (_mode == AWSDDDispatchQueueLogFormatterModeNonShareble) {
+        // Single-threaded mode.
+
+        dateFormatter = _threadUnsafeDateFormatter;
+        if (dateFormatter == nil) {
+            dateFormatter = [self createDateFormatter];
+            _threadUnsafeDateFormatter = dateFormatter;
+        }
+    } else {
+        // Multi-threaded mode.
+        // NSDateFormatter is NOT thread-safe.
+
+        NSString *key = _dateFormatterKey;
+
+        NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
+        dateFormatter = threadDictionary[key];
+
+        if (dateFormatter == nil) {
+            dateFormatter = [self createDateFormatter];
+            threadDictionary[key] = dateFormatter;
+        }
+    }
+
+    return [dateFormatter stringFromDate:date];
 }
 
 - (NSString *)queueThreadLabelForLogMessage:(AWSDDLogMessage *)logMessage {
     // As per the AWSDDLogFormatter contract, this method is always invoked on the same thread/dispatch_queue
 
-    __auto_type useQueueLabel = NO;
-    if (logMessage->_queueLabel) {
-        useQueueLabel = YES;
+    NSUInteger minQueueLength = self.minQueueLength;
+    NSUInteger maxQueueLength = self.maxQueueLength;
 
+    // Get the name of the queue, thread, or machID (whichever we are to use).
+
+    NSString *queueThreadLabel = nil;
+
+    BOOL useQueueLabel = YES;
+    BOOL useThreadName = NO;
+
+    if (logMessage->_queueLabel) {
         // If you manually create a thread, it's dispatch_queue will have one of the thread names below.
         // Since all such threads have the same name, we'd prefer to use the threadName or the machThreadID.
-        const NSArray<NSString *> *names = @[
+
+        NSArray *names = @[
             @"com.apple.root.low-priority",
             @"com.apple.root.default-priority",
             @"com.apple.root.high-priority",
             @"com.apple.root.low-overcommit-priority",
             @"com.apple.root.default-overcommit-priority",
-            @"com.apple.root.high-overcommit-priority",
-            @"com.apple.root.default-qos.overcommit",
+            @"com.apple.root.high-overcommit-priority"
         ];
-        for (NSString *name in names) {
+
+        for (NSString * name in names) {
             if ([logMessage->_queueLabel isEqualToString:name]) {
                 useQueueLabel = NO;
+                useThreadName = [logMessage->_threadName length] > 0;
                 break;
             }
         }
+    } else {
+        useQueueLabel = NO;
+        useThreadName = [logMessage->_threadName length] > 0;
     }
 
-    // Get the name of the queue, thread, or machID (whichever we are to use).
-    NSString *queueThreadLabel;
-    if (useQueueLabel || [logMessage->_threadName length] > 0) {
-        __auto_type fullLabel = useQueueLabel ? logMessage->_queueLabel : logMessage->_threadName;
-
+    if (useQueueLabel || useThreadName) {
+        NSString *fullLabel;
         NSString *abrvLabel;
-        pthread_mutex_lock(&_mutex);
+
+        if (useQueueLabel) {
+            fullLabel = logMessage->_queueLabel;
+        } else {
+            fullLabel = logMessage->_threadName;
+        }
+
+        OSSpinLockLock(&_lock);
         {
             abrvLabel = _replacements[fullLabel];
         }
-        pthread_mutex_unlock(&_mutex);
+        OSSpinLockUnlock(&_lock);
 
-        queueThreadLabel = abrvLabel ?: fullLabel;
+        if (abrvLabel) {
+            queueThreadLabel = abrvLabel;
+        } else {
+            queueThreadLabel = fullLabel;
+        }
     } else {
         queueThreadLabel = logMessage->_threadID;
     }
 
     // Now use the thread label in the output
+
+    NSUInteger labelLength = [queueThreadLabel length];
+
     // labelLength > maxQueueLength : truncate
     // labelLength < minQueueLength : padding
     //                              : exact
-    __auto_type minQueueLength = self.minQueueLength;
-    __auto_type maxQueueLength = self.maxQueueLength;
-    __auto_type labelLength = [queueThreadLabel length];
-    if (maxQueueLength > 0 && labelLength > maxQueueLength) {
+
+    if ((maxQueueLength > 0) && (labelLength > maxQueueLength)) {
         // Truncate
+
         return [queueThreadLabel substringToIndex:maxQueueLength];
     } else if (labelLength < minQueueLength) {
         // Padding
-        return [queueThreadLabel stringByPaddingToLength:minQueueLength
-                                              withString:@" "
-                                         startingAtIndex:0];
+
+        NSUInteger numSpaces = minQueueLength - labelLength;
+
+        char spaces[numSpaces + 1];
+        memset(spaces, ' ', numSpaces);
+        spaces[numSpaces] = '\0';
+
+        return [NSString stringWithFormat:@"%@%s", queueThreadLabel, spaces];
     } else {
         // Exact
+
         return queueThreadLabel;
     }
 }
 
 - (NSString *)formatLogMessage:(AWSDDLogMessage *)logMessage {
-    __auto_type timestamp = [self stringFromDate:logMessage->_timestamp];
-    __auto_type queueThreadLabel = [self queueThreadLabelForLogMessage:logMessage];
+    NSString *timestamp = [self stringFromDate:(logMessage->_timestamp)];
+    NSString *queueThreadLabel = [self queueThreadLabelForLogMessage:logMessage];
 
-    return [NSString stringWithFormat:@"%@ [%@ (QOS:%@)] %@", timestamp, queueThreadLabel, _qos_name(logMessage->_qos), logMessage->_message];
+    return [NSString stringWithFormat:@"%@ [%@] %@", timestamp, queueThreadLabel, logMessage->_message];
 }
 
-@end
-
-#pragma mark - AWSDDAtomicCounter
-
-@interface AWSDDAtomicCounter() {
-    atomic_int_fast32_t _value;
-}
-@end
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
-@implementation AWSDDAtomicCounter
-#pragma clang diagnostic pop
-
-- (instancetype)initWithDefaultValue:(int32_t)defaultValue {
-    if ((self = [super init])) {
-        atomic_init(&_value, defaultValue);
-    }
-    return self;
+- (void)didAddToLogger:(id <AWSDDLogger>  __attribute__((unused)))logger {
+    int32_t count = 0;
+    count = OSAtomicIncrement32(&_atomicLoggerCount);
+    NSAssert(count <= 1 || _mode == AWSDDDispatchQueueLogFormatterModeShareble, @"Can't reuse formatter with multiple loggers in non-shareable mode.");
 }
 
-- (int32_t)value {
-    return atomic_load_explicit(&_value, memory_order_relaxed);
-}
-
-- (int32_t)increment {
-    int32_t old = atomic_fetch_add_explicit(&_value, 1, memory_order_relaxed);
-    return (old + 1);
-}
-
-- (int32_t)decrement {
-    int32_t old = atomic_fetch_sub_explicit(&_value, 1, memory_order_relaxed);
-    return (old - 1);
+- (void)willRemoveFromLogger:(id <AWSDDLogger> __attribute__((unused)))logger {
+    OSAtomicDecrement32(&_atomicLoggerCount);
 }
 
 @end

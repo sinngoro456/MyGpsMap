@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2024, Deusty, LLC
+// Copyright (c) 2010-2016, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -14,6 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import <Foundation/Foundation.h>
+#import <libkern/OSAtomic.h>
 
 // Disable legacy macros
 #ifndef AWSDD_LEGACY_MACROS
@@ -22,12 +23,9 @@
 
 #import "AWSDDLog.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
  *  Log formatter mode
  */
-__attribute__((deprecated("AWSDDDispatchQueueLogFormatter is always shareable")))
 typedef NS_ENUM(NSUInteger, AWSDDDispatchQueueLogFormatterMode){
     /**
      *  This is the default option, means the formatter can be reused between multiple loggers and therefore is thread-safe.
@@ -41,36 +39,6 @@ typedef NS_ENUM(NSUInteger, AWSDDDispatchQueueLogFormatterMode){
     AWSDDDispatchQueueLogFormatterModeNonShareble,
 };
 
-/**
- * Quality of Service names.
- *
- * Since macOS 10.10 and iOS 8.0, pthreads, dispatch queues and NSOperations express their
- * scheduling priority by using an abstract classification called Quality of Service (QOS).
- *
- * This formatter will add a representation of this QOS in the log message by using those
- * string constants.
- * For example:
- *
- * `2011-10-17 20:21:45.435 AppName[19928:5207 (QOS:DF)] Your log message here`
- *
- * Where QOS is one of:
- * `- UI = User Interactive`
- * `- IN = User Initiated`
- * `- DF = Default`
- * `- UT = Utility`
- * `- BG = Background`
- * `- UN = Unspecified`
- *
- * Note: QOS will be absent in the log messages if running on OS versions that don't support it.
- **/
-typedef NSString * AWSDDQualityOfServiceName NS_STRING_ENUM;
-
-FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceUserInteractive NS_SWIFT_NAME(AWSDDQualityOfServiceName.userInteractive) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceUserInitiated NS_SWIFT_NAME(AWSDDQualityOfServiceName.userInitiated) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceDefault NS_SWIFT_NAME(AWSDDQualityOfServiceName.default) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceUtility NS_SWIFT_NAME(AWSDDQualityOfServiceName.utility) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceBackground NS_SWIFT_NAME(AWSDDQualityOfServiceName.background) API_AVAILABLE(macos(10.10), ios(8.0));
-FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceUnspecified NS_SWIFT_NAME(AWSDDQualityOfServiceName.unspecified) API_AVAILABLE(macos(10.10), ios(8.0));
 
 /**
  * This class provides a log formatter that prints the dispatch_queue label instead of the mach_thread_id.
@@ -122,7 +90,7 @@ FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceUnspecifi
  *
  *  @param mode choose between AWSDDDispatchQueueLogFormatterModeShareble and AWSDDDispatchQueueLogFormatterModeNonShareble, depending if the formatter is shared between several loggers or not
  */
-- (instancetype)initWithMode:(AWSDDDispatchQueueLogFormatterMode)mode __attribute__((deprecated("AWSDDDispatchQueueLogFormatter is always shareable")));
+- (instancetype)initWithMode:(AWSDDDispatchQueueLogFormatterMode)mode;
 
 /**
  * The minQueueLength restricts the minimum size of the [detail box].
@@ -173,12 +141,12 @@ FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceUnspecifi
  *
  * To remove/undo a previous replacement, invoke this method with nil for the 'shortLabel' parameter.
  **/
-- (nullable NSString *)replacementStringForQueueLabel:(NSString *)longLabel;
+- (NSString *)replacementStringForQueueLabel:(NSString *)longLabel;
 
 /**
  *  See the `replacementStringForQueueLabel:` description
  */
-- (void)setReplacementString:(nullable NSString *)shortLabel forQueueLabel:(NSString *)longLabel;
+- (void)setReplacementString:(NSString *)shortLabel forQueueLabel:(NSString *)longLabel;
 
 @end
 
@@ -202,22 +170,9 @@ FOUNDATION_EXPORT AWSDDQualityOfServiceName const AWSDDQualityOfServiceUnspecifi
  */
 - (NSString *)queueThreadLabelForLogMessage:(AWSDDLogMessage *)logMessage;
 
-@end
-
-#pragma mark - AWSDDAtomicCountable
-
-__attribute__((deprecated("AWSDDAtomicCountable is useless since AWSDDDispatchQueueLogFormatter is always shareable now")))
-@protocol AWSDDAtomicCountable <NSObject>
-
-- (instancetype)initWithDefaultValue:(int32_t)defaultValue;
-- (int32_t)increment;
-- (int32_t)decrement;
-- (int32_t)value;
+/**
+ *  The actual method that formats a message (transforms a `AWSDDLogMessage` model into a printable string)
+ */
+- (NSString *)formatLogMessage:(AWSDDLogMessage *)logMessage;
 
 @end
-
-__attribute__((deprecated("AWSDDAtomicCountable is deprecated")))
-@interface AWSDDAtomicCounter: NSObject<AWSDDAtomicCountable>
-@end
-
-NS_ASSUME_NONNULL_END

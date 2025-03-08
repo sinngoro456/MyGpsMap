@@ -26,10 +26,10 @@ typedef NS_ENUM(NSInteger, AWSS3TransferUtilityErrorType) {
     AWSS3TransferUtilityErrorRedirection,
     AWSS3TransferUtilityErrorClientError,
     AWSS3TransferUtilityErrorServerError,
-    AWSS3TransferUtilityErrorLocalFileNotFound,
-    AWSS3TransferUtilityErrorBaseDirectoryNotFound,
-    AWSS3TransferUtilityErrorPartialFileNotCreated
+    AWSS3TransferUtilityErrorLocalFileNotFound
 };
+
+
 
 FOUNDATION_EXPORT NSString *const AWSS3TransferUtilityURLSessionDidBecomeInvalidNotification;
 
@@ -56,16 +56,6 @@ FOUNDATION_EXPORT NSString *const AWSS3TransferUtilityURLSessionDidBecomeInvalid
  @warning Once the client is instantiated, do not modify the configuration object. It may cause unspecified behaviors.
  */
 @property (readonly) AWSServiceConfiguration *configuration;
-
-/**
- The transfer utility configuration.
- */
-@property (readonly) AWSS3TransferUtilityConfiguration *transferUtilityConfiguration;
-
-/**
- Indicates if completed tasks should be removed. Off by default.
- */
-@property (assign) BOOL shouldRemoveCompletedTasks;
 
 /**
  Returns the singleton service client. If the singleton object does not exist, the SDK instantiates the default service client with `defaultServiceConfiguration` from `[AWSServiceManager defaultServiceManager]`. The reference to this object is maintained by the SDK, and you do not need to retain it manually.
@@ -149,7 +139,7 @@ FOUNDATION_EXPORT NSString *const AWSS3TransferUtilityURLSessionDidBecomeInvalid
  
  }];
  
- @param completionHandler The completion handler to call when the TransferUtility finishes loading transfers from prior sessions, or fails to instantiate.
+ @param completionHandler The completion handler to call when the TransferUtility finishes loading transfers from prior sessions.
  @return The default service client.
  */
 + (instancetype)defaultS3TransferUtility:(nullable void (^)(NSError *_Nullable error)) completionHandler
@@ -250,7 +240,7 @@ FOUNDATION_EXPORT NSString *const AWSS3TransferUtilityURLSessionDidBecomeInvalid
  
  @param configuration A service configuration object.
  @param key           A string to identify the service client.
- @param completionHandler The completion handler to call when the TransferUtility finishes loading transfers from prior sessions, or fails to instantiate.
+ @param completionHandler The completion handler to call when the TransferUtility finishes loading transfers from prior sessions.
  */
 + (void)registerS3TransferUtilityWithConfiguration:(AWSServiceConfiguration *)configuration
                                             forKey:(NSString *)key
@@ -352,7 +342,7 @@ FOUNDATION_EXPORT NSString *const AWSS3TransferUtilityURLSessionDidBecomeInvalid
  @param configuration A service configuration object.
  @param transferUtilityConfiguration An S3 transfer utility configuration object.
  @param key           A string to identify the service client.
- @param completionHandler The completion handler to call when the TransferUtility finishes loading transfers from prior sessions, or fails to instantiate.
+ @param completionHandler The completion handler to call when the TransferUtility finishes loading transfers from prior sessions.
  */
 + (void)registerS3TransferUtilityWithConfiguration:(AWSServiceConfiguration *)configuration
                       transferUtilityConfiguration:(nullable AWSS3TransferUtilityConfiguration *)transferUtilityConfiguration
@@ -631,8 +621,7 @@ handleEventsForBackgroundURLSession:(NSString *)identifier
                                                                 _Nullable AWSS3TransferUtilityUploadCompletionHandlerBlock * _Nullable completionHandlerReference))uploadBlocksAssigner
                                 downloadTask:(nullable void (^)(AWSS3TransferUtilityDownloadTask *downloadTask,
                                                                 _Nullable AWSS3TransferUtilityProgressBlock * _Nullable downloadProgressBlockReference,
-                                                                _Nullable AWSS3TransferUtilityDownloadCompletionHandlerBlock * _Nullable completionHandlerReference))downloadBlocksAssigner
-                                                                DEPRECATED_MSG_ATTRIBUTE("Use enumerateToAssignBlocks: instead.");
+                                                                _Nullable AWSS3TransferUtilityDownloadCompletionHandlerBlock * _Nullable completionHandlerReference))downloadBlocksAssigner;
 
 /**
  Assigns progress feedback and completion handler blocks. This method should be called when the app was suspended while the transfer is still happening.
@@ -641,16 +630,15 @@ handleEventsForBackgroundURLSession:(NSString *)identifier
  @param multiPartUploadBlocksAssigner The block for assigning the multipart upload progress feedback and completion handler blocks.
  @param downloadBlocksAssigner The block for assigning the download progress feedback and completion handler blocks.
  */
-- (void)enumerateToAssignBlocksForUploadTask:(void (^)(AWSS3TransferUtilityUploadTask *uploadTask,
-                                                       AWSS3TransferUtilityProgressBlock _Nullable * _Nullable uploadProgressBlockReference,
-                                                       AWSS3TransferUtilityUploadCompletionHandlerBlock _Nullable * _Nullable completionHandlerReference))uploadBlocksAssigner
-               multiPartUploadBlocksAssigner:(void (^)(AWSS3TransferUtilityMultiPartUploadTask *multiPartUploadTask,
+-(void)enumerateToAssignBlocksForUploadTask:(void (^)(AWSS3TransferUtilityUploadTask *uploadTask,
+                                                      AWSS3TransferUtilityProgressBlock _Nullable * _Nullable uploadProgressBlockReference,
+                                                      AWSS3TransferUtilityUploadCompletionHandlerBlock _Nullable * _Nullable completionHandlerReference))uploadBlocksAssigner
+              multiPartUploadBlocksAssigner: (void (^) (AWSS3TransferUtilityMultiPartUploadTask *multiPartUploadTask,
                                                         AWSS3TransferUtilityMultiPartProgressBlock _Nullable * _Nullable multiPartUploadProgressBlockReference,
                                                         AWSS3TransferUtilityMultiPartUploadCompletionHandlerBlock _Nullable * _Nullable completionHandlerReference)) multiPartUploadBlocksAssigner
-                      downloadBlocksAssigner:(void (^)(AWSS3TransferUtilityDownloadTask *downloadTask,
-                                                       AWSS3TransferUtilityProgressBlock _Nullable * _Nullable downloadProgressBlockReference,
-                                                       AWSS3TransferUtilityDownloadCompletionHandlerBlock _Nullable * _Nullable completionHandlerReference))downloadBlocksAssigner
-                                                       DEPRECATED_MSG_ATTRIBUTE("Use enumerateToAssign(blocks:) instead.");
+                     downloadBlocksAssigner:(void (^)(AWSS3TransferUtilityDownloadTask *downloadTask,
+                                                      AWSS3TransferUtilityProgressBlock _Nullable * _Nullable downloadProgressBlockReference,
+                                                      AWSS3TransferUtilityDownloadCompletionHandlerBlock _Nullable * _Nullable completionHandlerReference))downloadBlocksAssigner;
 
 /**
  Retrieves all running tasks.
@@ -695,15 +683,6 @@ handleEventsForBackgroundURLSession:(NSString *)identifier
 @property (nonatomic, nullable) NSNumber *multiPartConcurrencyLimit;
 
 @property NSInteger timeoutIntervalForResource;
-
-/**
- The preferred access style for the bucket. The default is `AWSS3BucketAccessStyleVirtualHosted`.
- 
- Virtual-hosted-style requests require that the bucket name must be DNS-compliant and must not contain periods `(".")`.
- 
- If virtual-hosted-style access is set as preferred but the bucket name does not meet these conditions, path-style access will be used instead.
- */
-@property (nonatomic, assign) AWSS3BucketAccessStyle preferredAccessStyle;
 
 @end
 

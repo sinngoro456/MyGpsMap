@@ -10,13 +10,13 @@
 
 #import "AWSTask.h"
 
-#import <stdatomic.h>
+#import <libkern/OSAtomic.h>
 
 #import "AWSBolts.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-__attribute__ ((noinline)) void awsbf_warnBlockingOperationOnMainThread(void) {
+__attribute__ ((noinline)) void awsbf_warnBlockingOperationOnMainThread() {
     NSLog(@"Warning: A long-running operation is being executed on the main thread. \n"
           " Break on awsbf_warnBlockingOperationOnMainThread() to debug.");
 }
@@ -98,12 +98,12 @@ NSString *const AWSTaskMultipleErrorsUserInfoKey = @"errors";
 }
 
 + (instancetype)taskForCompletionOfAllTasks:(nullable NSArray<AWSTask *> *)tasks {
-    __block _Atomic(int32_t) total = (int32_t)tasks.count;
+    __block int32_t total = (int32_t)tasks.count;
     if (total == 0) {
         return [self taskWithResult:nil];
     }
 
-    __block _Atomic(int32_t) cancelled = 0;
+    __block int32_t cancelled = 0;
     NSObject *lock = [[NSObject alloc] init];
     NSMutableArray *errors = [NSMutableArray array];
 
@@ -115,11 +115,10 @@ NSString *const AWSTaskMultipleErrorsUserInfoKey = @"errors";
                     [errors addObject:t.error];
                 }
             } else if (t.cancelled) {
-                atomic_fetch_add(&cancelled, 1);
+                OSAtomicIncrement32Barrier(&cancelled);
             }
 
-            atomic_fetch_sub(&total, 1);
-            if (total == 0) {
+            if (OSAtomicDecrement32Barrier(&total) == 0) {
                 if (errors.count > 0) {
                     if (errors.count == 1) {
                         tcs.error = [errors firstObject];
@@ -149,14 +148,14 @@ NSString *const AWSTaskMultipleErrorsUserInfoKey = @"errors";
 
 + (instancetype)taskForCompletionOfAnyTask:(nullable NSArray<AWSTask *> *)tasks
 {
-    __block _Atomic(int32_t) total = (int32_t)tasks.count;
+    __block int32_t total = (int32_t)tasks.count;
     if (total == 0) {
         return [self taskWithResult:nil];
     }
     
-    __block _Atomic(BOOL) completed = NO;
-    __block _Atomic(int32_t) cancelled = 0;
-
+    __block int completed = 0;
+    __block int32_t cancelled = 0;
+    
     NSObject *lock = [NSObject new];
     NSMutableArray<NSError *> *errors = [NSMutableArray new];
     
@@ -168,17 +167,15 @@ NSString *const AWSTaskMultipleErrorsUserInfoKey = @"errors";
                     [errors addObject:t.error];
                 }
             } else if (t.cancelled) {
-                atomic_fetch_add(&cancelled, 1);
+                OSAtomicIncrement32Barrier(&cancelled);
             } else {
-                BOOL expected = NO;
-                if(atomic_compare_exchange_strong(&completed, &expected, YES)) {
+                if(OSAtomicCompareAndSwap32Barrier(0, 1, &completed)) {
                     [source setResult:t.result];
                 }
             }
-
-            atomic_fetch_sub(&total, 1);
-            BOOL expected = NO;
-            if (total == 0 && atomic_compare_exchange_strong(&completed, &expected, YES)) {
+            
+            if (OSAtomicDecrement32Barrier(&total) == 0 &&
+                OSAtomicCompareAndSwap32Barrier(0, 1, &completed)) {
                 if (cancelled > 0) {
                     [source cancel];
                 } else if (errors.count > 0) {

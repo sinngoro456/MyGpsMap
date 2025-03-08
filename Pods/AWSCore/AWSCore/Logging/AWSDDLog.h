@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2024, Deusty, LLC
+// Copyright (c) 2010-2016, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -15,23 +15,6 @@
 
 #import <Foundation/Foundation.h>
 
-// The Swift Package integration has no support for the legacy macros.
-#if __has_include(<AWSDDLegacyMacros.h>)
-    // Enable 1.9.x legacy macros if imported directly and it's not a swift package build.
-    #ifndef AWSDD_LEGACY_MACROS
-        #define AWSDD_LEGACY_MACROS 1
-    #endif
-    // AWSDD_LEGACY_MACROS is checked in the file itself
-    #import <AWSDDLegacyMacros.h>
-#endif
-
-#ifndef AWSDD_LEGACY_MESSAGE_TAG
-    #define AWSDD_LEGACY_MESSAGE_TAG 1
-#endif
-
-// Names of loggers.
-#import "AWSDDLoggerNames.h"
-
 #if OS_OBJECT_USE_OBJC
     #define DISPATCH_QUEUE_REFERENCE_TYPE strong
 #else
@@ -42,8 +25,6 @@
 @class AWSDDLoggerInformation;
 @protocol AWSDDLogger;
 @protocol AWSDDLogFormatter;
-
-NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Define the standard options.
@@ -117,22 +98,22 @@ typedef NS_OPTIONS(NSUInteger, AWSDDLogFlag){
      *  0...00001 AWSDDLogFlagError
      */
     AWSDDLogFlagError      = (1 << 0),
-
+    
     /**
      *  0...00010 AWSDDLogFlagWarning
      */
     AWSDDLogFlagWarning    = (1 << 1),
-
+    
     /**
      *  0...00100 AWSDDLogFlagInfo
      */
     AWSDDLogFlagInfo       = (1 << 2),
-
+    
     /**
      *  0...01000 AWSDDLogFlagDebug
      */
     AWSDDLogFlagDebug      = (1 << 3),
-
+    
     /**
      *  0...10000 AWSDDLogFlagVerbose
      */
@@ -147,37 +128,39 @@ typedef NS_ENUM(NSUInteger, AWSDDLogLevel){
      *  No logs
      */
     AWSDDLogLevelOff       = 0,
-
+    
     /**
      *  Error logs only
      */
     AWSDDLogLevelError     = (AWSDDLogFlagError),
-
+    
     /**
      *  Error and warning logs
      */
     AWSDDLogLevelWarning   = (AWSDDLogLevelError   | AWSDDLogFlagWarning),
-
+    
     /**
      *  Error, warning and info logs
      */
     AWSDDLogLevelInfo      = (AWSDDLogLevelWarning | AWSDDLogFlagInfo),
-
+    
     /**
      *  Error, warning, info and debug logs
      */
     AWSDDLogLevelDebug     = (AWSDDLogLevelInfo    | AWSDDLogFlagDebug),
-
+    
     /**
      *  Error, warning, info, debug and verbose logs
      */
     AWSDDLogLevelVerbose   = (AWSDDLogLevelDebug   | AWSDDLogFlagVerbose),
-
+    
     /**
      *  All logs (1...11111)
      */
     AWSDDLogLevelAll       = NSUIntegerMax
 };
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Extracts just the file name, no path or extension
@@ -187,11 +170,21 @@ typedef NS_ENUM(NSUInteger, AWSDDLogLevel){
  *
  *  @return the file name
  */
-FOUNDATION_EXTERN NSString * __nullable AWSDDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
+NSString * __nullable AWSDDExtractFileNameWithoutExtension(const char *filePath, BOOL copy);
+
+/**
+ * The THIS_FILE macro gives you an NSString of the file name.
+ * For simplicity and clarity, the file name does not include the full path or file extension.
+ *
+ * For example: AWSDDLogWarn(@"%@: Unable to find thingy", THIS_FILE) -> @"MyViewController: Unable to find thingy"
+ **/
+#ifndef THIS_FILE
+    #define THIS_FILE         (AWSDDExtractFileNameWithoutExtension(__FILE__, NO))
+#endif
 
 /**
  * The AWS_THIS_FILE macro gives you an NSString of the file name.
- * For simplicity and clarity, the file name does not include the full path or file extension.
+ * Provided for convenience in case of name conflicts of the THIS_FILE macro with CocoaLumberjack.
  *
  * For example: AWSDDLogWarn(@"%@: Unable to find thingy", AWS_THIS_FILE) -> @"MyViewController: Unable to find thingy"
  **/
@@ -207,20 +200,6 @@ FOUNDATION_EXTERN NSString * __nullable AWSDDExtractFileNameWithoutExtension(con
  **/
 #define THIS_METHOD       NSStringFromSelector(_cmd)
 
-/**
- * Makes a declaration "Sendable" in Swift (if supported by the compiler).
- */
-#ifndef AWSDD_SENDABLE
-#ifdef __has_attribute
-#if __has_attribute(swift_attr)
-#define AWSDD_SENDABLE __attribute__((swift_attr("@Sendable")))
-#endif
-#endif
-#endif
-#ifndef AWSDD_SENDABLE
-#define AWSDD_SENDABLE
-#endif
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -230,7 +209,6 @@ FOUNDATION_EXTERN NSString * __nullable AWSDDExtractFileNameWithoutExtension(con
  *  The main class, exposes all logging mechanisms, loggers, ...
  *  For most of the users, this class is hidden behind the logging functions like `AWSDDLogInfo`
  */
-AWSDD_SENDABLE
 @interface AWSDDLog : NSObject
 
 /**
@@ -240,7 +218,7 @@ AWSDD_SENDABLE
 @property (class, nonatomic, strong, readonly) AWSDDLog *sharedInstance;
 
 /**
- * Log level setting.
+ * Log level setting.
  */
 @property (nonatomic, assign) AWSDDLogLevel logLevel;
 
@@ -271,9 +249,9 @@ AWSDD_SENDABLE
        flag:(AWSDDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
-   function:(nullable const char *)function
+   function:(const char *)function
        line:(NSUInteger)line
-        tag:(nullable id)tag
+        tag:(id __nullable)tag
      format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
 
 /**
@@ -297,9 +275,9 @@ AWSDD_SENDABLE
        flag:(AWSDDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
-   function:(nullable const char *)function
+   function:(const char *)function
        line:(NSUInteger)line
-        tag:(nullable id)tag
+        tag:(id __nullable)tag
      format:(NSString *)format, ... NS_FORMAT_FUNCTION(9,10);
 
 /**
@@ -324,9 +302,9 @@ AWSDD_SENDABLE
        flag:(AWSDDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
-   function:(nullable const char *)function
+   function:(const char *)function
        line:(NSUInteger)line
-        tag:(nullable id)tag
+        tag:(id __nullable)tag
      format:(NSString *)format
        args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
@@ -352,16 +330,16 @@ AWSDD_SENDABLE
        flag:(AWSDDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
-   function:(nullable const char *)function
+   function:(const char *)function
        line:(NSUInteger)line
-        tag:(nullable id)tag
+        tag:(id __nullable)tag
      format:(NSString *)format
        args:(va_list)argList NS_SWIFT_NAME(log(asynchronous:level:flag:context:file:function:line:tag:format:arguments:));
 
 /**
  * Logging Primitive.
  *
- * This method can be used if you manually prepared AWSDDLogMessage.
+ * This method can be used if you manualy prepared AWSDDLogMessage.
  *
  *  @param asynchronous YES if the logging is done async, NO if you want to force sync
  *  @param logMessage   the log message stored in a `AWSDDLogMessage` model object
@@ -372,7 +350,7 @@ AWSDD_SENDABLE
 /**
  * Logging Primitive.
  *
- * This method can be used if you manually prepared AWSDDLogMessage.
+ * This method can be used if you manualy prepared AWSDDLogMessage.
  *
  *  @param asynchronous YES if the logging is done async, NO if you want to force sync
  *  @param logMessage   the log message stored in a `AWSDDLogMessage` model object
@@ -605,7 +583,7 @@ AWSDD_SENDABLE
  * If no formatter is set, the logger simply logs the message as it is given in logMessage,
  * or it may use its own built in formatting style.
  **/
-@property (nonatomic, strong, nullable) id <AWSDDLogFormatter> logFormatter;
+@property (nonatomic, strong) id <AWSDDLogFormatter> logFormatter;
 
 @optional
 
@@ -636,16 +614,16 @@ AWSDD_SENDABLE
 - (void)didAddLoggerInQueue:(dispatch_queue_t)queue;
 
 /**
- *  See the above description for `didAddLogger`
+ *  See the above description for `didAddLoger`
  */
 - (void)willRemoveLogger;
 
 /**
  * Some loggers may buffer IO for optimization purposes.
- * For example, a database logger may only save occasionally as the disk IO is slow.
+ * For example, a database logger may only save occasionaly as the disk IO is slow.
  * In such loggers, this method should be implemented to flush any pending IO.
  *
- * This allows invocations of AWSDDLog's flushLog method to be propagated to loggers that need it.
+ * This allows invocations of AWSDDLog's flushLog method to be propogated to loggers that need it.
  *
  * Note that AWSDDLog's flushLog method is invoked automatically when the application quits,
  * and it may be also invoked manually by the developer prior to application crashes, or other such reasons.
@@ -665,7 +643,7 @@ AWSDD_SENDABLE
  * The created queue will receive its name from this method.
  * This may be helpful for debugging or profiling reasons.
  **/
-@property (copy, nonatomic, readonly) AWSDDLoggerName loggerName;
+@property (nonatomic, readonly) NSString *loggerName;
 
 @end
 
@@ -690,7 +668,7 @@ AWSDD_SENDABLE
  * The formatter may also optionally filter the log message by returning nil,
  * in which case the logger will not log the message.
  **/
-- (nullable NSString *)formatLogMessage:(AWSDDLogMessage *)logMessage NS_SWIFT_NAME(format(message:));
+- (NSString * __nullable)formatLogMessage:(AWSDDLogMessage *)logMessage NS_SWIFT_NAME(format(message:));
 
 @optional
 
@@ -700,7 +678,7 @@ AWSDD_SENDABLE
  *
  * This is primarily for thread-safety.
  * If a formatter is explicitly not thread-safe, it may wish to throw an exception if added to multiple loggers.
- * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter with 10.0 behavior),
+ * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter),
  * it could possibly use these hooks to switch to thread-safe versions of the code.
  **/
 - (void)didAddToLogger:(id <AWSDDLogger>)logger;
@@ -711,7 +689,7 @@ AWSDD_SENDABLE
  *
  * This is primarily for thread-safety.
  * If a formatter is explicitly not thread-safe, it may wish to throw an exception if added to multiple loggers.
- * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter with 10.0 behavior),
+ * Or if a formatter has potentially thread-unsafe code (e.g. NSDateFormatter),
  * it could possibly use these hooks to switch to thread-safe versions of the code or use dispatch_set_specific()
 .* to add its own specific values.
  **/
@@ -731,7 +709,7 @@ AWSDD_SENDABLE
 /**
  *  This protocol describes a dynamic logging component
  */
-@protocol AWSDRegisteredDynamicLogging
+@protocol AWSDDRegisteredDynamicLogging
 
 /**
  * Implement these methods to allow a file's log level to be managed from a central location.
@@ -790,13 +768,11 @@ typedef NS_OPTIONS(NSInteger, AWSDDLogMessageOptions){
  * The `AWSDDLogMessage` class encapsulates information about the log message.
  * If you write custom loggers or formatters, you will be dealing with objects of this class.
  **/
-AWSDD_SENDABLE
 @interface AWSDDLogMessage : NSObject <NSCopying>
 {
     // Direct accessors to be used only for performance
     @public
     NSString *_message;
-    NSString *_messageFormat;
     AWSDDLogLevel _level;
     AWSDDLogFlag _flag;
     NSInteger _context;
@@ -804,16 +780,12 @@ AWSDD_SENDABLE
     NSString *_fileName;
     NSString *_function;
     NSUInteger _line;
-#if AWSDD_LEGACY_MESSAGE_TAG
-    id _tag __attribute__((deprecated("Use _representedObject instead", "_representedObject")));
-#endif
-    id _representedObject;
+    id _tag;
     AWSDDLogMessageOptions _options;
-    NSDate * _timestamp;
+    NSDate *_timestamp;
     NSString *_threadID;
     NSString *_threadName;
     NSString *_queueLabel;
-    NSUInteger _qos;
 }
 
 /**
@@ -835,64 +807,6 @@ AWSDD_SENDABLE
  * so it makes sense to optimize and skip the unnecessary allocations.
  * However, if you need them to be copied you may use the options parameter to specify this.
  *
- *  @param messageFormat   the message format
- *  @param message  the formatted message
- *  @param level     the log level
- *  @param flag      the log flag
- *  @param context   the context (if any is defined)
- *  @param file      the current file
- *  @param function  the current function
- *  @param line      the current code line
- *  @param tag       potential tag
- *  @param options   a bitmask which supports AWSDDLogMessageCopyFile and AWSDDLogMessageCopyFunction.
- *  @param timestamp the log timestamp
- *
- *  @return a new instance of a log message model object
- */
-- (instancetype)initWithFormat:(NSString *)messageFormat
-                     formatted:(NSString *)message
-                         level:(AWSDDLogLevel)level
-                          flag:(AWSDDLogFlag)flag
-                       context:(NSInteger)context
-                          file:(NSString *)file
-                      function:(nullable NSString *)function
-                          line:(NSUInteger)line
-                           tag:(nullable id)tag
-                       options:(AWSDDLogMessageOptions)options
-                     timestamp:(nullable NSDate *)timestamp NS_DESIGNATED_INITIALIZER;
-
-/**
- *     Convenience initializer taking a `va_list` as arguments to create the formatted message.
- *
- *  @param messageFormat   the message format
- *  @param messageArgs   the message arguments.
- *  @param level     the log level
- *  @param flag      the log flag
- *  @param context   the context (if any is defined)
- *  @param file      the current file
- *  @param function  the current function
- *  @param line      the current code line
- *  @param tag       potential tag
- *  @param options   a bitmask which supports AWSDDLogMessageCopyFile and AWSDDLogMessageCopyFunction.
- *  @param timestamp the log timestamp
- *
- *  @return a new instance of a log message model object
- */
-- (instancetype)initWithFormat:(NSString *)messageFormat
-                          args:(va_list)messageArgs
-                         level:(AWSDDLogLevel)level
-                          flag:(AWSDDLogFlag)flag
-                       context:(NSInteger)context
-                          file:(NSString *)file
-                      function:(nullable NSString *)function
-                          line:(NSUInteger)line
-                           tag:(nullable id)tag
-                       options:(AWSDDLogMessageOptions)options
-                     timestamp:(nullable NSDate *)timestamp;
-
-/**
- *  Deprecated initialier. See initWithFormat:args:formatted:level:flag:context:file:function:line:tag:options:timestamp:.
- *
  *  @param message   the message
  *  @param level     the log level
  *  @param flag      the log flag
@@ -911,42 +825,33 @@ AWSDD_SENDABLE
                            flag:(AWSDDLogFlag)flag
                         context:(NSInteger)context
                            file:(NSString *)file
-                       function:(nullable NSString *)function
+                       function:(NSString * __nullable)function
                            line:(NSUInteger)line
-                            tag:(nullable id)tag
+                            tag:(id __nullable)tag
                         options:(AWSDDLogMessageOptions)options
-                      timestamp:(nullable NSDate *)timestamp
-__attribute__((deprecated("Use initializer taking unformatted message and args instead", "initWithFormat:formatted:level:flag:context:file:function:line:tag:options:timestamp:")));
+                      timestamp:(NSDate * __nullable)timestamp NS_DESIGNATED_INITIALIZER;
 
 /**
  * Read-only properties
  **/
 
 /**
- *  The log message.
+ *  The log message
  */
 @property (readonly, nonatomic) NSString *message;
-/**
- * The message format. When the deprecated initializer is used, this might be the same as `message`.
- */
-@property (readonly, nonatomic) NSString *messageFormat;
 @property (readonly, nonatomic) AWSDDLogLevel level;
 @property (readonly, nonatomic) AWSDDLogFlag flag;
 @property (readonly, nonatomic) NSInteger context;
 @property (readonly, nonatomic) NSString *file;
 @property (readonly, nonatomic) NSString *fileName;
-@property (readonly, nonatomic, nullable) NSString * function;
+@property (readonly, nonatomic) NSString * __nullable function;
 @property (readonly, nonatomic) NSUInteger line;
-#if AWSDD_LEGACY_MESSAGE_TAG
-@property (readonly, nonatomic, nullable) id tag __attribute__((deprecated("Use representedObject instead", "representedObject")));
-#endif
-@property (readonly, nonatomic, nullable) id representedObject;
+@property (readonly, nonatomic) id __nullable tag;
 @property (readonly, nonatomic) AWSDDLogMessageOptions options;
 @property (readonly, nonatomic) NSDate *timestamp;
 @property (readonly, nonatomic) NSString *threadID; // ID as it appears in NSLog calculated from the machThreadID
-@property (readonly, nonatomic, nullable) NSString *threadName;
+@property (readonly, nonatomic) NSString *threadName;
 @property (readonly, nonatomic) NSString *queueLabel;
-@property (readonly, nonatomic) NSUInteger qos API_AVAILABLE(macos(10.10), ios(8.0));
 
 @end
 
@@ -958,10 +863,10 @@ __attribute__((deprecated("Use initializer taking unformatted message and args i
  * The `AWSDDLogger` protocol specifies that an optional formatter can be added to a logger.
  * Most (but not all) loggers will want to support formatters.
  *
- * However, writing getters and setters in a thread safe manner,
+ * However, writting getters and setters in a thread safe manner,
  * while still maintaining maximum speed for the logging process, is a difficult task.
  *
- * To do it right, the implementation of the getter/setter has strict requirements:
+ * To do it right, the implementation of the getter/setter has strict requiremenets:
  * - Must NOT require the `logMessage:` method to acquire a lock.
  * - Must NOT require the `logMessage:` method to access an atomic property (also a lock of sorts).
  *
@@ -974,7 +879,7 @@ __attribute__((deprecated("Use initializer taking unformatted message and args i
 {
     // Direct accessors to be used only for performance
     @public
-    _Nullable id <AWSDDLogFormatter> _logFormatter;
+    id <AWSDDLogFormatter> _logFormatter;
     dispatch_queue_t _loggerQueue;
 }
 
@@ -986,7 +891,7 @@ __attribute__((deprecated("Use initializer taking unformatted message and args i
 /**
  *  Return YES if the current logger uses a global queue for logging
  */
-@property (nonatomic, readonly, getter=isOnGlobalLoggingQueue) BOOL onGlobalLoggingQueue;
+@property (nonatomic, readonly, getter=isOnGlobalLoggingQueue)  BOOL onGlobalLoggingQueue;
 
 /**
  *  Return YES if the current logger uses the internal designated queue for logging
@@ -995,34 +900,17 @@ __attribute__((deprecated("Use initializer taking unformatted message and args i
 
 @end
 
-#define _AWSDDAbstractLoggerSelectorMessage(msg) [NSStringFromSelector(_cmd) stringByAppendingString:@" " msg]
-// Note: we do not wrap these in any do {...} while 0 construct, because NSAssert does that for us.
-#define AWSDDAbstractLoggerAssertOnGlobalLoggingQueue() \
-NSAssert([self isOnGlobalLoggingQueue], _AWSDDAbstractLoggerSelectorMessage("must only be called on the global logging queue!"))
-#define AWSDDAbstractLoggerAssertOnInternalLoggerQueue() \
-NSAssert([self isOnInternalLoggerQueue], _AWSDDAbstractLoggerSelectorMessage("must only be called on the internal logger queue!"))
-#define AWSDDAbstractLoggerAssertNotOnGlobalLoggingQueue() \
-    NSAssert(![self isOnGlobalLoggingQueue], _AWSDDAbstractLoggerSelectorMessage("must not be called on the global logging queue!"))
-#define AWSDDAbstractLoggerAssertNotOnInternalLoggerQueue() \
-    NSAssert(![self isOnGlobalLoggingQueue], _AWSDDAbstractLoggerSelectorMessage("must not be called on the internal logger queue!"))
-
-#define AWSDDAbstractLoggerAssertLockedPropertyAccess() \
-    AWSDDAbstractLoggerAssertNotOnGlobalLoggingQueue(); \
-    NSAssert(![self isOnInternalLoggerQueue], @"MUST access ivar directly, NOT via self.* syntax.")
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AWSDD_SENDABLE
 @interface AWSDDLoggerInformation : NSObject
 
 @property (nonatomic, readonly) id <AWSDDLogger> logger;
 @property (nonatomic, readonly) AWSDDLogLevel level;
 
-+ (instancetype)informationWithLogger:(id <AWSDDLogger>)logger
-                             andLevel:(AWSDDLogLevel)level;
++ (AWSDDLoggerInformation *)informationWithLogger:(id <AWSDDLogger>)logger
+                           andLevel:(AWSDDLogLevel)level;
 
 @end
 

@@ -93,16 +93,12 @@
     NSDictionary *actionHTTPRule = [actionRules objectForKey:@"http"];
     NSString *ruleURIStr = [actionHTTPRule objectForKey:@"requestUri"];
 
-    NSDictionary *actionEndpoint = [actionRules objectForKey:@"endpoint"];
-    NSString *endpointHostPrefix = [actionEndpoint objectForKey:@"hostPrefix"];
-    
     NSError *error = nil;
 
     [AWSXMLRequestSerializer constructURIandHeadersAndBody:request
                                                      rules:inputRules
                                                 parameters:parameters
                                                  uriSchema:ruleURIStr
-                                                hostPrefix:endpointHostPrefix
                                                      error:&error];
     if (error) {
         return [AWSTask taskWithError:error];
@@ -190,15 +186,11 @@
     NSDictionary *shapeRules = [self.serviceDefinitionJSON objectForKey:@"shapes"];
     AWSJSONDictionary *inputRules = [[AWSJSONDictionary alloc] initWithDictionary:[anActionRules objectForKey:@"input"] JSONDefinitionRule:shapeRules];
 
-    NSDictionary *actionEndpoint = [anActionRules objectForKey:@"endpoint"];
-    NSString *endpointHostPrefix = [actionEndpoint objectForKey:@"hostPrefix"];
-    
     NSError *error = nil;
     [AWSXMLRequestSerializer constructURIandHeadersAndBody:request
                                                      rules:inputRules
                                                 parameters:parameters
                                                  uriSchema:ruleURIStr
-                                                hostPrefix:endpointHostPrefix
                                                      error:&error];
 
     if (!error) {
@@ -238,7 +230,6 @@
                                 rules:(AWSJSONDictionary *)rules
                            parameters:(NSDictionary *)params
                             uriSchema:(NSString *)uriSchema
-                           hostPrefix:(NSString *)hostPrefix
                                 error:(NSError *__autoreleasing *)error {
     //If no rule just return
     if (rules == (id)[NSNull null] ||  [rules count] == 0) {
@@ -330,10 +321,7 @@
             }
 
             //if it is queryString type, construct queryString
-            if ([memberRules[@"location"] isEqualToString:@"querystring"] &&
-                [rulesType isEqualToString:@"list"]) {
-                [queryStringDictionary setObject:value forKey:memberRules[@"locationName"]];
-            } else if ([memberRules[@"location"] isEqualToString:@"querystring"]) {
+            if ([memberRules[@"location"] isEqualToString:@"querystring"]) {
                 [queryStringDictionary setObject:valueStr forKey:memberRules[@"locationName"]];
             }
 
@@ -394,29 +382,14 @@
         NSArray *myKeys = [queryStringDictionary allKeys];
         NSArray *sortedKeys = [myKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         NSString *queryString = @"";
-        NSMutableArray *keyValuesToAppend = [@[] mutableCopy];
         for (NSString *key in sortedKeys) {
-            if ([queryStringDictionary[key] isKindOfClass:[NSArray class]]) {
-                NSArray *listOfValues = (NSArray*)queryStringDictionary[key];
-                for (NSString *singleValue in listOfValues) {
-                    NSString *keyVal = [NSString stringWithFormat:@"%@=%@", [key aws_stringWithURLEncoding], [singleValue aws_stringWithURLEncoding]];
-                    [keyValuesToAppend addObject:keyVal];
-                }
-            } else {
-                NSString *keyVal = [NSString stringWithFormat:@"%@=%@", [key aws_stringWithURLEncoding], [queryStringDictionary[key] aws_stringWithURLEncoding]];
-                [keyValuesToAppend addObject:keyVal];
-            }
-        }
-        
-        for (NSString *keyValue in keyValuesToAppend) {
             if ([queryString length] == 0 && uriSchemaContainsQuestionMark == NO) {
-                queryString = [NSString stringWithFormat:@"?%@", keyValue];
+                queryString = [NSString stringWithFormat:@"?%@=%@",[key aws_stringWithURLEncoding],[queryStringDictionary[key] aws_stringWithURLEncoding]];
             } else {
-                NSString *appendString = [NSString stringWithFormat:@"&%@", keyValue];
+                NSString *appendString = [NSString stringWithFormat:@"&%@=%@",[key aws_stringWithURLEncoding],[queryStringDictionary[key] aws_stringWithURLEncoding]];
                 queryString = [queryString stringByAppendingString:appendString];
             }
         }
-        
         rawURI = [rawURI stringByAppendingString:queryString];
     }
 
@@ -424,14 +397,6 @@
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\{.*?\\}" options:NSRegularExpressionCaseInsensitive error:nil];
     rawURI = [regex stringByReplacingMatchesInString:rawURI options:0 range:NSMakeRange(0, [rawURI length]) withTemplate:@""];
 
-    //prepend the hostPrefix
-    if (hostPrefix.length) {
-        NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:request.URL resolvingAgainstBaseURL:NO];
-        NSString* finalHost = [hostPrefix stringByAppendingString:request.URL.host];
-        [urlComponents setHost:finalHost];
-        request.URL = urlComponents.URL;
-    }
-    
     //validate URL
     NSRange r = [rawURI rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"{}"]];
     if (r.location != NSNotFound) {

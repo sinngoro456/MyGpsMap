@@ -17,11 +17,6 @@
 
 @implementation AWSModel
 
-/// This must be overridden by subclasses on a model-by-model basis
-+ (BOOL)supportsSecureCoding {
-    return NO;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return nil;
 }

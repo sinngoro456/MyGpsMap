@@ -20,10 +20,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 
 @implementation AWSS3AbortIncompleteMultipartUpload
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"daysAfterInitiation" : @"DaysAfterInitiation",
@@ -33,10 +29,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 @end
 
 @implementation AWSS3AbortMultipartUploadOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -64,14 +56,9 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 
 @implementation AWSS3AbortMultipartUploadRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"requestPayer" : @"RequestPayer",
              @"uploadId" : @"UploadId",
@@ -97,10 +84,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 @end
 
 @implementation AWSS3AccelerateConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -133,10 +116,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 
 @implementation AWSS3AccessControlPolicy
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"grants" : @"Grants",
@@ -155,10 +134,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 @end
 
 @implementation AWSS3AccessControlTranslation
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -186,10 +161,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 
 @implementation AWSS3AnalyticsAndOperator
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"prefix" : @"Prefix",
@@ -204,10 +175,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 @end
 
 @implementation AWSS3AnalyticsConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -229,10 +196,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 
 @implementation AWSS3AnalyticsExportDestination
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"s3BucketDestination" : @"S3BucketDestination",
@@ -246,10 +209,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 @end
 
 @implementation AWSS3AnalyticsFilter
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -270,10 +229,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 @end
 
 @implementation AWSS3AnalyticsS3BucketDestination
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -304,10 +259,6 @@ NSString *const AWSS3ErrorDomain = @"com.amazonaws.AWSS3ErrorDomain";
 
 @implementation AWSS3Bucket
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"creationDate" : @"CreationDate",
@@ -327,10 +278,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3BucketLifecycleConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"rules" : @"Rules",
@@ -344,10 +291,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3BucketLoggingStatus
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -363,10 +306,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CORSConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"CORSRules" : @"CORSRules",
@@ -381,10 +320,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CORSRule
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"allowedHeaders" : @"AllowedHeaders",
@@ -398,10 +333,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3CSVInput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -445,10 +376,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CSVOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"fieldDelimiter" : @"FieldDelimiter",
@@ -483,10 +410,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3CloudFunctionConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -527,29 +450,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"s3:ObjectRemoved:DeleteMarkerCreated"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRemovedDeleteMarkerCreated);
         }
-        if ([value caseInsensitiveCompare:@"s3:ObjectRestore:*"] == NSOrderedSame) {
-            return @(AWSS3EventS3ObjectRestore);
-        }
         if ([value caseInsensitiveCompare:@"s3:ObjectRestore:Post"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRestorePost);
         }
         if ([value caseInsensitiveCompare:@"s3:ObjectRestore:Completed"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRestoreCompleted);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:*"] == NSOrderedSame) {
-            return @(AWSS3EventS3Replication);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationFailedReplication"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationFailedReplication);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationNotTracked"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationNotTracked);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationMissedThreshold"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationMissedThreshold);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationReplicatedAfterThreshold"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationReplicatedAfterThreshold);
         }
         return @(AWSS3EventUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
@@ -572,22 +477,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"s3:ObjectRemoved:Delete";
             case AWSS3EventS3ObjectRemovedDeleteMarkerCreated:
                 return @"s3:ObjectRemoved:DeleteMarkerCreated";
-            case AWSS3EventS3ObjectRestore:
-                return @"s3:ObjectRestore:*";
             case AWSS3EventS3ObjectRestorePost:
                 return @"s3:ObjectRestore:Post";
             case AWSS3EventS3ObjectRestoreCompleted:
                 return @"s3:ObjectRestore:Completed";
-            case AWSS3EventS3Replication:
-                return @"s3:Replication:*";
-            case AWSS3EventS3ReplicationOperationFailedReplication:
-                return @"s3:Replication:OperationFailedReplication";
-            case AWSS3EventS3ReplicationOperationNotTracked:
-                return @"s3:Replication:OperationNotTracked";
-            case AWSS3EventS3ReplicationOperationMissedThreshold:
-                return @"s3:Replication:OperationMissedThreshold";
-            case AWSS3EventS3ReplicationOperationReplicatedAfterThreshold:
-                return @"s3:Replication:OperationReplicatedAfterThreshold";
             default:
                 return nil;
         }
@@ -598,10 +491,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CommonPrefix
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"prefix" : @"Prefix",
@@ -611,10 +500,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3CompleteMultipartUploadOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -671,14 +556,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CompleteMultipartUploadRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"multipartUpload" : @"MultipartUpload",
              @"requestPayer" : @"RequestPayer",
@@ -710,10 +590,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CompletedMultipartUpload
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"parts" : @"Parts",
@@ -728,10 +604,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CompletedPart
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ETag" : @"ETag",
@@ -742,10 +614,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Condition
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -758,17 +626,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ContinuationEvent
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 @end
 
 @implementation AWSS3ReplicateObjectOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -778,7 +638,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"requestCharged" : @"RequestCharged",
              @"SSECustomerAlgorithm" : @"SSECustomerAlgorithm",
              @"SSECustomerKeyMD5" : @"SSECustomerKeyMD5",
-             @"SSEKMSEncryptionContext" : @"SSEKMSEncryptionContext",
              @"SSEKMSKeyId" : @"SSEKMSKeyId",
              @"serverSideEncryption" : @"ServerSideEncryption",
              @"versionId" : @"VersionId",
@@ -830,10 +689,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ReplicateObjectRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ACL" : @"ACL",
@@ -851,8 +706,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"replicateSourceSSECustomerAlgorithm" : @"CopySourceSSECustomerAlgorithm",
              @"replicateSourceSSECustomerKey" : @"CopySourceSSECustomerKey",
              @"replicateSourceSSECustomerKeyMD5" : @"CopySourceSSECustomerKeyMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
-             @"expectedSourceBucketOwner" : @"ExpectedSourceBucketOwner",
              @"expires" : @"Expires",
              @"grantFullControl" : @"GrantFullControl",
              @"grantRead" : @"GrantRead",
@@ -868,7 +721,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"SSECustomerAlgorithm" : @"SSECustomerAlgorithm",
              @"SSECustomerKey" : @"SSECustomerKey",
              @"SSECustomerKeyMD5" : @"SSECustomerKeyMD5",
-             @"SSEKMSEncryptionContext" : @"SSEKMSEncryptionContext",
              @"SSEKMSKeyId" : @"SSEKMSKeyId",
              @"serverSideEncryption" : @"ServerSideEncryption",
              @"storageClass" : @"StorageClass",
@@ -1076,12 +928,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -1097,10 +943,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -1132,10 +974,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ReplicateObjectResult
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ETag" : @"ETag",
@@ -1154,10 +992,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ReplicatePartResult
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1178,10 +1012,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CreateBucketConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"locationConstraint" : @"LocationConstraint",
@@ -1193,101 +1023,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@""] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintBlank);
         }
-        if ([value caseInsensitiveCompare:@"af-south-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAFSouth1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-east-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPEast1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-northeast-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPNortheast1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-northeast-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPNortheast2);
-        }
-        if ([value caseInsensitiveCompare:@"ap-northeast-3"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPNortheast3);
-        }
-        if ([value caseInsensitiveCompare:@"ap-south-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSouth1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-south-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSouth2);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast2);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-3"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast3);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-4"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast4);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-5"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast5);
-        }
-        if ([value caseInsensitiveCompare:@"ca-central-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintCACentral1);
-        }
-        if ([value caseInsensitiveCompare:@"ca-west-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintCAWest1);
-        }
-        if ([value caseInsensitiveCompare:@"cn-north-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintCNNorth1);
-        }
-        if ([value caseInsensitiveCompare:@"cn-northwest-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintCNNorthwest1);
-        }
         if ([value caseInsensitiveCompare:@"EU"] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintEU);
         }
-        if ([value caseInsensitiveCompare:@"eu-central-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUCentral1);
-        }
-        if ([value caseInsensitiveCompare:@"eu-central-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUCentral2);
-        }
-        if ([value caseInsensitiveCompare:@"eu-north-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUNorth1);
-        }
-        if ([value caseInsensitiveCompare:@"eu-south-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUSouth1);
-        }
-        if ([value caseInsensitiveCompare:@"eu-south-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUSouth2);
-        }
         if ([value caseInsensitiveCompare:@"eu-west-1"] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintEUWest1);
-        }
-        if ([value caseInsensitiveCompare:@"eu-west-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUWest2);
-        }
-        if ([value caseInsensitiveCompare:@"eu-west-3"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUWest3);
-        }
-        if ([value caseInsensitiveCompare:@"il-central-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintILCentral1);
-        }
-        if ([value caseInsensitiveCompare:@"me-central-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintMECentral1);
-        }
-        if ([value caseInsensitiveCompare:@"me-south-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintMESouth1);
-        }
-        if ([value caseInsensitiveCompare:@"sa-east-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintSAEast1);
-        }
-        if ([value caseInsensitiveCompare:@"us-east-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintUSEast2);
-        }
-        if ([value caseInsensitiveCompare:@"us-gov-east-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintUSGovEast1);
-        }
-        if ([value caseInsensitiveCompare:@"us-gov-west-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintUSGovWest1);
         }
         if ([value caseInsensitiveCompare:@"us-west-1"] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintUSWest1);
@@ -1295,79 +1035,109 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"us-west-2"] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintUSWest2);
         }
+        if ([value caseInsensitiveCompare:@"eu-west-2"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintEUWest2);
+        }
+        if ([value caseInsensitiveCompare:@"eu-west-3"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintEUWest3);
+        }
+        if ([value caseInsensitiveCompare:@"us-east-2"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintUSEast2);
+        }
+        if ([value caseInsensitiveCompare:@"ap-south-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPSouth1);
+        }
+        if ([value caseInsensitiveCompare:@"ap-southeast-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPSoutheast1);
+        }
+        if ([value caseInsensitiveCompare:@"ap-southeast-2"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPSoutheast2);
+        }
+        if ([value caseInsensitiveCompare:@"ap-northeast-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPNortheast1);
+        }
+        if ([value caseInsensitiveCompare:@"ap-northeast-2"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPNortheast2);
+        }
+        if ([value caseInsensitiveCompare:@"sa-east-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintSAEast1);
+        }
+        if ([value caseInsensitiveCompare:@"cn-north-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintCNNorth1);
+        }
+        if ([value caseInsensitiveCompare:@"cn-northwest-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintCNNorthwest1);
+        }
+        if ([value caseInsensitiveCompare:@"us-gov-west-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintUSGovWest1);
+        }
+        if ([value caseInsensitiveCompare:@"eu-central-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintEUCentral1);
+        }
+        if ([value caseInsensitiveCompare:@"ca-central-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintCACentral1);
+        }
+        if ([value caseInsensitiveCompare:@"us-gov-east-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintUSGovEast1);
+        }
+        if ([value caseInsensitiveCompare:@"eu-north-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintEUNorth1);
+        }
+        if ([value caseInsensitiveCompare:@"ap-east-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPEast1);
+        }
+        if ([value caseInsensitiveCompare:@"me-south-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintMESouth1);
+        }
         return @(AWSS3BucketLocationConstraintUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
             case AWSS3BucketLocationConstraintBlank:
                 return @"";
-            case AWSS3BucketLocationConstraintAFSouth1:
-                return @"af-south-1";
-            case AWSS3BucketLocationConstraintAPEast1:
-                return @"ap-east-1";
-            case AWSS3BucketLocationConstraintAPNortheast1:
-                return @"ap-northeast-1";
-            case AWSS3BucketLocationConstraintAPNortheast2:
-                return @"ap-northeast-2";
-            case AWSS3BucketLocationConstraintAPNortheast3:
-                return @"ap-northeast-3";
-            case AWSS3BucketLocationConstraintAPSouth1:
-                return @"ap-south-1";
-            case AWSS3BucketLocationConstraintAPSouth2:
-                return @"ap-south-2";
-            case AWSS3BucketLocationConstraintAPSoutheast1:
-                return @"ap-southeast-1";
-            case AWSS3BucketLocationConstraintAPSoutheast2:
-                return @"ap-southeast-2";
-            case AWSS3BucketLocationConstraintAPSoutheast3:
-                return @"ap-southeast-3";
-            case AWSS3BucketLocationConstraintAPSoutheast4:
-                return @"ap-southeast-4";
-            case AWSS3BucketLocationConstraintAPSoutheast5:
-                return @"ap-southeast-5";
-            case AWSS3BucketLocationConstraintCACentral1:
-                return @"ca-central-1";
-            case AWSS3BucketLocationConstraintCAWest1:
-                return @"ca-west-1";
-            case AWSS3BucketLocationConstraintCNNorth1:
-                return @"cn-north-1";
-            case AWSS3BucketLocationConstraintCNNorthwest1:
-                return @"cn-northwest-1";
             case AWSS3BucketLocationConstraintEU:
                 return @"EU";
-            case AWSS3BucketLocationConstraintEUCentral1:
-                return @"eu-central-1";
-            case AWSS3BucketLocationConstraintEUCentral2:
-                return @"eu-central-2";
-            case AWSS3BucketLocationConstraintEUNorth1:
-                return @"eu-north-1";
-            case AWSS3BucketLocationConstraintEUSouth1:
-                return @"eu-south-1";
-            case AWSS3BucketLocationConstraintEUSouth2:
-                return @"eu-south-2";
             case AWSS3BucketLocationConstraintEUWest1:
                 return @"eu-west-1";
-            case AWSS3BucketLocationConstraintEUWest2:
-                return @"eu-west-2";
-            case AWSS3BucketLocationConstraintEUWest3:
-                return @"eu-west-3";
-            case AWSS3BucketLocationConstraintILCentral1:
-                return @"il-central-1";
-            case AWSS3BucketLocationConstraintMECentral1:
-                return @"me-central-1";
-            case AWSS3BucketLocationConstraintMESouth1:
-                return @"me-south-1";
-            case AWSS3BucketLocationConstraintSAEast1:
-                return @"sa-east-1";
-            case AWSS3BucketLocationConstraintUSEast2:
-                return @"us-east-2";
-            case AWSS3BucketLocationConstraintUSGovEast1:
-                return @"us-gov-east-1";
-            case AWSS3BucketLocationConstraintUSGovWest1:
-                return @"us-gov-west-1";
             case AWSS3BucketLocationConstraintUSWest1:
                 return @"us-west-1";
             case AWSS3BucketLocationConstraintUSWest2:
                 return @"us-west-2";
+            case AWSS3BucketLocationConstraintEUWest2:
+                return @"eu-west-2";
+            case AWSS3BucketLocationConstraintEUWest3:
+                return @"eu-west-3";
+            case AWSS3BucketLocationConstraintUSEast2:
+                return @"us-east-2";
+            case AWSS3BucketLocationConstraintAPSouth1:
+                return @"ap-south-1";
+            case AWSS3BucketLocationConstraintAPSoutheast1:
+                return @"ap-southeast-1";
+            case AWSS3BucketLocationConstraintAPSoutheast2:
+                return @"ap-southeast-2";
+            case AWSS3BucketLocationConstraintAPNortheast1:
+                return @"ap-northeast-1";
+            case AWSS3BucketLocationConstraintAPNortheast2:
+                return @"ap-northeast-2";
+            case AWSS3BucketLocationConstraintSAEast1:
+                return @"sa-east-1";
+            case AWSS3BucketLocationConstraintCNNorth1:
+                return @"cn-north-1";
+            case AWSS3BucketLocationConstraintCNNorthwest1:
+                return @"cn-northwest-1";
+            case AWSS3BucketLocationConstraintUSGovWest1:
+                return @"us-gov-west-1";
+            case AWSS3BucketLocationConstraintEUCentral1:
+                return @"eu-central-1";
+            case AWSS3BucketLocationConstraintCACentral1:
+                return @"ca-central-1";
+            case AWSS3BucketLocationConstraintUSGovEast1:
+                return @"us-gov-east-1";
+            case AWSS3BucketLocationConstraintEUNorth1:
+                return @"eu-north-1";
+            case AWSS3BucketLocationConstraintAPEast1:
+                return @"ap-east-1";
+            case AWSS3BucketLocationConstraintMESouth1:
+                return @"me-south-1";
             default:
                 return nil;
         }
@@ -1378,10 +1148,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CreateBucketOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"location" : @"Location",
@@ -1391,10 +1157,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3CreateBucketRequest
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1449,10 +1211,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CreateMultipartUploadOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"abortDate" : @"AbortDate",
@@ -1462,7 +1220,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"requestCharged" : @"RequestCharged",
              @"SSECustomerAlgorithm" : @"SSECustomerAlgorithm",
              @"SSECustomerKeyMD5" : @"SSECustomerKeyMD5",
-             @"SSEKMSEncryptionContext" : @"SSEKMSEncryptionContext",
              @"SSEKMSKeyId" : @"SSEKMSKeyId",
              @"serverSideEncryption" : @"ServerSideEncryption",
              @"uploadId" : @"UploadId",
@@ -1518,10 +1275,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3CreateMultipartUploadRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ACL" : @"ACL",
@@ -1531,7 +1284,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"contentEncoding" : @"ContentEncoding",
              @"contentLanguage" : @"ContentLanguage",
              @"contentType" : @"ContentType",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"expires" : @"Expires",
              @"grantFullControl" : @"GrantFullControl",
              @"grantRead" : @"GrantRead",
@@ -1546,7 +1298,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"SSECustomerAlgorithm" : @"SSECustomerAlgorithm",
              @"SSECustomerKey" : @"SSECustomerKey",
              @"SSECustomerKeyMD5" : @"SSECustomerKeyMD5",
-             @"SSEKMSEncryptionContext" : @"SSEKMSEncryptionContext",
              @"SSEKMSKeyId" : @"SSEKMSKeyId",
              @"serverSideEncryption" : @"ServerSideEncryption",
              @"storageClass" : @"StorageClass",
@@ -1716,12 +1467,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -1737,10 +1482,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -1750,10 +1491,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3DefaultRetention
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1788,10 +1525,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3Remove
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"objects" : @"Objects",
@@ -1807,14 +1540,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketAnalyticsConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
              };
 }
@@ -1823,14 +1551,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketCorsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -1838,14 +1561,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketEncryptionRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -1853,14 +1571,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketInventoryConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
              };
 }
@@ -1869,14 +1582,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketLifecycleRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -1884,30 +1592,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketMetricsConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
-             };
-}
-
-@end
-
-@implementation AWSS3DeleteBucketOwnershipControlsRequest
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -1915,14 +1603,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketPolicyRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -1930,14 +1613,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketReplicationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -1945,14 +1623,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -1960,14 +1633,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketTaggingRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -1975,24 +1643,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteBucketWebsiteRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3DeleteMarkerEntry
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2019,10 +1678,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3DeleteMarkerReplication
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2055,10 +1710,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteObjectOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"deleteMarker" : @"DeleteMarker",
@@ -2087,15 +1738,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteObjectRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"bypassGovernanceRetention" : @"BypassGovernanceRetention",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"MFA" : @"MFA",
              @"requestPayer" : @"RequestPayer",
@@ -2123,10 +1769,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteObjectTaggingOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"versionId" : @"VersionId",
@@ -2137,14 +1779,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteObjectTaggingRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"versionId" : @"VersionId",
              };
@@ -2153,10 +1790,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3DeleteObjectsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2194,16 +1827,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeleteObjectsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"bypassGovernanceRetention" : @"BypassGovernanceRetention",
              @"remove" : @"Delete",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"MFA" : @"MFA",
              @"requestPayer" : @"RequestPayer",
              };
@@ -2233,24 +1861,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3DeletePublicAccessBlockRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3DeletedObject
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2265,18 +1884,12 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3Destination
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"accessControlTranslation" : @"AccessControlTranslation",
              @"account" : @"Account",
              @"bucket" : @"Bucket",
              @"encryptionConfiguration" : @"EncryptionConfiguration",
-             @"metrics" : @"Metrics",
-             @"replicationTime" : @"ReplicationTime",
              @"storageClass" : @"StorageClass",
              };
 }
@@ -2287,14 +1900,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)encryptionConfigurationJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3EncryptionConfiguration class]];
-}
-
-+ (NSValueTransformer *)metricsJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3Metrics class]];
-}
-
-+ (NSValueTransformer *)replicationTimeJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3ReplicationTime class]];
 }
 
 + (NSValueTransformer *)storageClassJSONTransformer {
@@ -2317,12 +1922,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -2338,10 +1937,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -2351,10 +1946,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Encryption
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2389,10 +1980,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3EncryptionConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"replicaKmsKeyID" : @"ReplicaKmsKeyID",
@@ -2403,17 +1990,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3EndEvent
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 @end
 
 @implementation AWSS3Error
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2428,10 +2007,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ErrorDocument
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"key" : @"Key",
@@ -2440,46 +2015,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @end
 
-@implementation AWSS3ExistingObjectReplication
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"status" : @"Status",
-             };
-}
-
-+ (NSValueTransformer *)statusJSONTransformer {
-    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
-        if ([value caseInsensitiveCompare:@"Enabled"] == NSOrderedSame) {
-            return @(AWSS3ExistingObjectReplicationStatusEnabled);
-        }
-        if ([value caseInsensitiveCompare:@"Disabled"] == NSOrderedSame) {
-            return @(AWSS3ExistingObjectReplicationStatusDisabled);
-        }
-        return @(AWSS3ExistingObjectReplicationStatusUnknown);
-    } reverseBlock:^NSString *(NSNumber *value) {
-        switch ([value integerValue]) {
-            case AWSS3ExistingObjectReplicationStatusEnabled:
-                return @"Enabled";
-            case AWSS3ExistingObjectReplicationStatusDisabled:
-                return @"Disabled";
-            default:
-                return nil;
-        }
-    }];
-}
-
-@end
-
 @implementation AWSS3FilterRule
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2513,10 +2049,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketAccelerateConfigurationOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"status" : @"Status",
@@ -2548,24 +2080,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketAccelerateConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketAclOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2586,24 +2109,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketAclRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketAnalyticsConfigurationOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2619,14 +2133,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketAnalyticsConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
              };
 }
@@ -2634,10 +2143,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3GetBucketCorsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2653,24 +2158,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketCorsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketEncryptionOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2686,24 +2182,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketEncryptionRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketInventoryConfigurationOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2719,14 +2206,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketInventoryConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
              };
 }
@@ -2734,10 +2216,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3GetBucketLifecycleConfigurationOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2753,24 +2231,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketLifecycleConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketLifecycleOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2786,24 +2255,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketLifecycleRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketLocationOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -2816,101 +2276,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@""] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintBlank);
         }
-        if ([value caseInsensitiveCompare:@"af-south-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAFSouth1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-east-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPEast1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-northeast-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPNortheast1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-northeast-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPNortheast2);
-        }
-        if ([value caseInsensitiveCompare:@"ap-northeast-3"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPNortheast3);
-        }
-        if ([value caseInsensitiveCompare:@"ap-south-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSouth1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-south-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSouth2);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast1);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast2);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-3"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast3);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-4"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast4);
-        }
-        if ([value caseInsensitiveCompare:@"ap-southeast-5"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintAPSoutheast5);
-        }
-        if ([value caseInsensitiveCompare:@"ca-central-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintCACentral1);
-        }
-        if ([value caseInsensitiveCompare:@"ca-west-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintCAWest1);
-        }
-        if ([value caseInsensitiveCompare:@"cn-north-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintCNNorth1);
-        }
-        if ([value caseInsensitiveCompare:@"cn-northwest-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintCNNorthwest1);
-        }
         if ([value caseInsensitiveCompare:@"EU"] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintEU);
         }
-        if ([value caseInsensitiveCompare:@"eu-central-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUCentral1);
-        }
-        if ([value caseInsensitiveCompare:@"eu-central-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUCentral2);
-        }
-        if ([value caseInsensitiveCompare:@"eu-north-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUNorth1);
-        }
-        if ([value caseInsensitiveCompare:@"eu-south-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUSouth1);
-        }
-        if ([value caseInsensitiveCompare:@"eu-south-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUSouth2);
-        }
         if ([value caseInsensitiveCompare:@"eu-west-1"] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintEUWest1);
-        }
-        if ([value caseInsensitiveCompare:@"eu-west-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUWest2);
-        }
-        if ([value caseInsensitiveCompare:@"eu-west-3"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintEUWest3);
-        }
-        if ([value caseInsensitiveCompare:@"il-central-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintILCentral1);
-        }
-        if ([value caseInsensitiveCompare:@"me-central-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintMECentral1);
-        }
-        if ([value caseInsensitiveCompare:@"me-south-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintMESouth1);
-        }
-        if ([value caseInsensitiveCompare:@"sa-east-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintSAEast1);
-        }
-        if ([value caseInsensitiveCompare:@"us-east-2"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintUSEast2);
-        }
-        if ([value caseInsensitiveCompare:@"us-gov-east-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintUSGovEast1);
-        }
-        if ([value caseInsensitiveCompare:@"us-gov-west-1"] == NSOrderedSame) {
-            return @(AWSS3BucketLocationConstraintUSGovWest1);
         }
         if ([value caseInsensitiveCompare:@"us-west-1"] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintUSWest1);
@@ -2918,79 +2288,109 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"us-west-2"] == NSOrderedSame) {
             return @(AWSS3BucketLocationConstraintUSWest2);
         }
+        if ([value caseInsensitiveCompare:@"eu-west-2"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintEUWest2);
+        }
+        if ([value caseInsensitiveCompare:@"eu-west-3"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintEUWest3);
+        }
+        if ([value caseInsensitiveCompare:@"us-east-2"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintUSEast2);
+        }
+        if ([value caseInsensitiveCompare:@"ap-south-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPSouth1);
+        }
+        if ([value caseInsensitiveCompare:@"ap-southeast-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPSoutheast1);
+        }
+        if ([value caseInsensitiveCompare:@"ap-southeast-2"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPSoutheast2);
+        }
+        if ([value caseInsensitiveCompare:@"ap-northeast-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPNortheast1);
+        }
+        if ([value caseInsensitiveCompare:@"ap-northeast-2"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPNortheast2);
+        }
+        if ([value caseInsensitiveCompare:@"sa-east-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintSAEast1);
+        }
+        if ([value caseInsensitiveCompare:@"cn-north-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintCNNorth1);
+        }
+        if ([value caseInsensitiveCompare:@"cn-northwest-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintCNNorthwest1);
+        }
+        if ([value caseInsensitiveCompare:@"us-gov-west-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintUSGovWest1);
+        }
+        if ([value caseInsensitiveCompare:@"eu-central-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintEUCentral1);
+        }
+        if ([value caseInsensitiveCompare:@"ca-central-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintCACentral1);
+        }
+        if ([value caseInsensitiveCompare:@"us-gov-east-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintUSGovEast1);
+        }
+        if ([value caseInsensitiveCompare:@"eu-north-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintEUNorth1);
+        }
+        if ([value caseInsensitiveCompare:@"ap-east-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintAPEast1);
+        }
+        if ([value caseInsensitiveCompare:@"me-south-1"] == NSOrderedSame) {
+            return @(AWSS3BucketLocationConstraintMESouth1);
+        }
         return @(AWSS3BucketLocationConstraintUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
             case AWSS3BucketLocationConstraintBlank:
                 return @"";
-            case AWSS3BucketLocationConstraintAFSouth1:
-                return @"af-south-1";
-            case AWSS3BucketLocationConstraintAPEast1:
-                return @"ap-east-1";
-            case AWSS3BucketLocationConstraintAPNortheast1:
-                return @"ap-northeast-1";
-            case AWSS3BucketLocationConstraintAPNortheast2:
-                return @"ap-northeast-2";
-            case AWSS3BucketLocationConstraintAPNortheast3:
-                return @"ap-northeast-3";
-            case AWSS3BucketLocationConstraintAPSouth1:
-                return @"ap-south-1";
-            case AWSS3BucketLocationConstraintAPSouth2:
-                return @"ap-south-2";
-            case AWSS3BucketLocationConstraintAPSoutheast1:
-                return @"ap-southeast-1";
-            case AWSS3BucketLocationConstraintAPSoutheast2:
-                return @"ap-southeast-2";
-            case AWSS3BucketLocationConstraintAPSoutheast3:
-                return @"ap-southeast-3";
-            case AWSS3BucketLocationConstraintAPSoutheast4:
-                return @"ap-southeast-4";
-            case AWSS3BucketLocationConstraintAPSoutheast5:
-                return @"ap-southeast-5";
-            case AWSS3BucketLocationConstraintCACentral1:
-                return @"ca-central-1";
-            case AWSS3BucketLocationConstraintCAWest1:
-                return @"ca-west-1";
-            case AWSS3BucketLocationConstraintCNNorth1:
-                return @"cn-north-1";
-            case AWSS3BucketLocationConstraintCNNorthwest1:
-                return @"cn-northwest-1";
             case AWSS3BucketLocationConstraintEU:
                 return @"EU";
-            case AWSS3BucketLocationConstraintEUCentral1:
-                return @"eu-central-1";
-            case AWSS3BucketLocationConstraintEUCentral2:
-                return @"eu-central-2";
-            case AWSS3BucketLocationConstraintEUNorth1:
-                return @"eu-north-1";
-            case AWSS3BucketLocationConstraintEUSouth1:
-                return @"eu-south-1";
-            case AWSS3BucketLocationConstraintEUSouth2:
-                return @"eu-south-2";
             case AWSS3BucketLocationConstraintEUWest1:
                 return @"eu-west-1";
-            case AWSS3BucketLocationConstraintEUWest2:
-                return @"eu-west-2";
-            case AWSS3BucketLocationConstraintEUWest3:
-                return @"eu-west-3";
-            case AWSS3BucketLocationConstraintILCentral1:
-                return @"il-central-1";
-            case AWSS3BucketLocationConstraintMECentral1:
-                return @"me-central-1";
-            case AWSS3BucketLocationConstraintMESouth1:
-                return @"me-south-1";
-            case AWSS3BucketLocationConstraintSAEast1:
-                return @"sa-east-1";
-            case AWSS3BucketLocationConstraintUSEast2:
-                return @"us-east-2";
-            case AWSS3BucketLocationConstraintUSGovEast1:
-                return @"us-gov-east-1";
-            case AWSS3BucketLocationConstraintUSGovWest1:
-                return @"us-gov-west-1";
             case AWSS3BucketLocationConstraintUSWest1:
                 return @"us-west-1";
             case AWSS3BucketLocationConstraintUSWest2:
                 return @"us-west-2";
+            case AWSS3BucketLocationConstraintEUWest2:
+                return @"eu-west-2";
+            case AWSS3BucketLocationConstraintEUWest3:
+                return @"eu-west-3";
+            case AWSS3BucketLocationConstraintUSEast2:
+                return @"us-east-2";
+            case AWSS3BucketLocationConstraintAPSouth1:
+                return @"ap-south-1";
+            case AWSS3BucketLocationConstraintAPSoutheast1:
+                return @"ap-southeast-1";
+            case AWSS3BucketLocationConstraintAPSoutheast2:
+                return @"ap-southeast-2";
+            case AWSS3BucketLocationConstraintAPNortheast1:
+                return @"ap-northeast-1";
+            case AWSS3BucketLocationConstraintAPNortheast2:
+                return @"ap-northeast-2";
+            case AWSS3BucketLocationConstraintSAEast1:
+                return @"sa-east-1";
+            case AWSS3BucketLocationConstraintCNNorth1:
+                return @"cn-north-1";
+            case AWSS3BucketLocationConstraintCNNorthwest1:
+                return @"cn-northwest-1";
+            case AWSS3BucketLocationConstraintUSGovWest1:
+                return @"us-gov-west-1";
+            case AWSS3BucketLocationConstraintEUCentral1:
+                return @"eu-central-1";
+            case AWSS3BucketLocationConstraintCACentral1:
+                return @"ca-central-1";
+            case AWSS3BucketLocationConstraintUSGovEast1:
+                return @"us-gov-east-1";
+            case AWSS3BucketLocationConstraintEUNorth1:
+                return @"eu-north-1";
+            case AWSS3BucketLocationConstraintAPEast1:
+                return @"ap-east-1";
+            case AWSS3BucketLocationConstraintMESouth1:
+                return @"me-south-1";
             default:
                 return nil;
         }
@@ -3001,24 +2401,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketLocationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketLoggingOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3034,24 +2425,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketLoggingRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketMetricsConfigurationOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3067,14 +2449,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketMetricsConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
              };
 }
@@ -3083,57 +2460,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketNotificationConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
-             };
-}
-
-@end
-
-@implementation AWSS3GetBucketOwnershipControlsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"ownershipControls" : @"OwnershipControls",
-             };
-}
-
-+ (NSValueTransformer *)ownershipControlsJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3OwnershipControls class]];
-}
-
-@end
-
-@implementation AWSS3GetBucketOwnershipControlsRequest
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketPolicyOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3149,24 +2484,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketPolicyRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketPolicyStatusOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3182,24 +2508,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketPolicyStatusRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketReplicationOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3215,24 +2532,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketReplicationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketRequestPaymentOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3265,24 +2573,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketRequestPaymentRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketTaggingOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3298,24 +2597,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketTaggingRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketVersioningOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3370,24 +2660,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketVersioningRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetBucketWebsiteOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3418,24 +2699,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetBucketWebsiteRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetObjectAclOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3473,14 +2745,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectAclRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"requestPayer" : @"RequestPayer",
              @"versionId" : @"VersionId",
@@ -3507,10 +2774,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectLegalHoldOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"legalHold" : @"LegalHold",
@@ -3525,14 +2788,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectLegalHoldRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"requestPayer" : @"RequestPayer",
              @"versionId" : @"VersionId",
@@ -3559,10 +2817,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectLockConfigurationOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"objectLockConfiguration" : @"ObjectLockConfiguration",
@@ -3577,24 +2831,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectLockConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GetObjectOutput
-
-+ (BOOL)supportsSecureCoding {
-    return NO;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -3786,12 +3031,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -3807,10 +3046,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -3821,14 +3056,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"ifMatch" : @"IfMatch",
              @"ifModifiedSince" : @"IfModifiedSince",
              @"ifNoneMatch" : @"IfNoneMatch",
@@ -3894,10 +3124,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectRetentionOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"retention" : @"Retention",
@@ -3912,14 +3138,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectRetentionRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"requestPayer" : @"RequestPayer",
              @"versionId" : @"VersionId",
@@ -3946,10 +3167,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectTaggingOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"tagSet" : @"TagSet",
@@ -3965,14 +3182,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectTaggingRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"versionId" : @"VersionId",
              };
@@ -3981,10 +3193,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3GetObjectTorrentOutput
-
-+ (BOOL)supportsSecureCoding {
-    return NO;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4013,14 +3221,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetObjectTorrentRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"requestPayer" : @"RequestPayer",
              };
@@ -4046,10 +3249,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetPublicAccessBlockOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"publicAccessBlockConfiguration" : @"PublicAccessBlockConfiguration",
@@ -4064,24 +3263,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3GetPublicAccessBlockRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3GlacierJobParameters
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4118,10 +3308,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Grant
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4174,10 +3360,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3Grantee
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"displayName" : @"DisplayName",
@@ -4218,24 +3400,15 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3HeadBucketRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3HeadObjectOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4424,12 +3597,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -4445,10 +3612,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -4459,14 +3622,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3HeadObjectRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"ifMatch" : @"IfMatch",
              @"ifModifiedSince" : @"IfModifiedSince",
              @"ifNoneMatch" : @"IfNoneMatch",
@@ -4518,10 +3676,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 
 @implementation AWSS3IndexDocument
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"suffix" : @"Suffix",
@@ -4531,10 +3685,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 @end
 
 @implementation AWSS3Initiator
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4546,10 +3696,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 @end
 
 @implementation AWSS3InputSerialization
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4602,10 +3748,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 
 @implementation AWSS3InventoryConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"destination" : @"Destination",
@@ -4655,10 +3797,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 
 @implementation AWSS3InventoryDestination
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"s3BucketDestination" : @"S3BucketDestination",
@@ -4672,10 +3810,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 @end
 
 @implementation AWSS3InventoryEncryption
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4696,10 +3830,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 
 @implementation AWSS3InventoryFilter
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"prefix" : @"Prefix",
@@ -4709,10 +3839,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 @end
 
 @implementation AWSS3InventoryS3BucketDestination
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4758,10 +3884,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 
 @implementation AWSS3InventorySchedule
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"frequency" : @"Frequency",
@@ -4792,10 +3914,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 @end
 
 @implementation AWSS3JSONInput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4828,10 +3946,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 
 @implementation AWSS3JSONOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"recordDelimiter" : @"RecordDelimiter",
@@ -4841,10 +3955,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 @end
 
 @implementation AWSS3LambdaFunctionConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4863,10 +3973,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 
 @implementation AWSS3LifecycleConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"rules" : @"Rules",
@@ -4880,10 +3986,6 @@ return [date aws_stringValue:AWSDateRFC822DateFormat1];
 @end
 
 @implementation AWSS3LifecycleExpiration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4904,10 +4006,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3LifecycleRule
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -4972,10 +4070,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3LifecycleRuleAndOperator
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"prefix" : @"Prefix",
@@ -4990,10 +4084,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3LifecycleRuleFilter
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5015,10 +4105,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListBucketAnalyticsConfigurationsOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"analyticsConfigurationList" : @"AnalyticsConfigurationList",
@@ -5036,25 +4122,16 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListBucketAnalyticsConfigurationsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"continuationToken" : @"ContinuationToken",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3ListBucketInventoryConfigurationsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5073,25 +4150,16 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListBucketInventoryConfigurationsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"continuationToken" : @"ContinuationToken",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3ListBucketMetricsConfigurationsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5110,25 +4178,16 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListBucketMetricsConfigurationsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"continuationToken" : @"ContinuationToken",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
 @end
 
 @implementation AWSS3ListBucketsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5148,10 +4207,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ListMultipartUploadsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5198,16 +4253,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListMultipartUploadsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"delimiter" : @"Delimiter",
              @"encodingType" : @"EncodingType",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"keyMarker" : @"KeyMarker",
              @"maxUploads" : @"MaxUploads",
              @"prefix" : @"Prefix",
@@ -5234,10 +4284,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ListObjectVersionsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5289,16 +4335,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListObjectVersionsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"delimiter" : @"Delimiter",
              @"encodingType" : @"EncodingType",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"keyMarker" : @"KeyMarker",
              @"maxKeys" : @"MaxKeys",
              @"prefix" : @"Prefix",
@@ -5325,10 +4366,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ListObjectsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5373,16 +4410,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListObjectsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"delimiter" : @"Delimiter",
              @"encodingType" : @"EncodingType",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"marker" : @"Marker",
              @"maxKeys" : @"MaxKeys",
              @"prefix" : @"Prefix",
@@ -5425,10 +4457,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ListObjectsV2Output
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5475,17 +4503,12 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListObjectsV2Request
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"continuationToken" : @"ContinuationToken",
              @"delimiter" : @"Delimiter",
              @"encodingType" : @"EncodingType",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"fetchOwner" : @"FetchOwner",
              @"maxKeys" : @"MaxKeys",
              @"prefix" : @"Prefix",
@@ -5529,10 +4552,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ListPartsOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5609,12 +4628,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -5630,10 +4643,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -5644,14 +4653,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ListPartsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"maxParts" : @"MaxParts",
              @"partNumberMarker" : @"PartNumberMarker",
@@ -5680,10 +4684,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3LoggingEnabled
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"targetBucket" : @"TargetBucket",
@@ -5700,10 +4700,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3MetadataEntry
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"name" : @"Name",
@@ -5713,51 +4709,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @end
 
-@implementation AWSS3Metrics
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"eventThreshold" : @"EventThreshold",
-             @"status" : @"Status",
-             };
-}
-
-+ (NSValueTransformer *)eventThresholdJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3ReplicationTimeValue class]];
-}
-
-+ (NSValueTransformer *)statusJSONTransformer {
-    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
-        if ([value caseInsensitiveCompare:@"Enabled"] == NSOrderedSame) {
-            return @(AWSS3MetricsStatusEnabled);
-        }
-        if ([value caseInsensitiveCompare:@"Disabled"] == NSOrderedSame) {
-            return @(AWSS3MetricsStatusDisabled);
-        }
-        return @(AWSS3MetricsStatusUnknown);
-    } reverseBlock:^NSString *(NSNumber *value) {
-        switch ([value integerValue]) {
-            case AWSS3MetricsStatusEnabled:
-                return @"Enabled";
-            case AWSS3MetricsStatusDisabled:
-                return @"Disabled";
-            default:
-                return nil;
-        }
-    }];
-}
-
-@end
-
 @implementation AWSS3MetricsAndOperator
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5774,10 +4726,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3MetricsConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"filter" : @"Filter",
@@ -5792,10 +4740,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3MetricsFilter
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5816,10 +4760,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3MultipartUpload
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5868,12 +4808,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -5889,10 +4823,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -5903,10 +4833,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3NoncurrentVersionExpiration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"noncurrentDays" : @"NoncurrentDays",
@@ -5916,10 +4842,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3NoncurrentVersionTransition
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5942,9 +4864,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"INTELLIGENT_TIERING"] == NSOrderedSame) {
             return @(AWSS3TransitionStorageClassIntelligentTiering);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3TransitionStorageClassDeepArchive);
-        }
         return @(AWSS3TransitionStorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -5956,8 +4875,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"ONEZONE_IA";
             case AWSS3TransitionStorageClassIntelligentTiering:
                 return @"INTELLIGENT_TIERING";
-            case AWSS3TransitionStorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
             default:
                 return nil;
         }
@@ -5967,10 +4884,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3NotificationConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -5996,10 +4909,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3NotificationConfigurationDeprecated
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"cloudFunctionConfiguration" : @"CloudFunctionConfiguration",
@@ -6024,10 +4933,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3NotificationConfigurationFilter
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"key" : @"Key",
@@ -6041,10 +4946,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Object
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6089,12 +4990,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"INTELLIGENT_TIERING"] == NSOrderedSame) {
             return @(AWSS3ObjectStorageClassIntelligentTiering);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3ObjectStorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3ObjectStorageClassOutposts);
-        }
         return @(AWSS3ObjectStorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -6110,10 +5005,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"ONEZONE_IA";
             case AWSS3ObjectStorageClassIntelligentTiering:
                 return @"INTELLIGENT_TIERING";
-            case AWSS3ObjectStorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3ObjectStorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -6123,10 +5014,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ObjectIdentifier
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6138,10 +5025,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ObjectLockConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6174,10 +5057,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ObjectLockLegalHold
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"status" : @"Status",
@@ -6208,10 +5087,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ObjectLockRetention
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6253,10 +5128,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ObjectLockRule
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"defaultRetention" : @"DefaultRetention",
@@ -6270,10 +5141,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ObjectVersion
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6320,10 +5187,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3OutputLocation
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"s3" : @"S3",
@@ -6337,10 +5200,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3OutputSerialization
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6361,10 +5220,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3Owner
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"displayName" : @"DisplayName",
@@ -6374,72 +5229,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @end
 
-@implementation AWSS3OwnershipControls
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"rules" : @"Rules",
-             };
-}
-
-+ (NSValueTransformer *)rulesJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSS3OwnershipControlsRule class]];
-}
-
-@end
-
-@implementation AWSS3OwnershipControlsRule
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"objectOwnership" : @"ObjectOwnership",
-             };
-}
-
-+ (NSValueTransformer *)objectOwnershipJSONTransformer {
-    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
-        if ([value caseInsensitiveCompare:@"BucketOwnerPreferred"] == NSOrderedSame) {
-            return @(AWSS3ObjectOwnershipBucketOwnerPreferred);
-        }
-        if ([value caseInsensitiveCompare:@"ObjectWriter"] == NSOrderedSame) {
-            return @(AWSS3ObjectOwnershipObjectWriter);
-        }
-        return @(AWSS3ObjectOwnershipUnknown);
-    } reverseBlock:^NSString *(NSNumber *value) {
-        switch ([value integerValue]) {
-            case AWSS3ObjectOwnershipBucketOwnerPreferred:
-                return @"BucketOwnerPreferred";
-            case AWSS3ObjectOwnershipObjectWriter:
-                return @"ObjectWriter";
-            default:
-                return nil;
-        }
-    }];
-}
-
-@end
-
 @implementation AWSS3ParquetInput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 @end
 
 @implementation AWSS3Part
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6462,10 +5256,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PolicyStatus
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"isPublic" : @"IsPublic",
@@ -6475,10 +5265,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Progress
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6491,10 +5277,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ProgressEvent
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6510,10 +5292,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PublicAccessBlockConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"blockPublicAcls" : @"BlockPublicAcls",
@@ -6527,15 +5305,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketAccelerateConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"accelerateConfiguration" : @"AccelerateConfiguration",
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -6547,17 +5320,12 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketAclRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ACL" : @"ACL",
              @"accessControlPolicy" : @"AccessControlPolicy",
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"grantFullControl" : @"GrantFullControl",
              @"grantRead" : @"GrantRead",
              @"grantReadACP" : @"GrantReadACP",
@@ -6605,15 +5373,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketAnalyticsConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"analyticsConfiguration" : @"AnalyticsConfiguration",
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
              };
 }
@@ -6626,16 +5389,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketCorsRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"CORSConfiguration" : @"CORSConfiguration",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -6647,15 +5405,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketEncryptionRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"serverSideEncryptionConfiguration" : @"ServerSideEncryptionConfiguration",
              };
 }
@@ -6668,14 +5421,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketInventoryConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
              @"inventoryConfiguration" : @"InventoryConfiguration",
              };
@@ -6689,14 +5437,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketLifecycleConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"lifecycleConfiguration" : @"LifecycleConfiguration",
              };
 }
@@ -6709,15 +5452,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketLifecycleRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"lifecycleConfiguration" : @"LifecycleConfiguration",
              };
 }
@@ -6730,16 +5468,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketLoggingRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"bucketLoggingStatus" : @"BucketLoggingStatus",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              };
 }
 
@@ -6751,14 +5484,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketMetricsConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"identifier" : @"Id",
              @"metricsConfiguration" : @"MetricsConfiguration",
              };
@@ -6772,14 +5500,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketNotificationConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"notificationConfiguration" : @"NotificationConfiguration",
              };
 }
@@ -6792,15 +5515,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketNotificationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"notificationConfiguration" : @"NotificationConfiguration",
              };
 }
@@ -6811,39 +5529,13 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @end
 
-@implementation AWSS3PutBucketOwnershipControlsRequest
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"bucket" : @"Bucket",
-             @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
-             @"ownershipControls" : @"OwnershipControls",
-             };
-}
-
-+ (NSValueTransformer *)ownershipControlsJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3OwnershipControls class]];
-}
-
-@end
-
 @implementation AWSS3PutBucketPolicyRequest
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"confirmRemoveSelfBucketAccess" : @"ConfirmRemoveSelfBucketAccess",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"policy" : @"Policy",
              };
 }
@@ -6856,17 +5548,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketReplicationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"replicationConfiguration" : @"ReplicationConfiguration",
-             @"token" : @"Token",
              };
 }
 
@@ -6878,15 +5564,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketRequestPaymentRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"requestPaymentConfiguration" : @"RequestPaymentConfiguration",
              };
 }
@@ -6899,15 +5580,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketTaggingRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"tagging" : @"Tagging",
              };
 }
@@ -6920,15 +5596,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketVersioningRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"MFA" : @"MFA",
              @"versioningConfiguration" : @"VersioningConfiguration",
              };
@@ -6942,15 +5613,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutBucketWebsiteRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"websiteConfiguration" : @"WebsiteConfiguration",
              };
 }
@@ -6962,10 +5628,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3PutObjectAclOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -6993,17 +5655,12 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectAclRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ACL" : @"ACL",
              @"accessControlPolicy" : @"AccessControlPolicy",
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"grantFullControl" : @"GrantFullControl",
              @"grantRead" : @"GrantRead",
              @"grantReadACP" : @"GrantReadACP",
@@ -7085,10 +5742,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectLegalHoldOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"requestCharged" : @"RequestCharged",
@@ -7115,15 +5768,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectLegalHoldRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"legalHold" : @"LegalHold",
              @"requestPayer" : @"RequestPayer",
@@ -7155,10 +5803,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectLockConfigurationOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"requestCharged" : @"RequestCharged",
@@ -7185,15 +5829,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectLockConfigurationRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"objectLockConfiguration" : @"ObjectLockConfiguration",
              @"requestPayer" : @"RequestPayer",
              @"token" : @"Token",
@@ -7224,10 +5863,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ETag" : @"ETag",
@@ -7235,7 +5870,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"requestCharged" : @"RequestCharged",
              @"SSECustomerAlgorithm" : @"SSECustomerAlgorithm",
              @"SSECustomerKeyMD5" : @"SSECustomerKeyMD5",
-             @"SSEKMSEncryptionContext" : @"SSEKMSEncryptionContext",
              @"SSEKMSKeyId" : @"SSEKMSKeyId",
              @"serverSideEncryption" : @"ServerSideEncryption",
              @"versionId" : @"VersionId",
@@ -7283,10 +5917,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectRequest
 
-+ (BOOL)supportsSecureCoding {
-    return NO;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ACL" : @"ACL",
@@ -7299,7 +5929,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"contentLength" : @"ContentLength",
              @"contentMD5" : @"ContentMD5",
              @"contentType" : @"ContentType",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"expires" : @"Expires",
              @"grantFullControl" : @"GrantFullControl",
              @"grantRead" : @"GrantRead",
@@ -7314,7 +5943,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"SSECustomerAlgorithm" : @"SSECustomerAlgorithm",
              @"SSECustomerKey" : @"SSECustomerKey",
              @"SSECustomerKeyMD5" : @"SSECustomerKeyMD5",
-             @"SSEKMSEncryptionContext" : @"SSEKMSEncryptionContext",
              @"SSEKMSKeyId" : @"SSEKMSKeyId",
              @"serverSideEncryption" : @"ServerSideEncryption",
              @"storageClass" : @"StorageClass",
@@ -7484,12 +6112,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -7505,10 +6127,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -7518,10 +6136,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3PutObjectRetentionOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -7549,16 +6163,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectRetentionRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"bypassGovernanceRetention" : @"BypassGovernanceRetention",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"requestPayer" : @"RequestPayer",
              @"retention" : @"Retention",
@@ -7590,10 +6199,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectTaggingOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"versionId" : @"VersionId",
@@ -7604,15 +6209,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutObjectTaggingRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"tagging" : @"Tagging",
              @"versionId" : @"VersionId",
@@ -7627,15 +6227,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3PutPublicAccessBlockRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"publicAccessBlockConfiguration" : @"PublicAccessBlockConfiguration",
              };
 }
@@ -7647,10 +6242,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3QueueConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -7668,10 +6259,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3QueueConfigurationDeprecated
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -7711,29 +6298,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"s3:ObjectRemoved:DeleteMarkerCreated"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRemovedDeleteMarkerCreated);
         }
-        if ([value caseInsensitiveCompare:@"s3:ObjectRestore:*"] == NSOrderedSame) {
-            return @(AWSS3EventS3ObjectRestore);
-        }
         if ([value caseInsensitiveCompare:@"s3:ObjectRestore:Post"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRestorePost);
         }
         if ([value caseInsensitiveCompare:@"s3:ObjectRestore:Completed"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRestoreCompleted);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:*"] == NSOrderedSame) {
-            return @(AWSS3EventS3Replication);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationFailedReplication"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationFailedReplication);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationNotTracked"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationNotTracked);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationMissedThreshold"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationMissedThreshold);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationReplicatedAfterThreshold"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationReplicatedAfterThreshold);
         }
         return @(AWSS3EventUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
@@ -7756,22 +6325,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"s3:ObjectRemoved:Delete";
             case AWSS3EventS3ObjectRemovedDeleteMarkerCreated:
                 return @"s3:ObjectRemoved:DeleteMarkerCreated";
-            case AWSS3EventS3ObjectRestore:
-                return @"s3:ObjectRestore:*";
             case AWSS3EventS3ObjectRestorePost:
                 return @"s3:ObjectRestore:Post";
             case AWSS3EventS3ObjectRestoreCompleted:
                 return @"s3:ObjectRestore:Completed";
-            case AWSS3EventS3Replication:
-                return @"s3:Replication:*";
-            case AWSS3EventS3ReplicationOperationFailedReplication:
-                return @"s3:Replication:OperationFailedReplication";
-            case AWSS3EventS3ReplicationOperationNotTracked:
-                return @"s3:Replication:OperationNotTracked";
-            case AWSS3EventS3ReplicationOperationMissedThreshold:
-                return @"s3:Replication:OperationMissedThreshold";
-            case AWSS3EventS3ReplicationOperationReplicatedAfterThreshold:
-                return @"s3:Replication:OperationReplicatedAfterThreshold";
             default:
                 return nil;
         }
@@ -7782,10 +6339,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3RecordsEvent
 
-+ (BOOL)supportsSecureCoding {
-    return NO;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"payload" : @"Payload",
@@ -7795,10 +6348,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Redirect
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -7835,10 +6384,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3RedirectAllRequestsTo
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"hostName" : @"HostName",
@@ -7871,10 +6416,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ReplicationConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"role" : @"Role",
@@ -7890,15 +6431,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ReplicationRule
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"deleteMarkerReplication" : @"DeleteMarkerReplication",
              @"destination" : @"Destination",
-             @"existingObjectReplication" : @"ExistingObjectReplication",
              @"filter" : @"Filter",
              @"identifier" : @"ID",
              @"prefix" : @"Prefix",
@@ -7914,10 +6450,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)destinationJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3Destination class]];
-}
-
-+ (NSValueTransformer *)existingObjectReplicationJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3ExistingObjectReplication class]];
 }
 
 + (NSValueTransformer *)filterJSONTransformer {
@@ -7953,10 +6485,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ReplicationRuleAndOperator
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"prefix" : @"Prefix",
@@ -7971,10 +6499,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ReplicationRuleFilter
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -7994,65 +6518,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @end
 
-@implementation AWSS3ReplicationTime
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"status" : @"Status",
-             @"time" : @"Time",
-             };
-}
-
-+ (NSValueTransformer *)statusJSONTransformer {
-    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
-        if ([value caseInsensitiveCompare:@"Enabled"] == NSOrderedSame) {
-            return @(AWSS3ReplicationTimeStatusEnabled);
-        }
-        if ([value caseInsensitiveCompare:@"Disabled"] == NSOrderedSame) {
-            return @(AWSS3ReplicationTimeStatusDisabled);
-        }
-        return @(AWSS3ReplicationTimeStatusUnknown);
-    } reverseBlock:^NSString *(NSNumber *value) {
-        switch ([value integerValue]) {
-            case AWSS3ReplicationTimeStatusEnabled:
-                return @"Enabled";
-            case AWSS3ReplicationTimeStatusDisabled:
-                return @"Disabled";
-            default:
-                return nil;
-        }
-    }];
-}
-
-+ (NSValueTransformer *)timeJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3ReplicationTimeValue class]];
-}
-
-@end
-
-@implementation AWSS3ReplicationTimeValue
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"minutes" : @"Minutes",
-             };
-}
-
-@end
-
 @implementation AWSS3RequestPaymentConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8085,10 +6551,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3RequestProgress
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"enabled" : @"Enabled",
@@ -8098,10 +6560,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3RestoreObjectOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8130,14 +6588,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3RestoreObjectRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"requestPayer" : @"RequestPayer",
              @"restoreRequest" : @"RestoreRequest",
@@ -8168,10 +6621,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3RestoreRequest
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8243,10 +6692,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3RoutingRule
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"condition" : @"Condition",
@@ -8265,10 +6710,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Rule
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8328,10 +6769,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3S3KeyFilter
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"filterRules" : @"FilterRules",
@@ -8345,10 +6782,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3S3Location
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8437,12 +6870,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"GLACIER"] == NSOrderedSame) {
             return @(AWSS3StorageClassGlacier);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3StorageClassDeepArchive);
-        }
-        if ([value caseInsensitiveCompare:@"OUTPOSTS"] == NSOrderedSame) {
-            return @(AWSS3StorageClassOutposts);
-        }
         return @(AWSS3StorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -8458,10 +6885,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"INTELLIGENT_TIERING";
             case AWSS3StorageClassGlacier:
                 return @"GLACIER";
-            case AWSS3StorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
-            case AWSS3StorageClassOutposts:
-                return @"OUTPOSTS";
             default:
                 return nil;
         }
@@ -8480,10 +6903,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3SSEKMS
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"keyId" : @"KeyId",
@@ -8494,32 +6913,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3SSES3
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-@end
-
-@implementation AWSS3ScanRange
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
-+ (NSDictionary *)JSONKeyPathsByPropertyKey {
-	return @{
-             @"end" : @"End",
-             @"start" : @"Start",
-             };
-}
-
 @end
 
 @implementation AWSS3SelectObjectContentEventStream
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8555,10 +6951,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3SelectObjectContentOutput
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"payload" : @"Payload",
@@ -8573,14 +6965,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3SelectObjectContentRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"expression" : @"Expression",
              @"expressionType" : @"ExpressionType",
              @"inputSerialization" : @"InputSerialization",
@@ -8590,7 +6977,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"SSECustomerAlgorithm" : @"SSECustomerAlgorithm",
              @"SSECustomerKey" : @"SSECustomerKey",
              @"SSECustomerKeyMD5" : @"SSECustomerKeyMD5",
-             @"scanRange" : @"ScanRange",
              };
 }
 
@@ -8622,17 +7008,9 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3RequestProgress class]];
 }
 
-+ (NSValueTransformer *)scanRangeJSONTransformer {
-    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSS3ScanRange class]];
-}
-
 @end
 
 @implementation AWSS3SelectParameters
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8671,10 +7049,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ServerSideEncryptionByDefault
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"KMSMasterKeyID" : @"KMSMasterKeyID",
@@ -8707,10 +7081,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3ServerSideEncryptionConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"rules" : @"Rules",
@@ -8724,10 +7094,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3ServerSideEncryptionRule
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8743,10 +7109,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3SourceSelectionCriteria
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"sseKmsEncryptedObjects" : @"SseKmsEncryptedObjects",
@@ -8760,10 +7122,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3SseKmsEncryptedObjects
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8796,10 +7154,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3Stats
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bytesProcessed" : @"BytesProcessed",
@@ -8811,10 +7165,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3StatsEvent
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8830,10 +7180,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3StorageClassAnalysis
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"dataExport" : @"DataExport",
@@ -8847,10 +7193,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3StorageClassAnalysisDataExport
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8883,10 +7225,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3Tag
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"key" : @"Key",
@@ -8897,10 +7235,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Tagging
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8915,10 +7249,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3TargetGrant
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -8961,10 +7291,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3TopicConfiguration
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"events" : @"Events",
@@ -8981,10 +7307,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3TopicConfigurationDeprecated
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -9024,29 +7346,11 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"s3:ObjectRemoved:DeleteMarkerCreated"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRemovedDeleteMarkerCreated);
         }
-        if ([value caseInsensitiveCompare:@"s3:ObjectRestore:*"] == NSOrderedSame) {
-            return @(AWSS3EventS3ObjectRestore);
-        }
         if ([value caseInsensitiveCompare:@"s3:ObjectRestore:Post"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRestorePost);
         }
         if ([value caseInsensitiveCompare:@"s3:ObjectRestore:Completed"] == NSOrderedSame) {
             return @(AWSS3EventS3ObjectRestoreCompleted);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:*"] == NSOrderedSame) {
-            return @(AWSS3EventS3Replication);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationFailedReplication"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationFailedReplication);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationNotTracked"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationNotTracked);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationMissedThreshold"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationMissedThreshold);
-        }
-        if ([value caseInsensitiveCompare:@"s3:Replication:OperationReplicatedAfterThreshold"] == NSOrderedSame) {
-            return @(AWSS3EventS3ReplicationOperationReplicatedAfterThreshold);
         }
         return @(AWSS3EventUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
@@ -9069,22 +7373,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"s3:ObjectRemoved:Delete";
             case AWSS3EventS3ObjectRemovedDeleteMarkerCreated:
                 return @"s3:ObjectRemoved:DeleteMarkerCreated";
-            case AWSS3EventS3ObjectRestore:
-                return @"s3:ObjectRestore:*";
             case AWSS3EventS3ObjectRestorePost:
                 return @"s3:ObjectRestore:Post";
             case AWSS3EventS3ObjectRestoreCompleted:
                 return @"s3:ObjectRestore:Completed";
-            case AWSS3EventS3Replication:
-                return @"s3:Replication:*";
-            case AWSS3EventS3ReplicationOperationFailedReplication:
-                return @"s3:Replication:OperationFailedReplication";
-            case AWSS3EventS3ReplicationOperationNotTracked:
-                return @"s3:Replication:OperationNotTracked";
-            case AWSS3EventS3ReplicationOperationMissedThreshold:
-                return @"s3:Replication:OperationMissedThreshold";
-            case AWSS3EventS3ReplicationOperationReplicatedAfterThreshold:
-                return @"s3:Replication:OperationReplicatedAfterThreshold";
             default:
                 return nil;
         }
@@ -9094,10 +7386,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3Transition
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -9129,9 +7417,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"INTELLIGENT_TIERING"] == NSOrderedSame) {
             return @(AWSS3TransitionStorageClassIntelligentTiering);
         }
-        if ([value caseInsensitiveCompare:@"DEEP_ARCHIVE"] == NSOrderedSame) {
-            return @(AWSS3TransitionStorageClassDeepArchive);
-        }
         return @(AWSS3TransitionStorageClassUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -9143,8 +7428,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"ONEZONE_IA";
             case AWSS3TransitionStorageClassIntelligentTiering:
                 return @"INTELLIGENT_TIERING";
-            case AWSS3TransitionStorageClassDeepArchive:
-                return @"DEEP_ARCHIVE";
             default:
                 return nil;
         }
@@ -9154,10 +7437,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3UploadPartCopyOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -9216,10 +7495,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3UploadPartCopyRequest
 
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bucket" : @"Bucket",
@@ -9232,8 +7507,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"replicateSourceSSECustomerAlgorithm" : @"CopySourceSSECustomerAlgorithm",
              @"replicateSourceSSECustomerKey" : @"CopySourceSSECustomerKey",
              @"replicateSourceSSECustomerKeyMD5" : @"CopySourceSSECustomerKeyMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
-             @"expectedSourceBucketOwner" : @"ExpectedSourceBucketOwner",
              @"key" : @"Key",
              @"partNumber" : @"PartNumber",
              @"requestPayer" : @"RequestPayer",
@@ -9279,10 +7552,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3UploadPartOutput
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -9336,17 +7605,12 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSS3UploadPartRequest
 
-+ (BOOL)supportsSecureCoding {
-    return NO;
-}
-
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"body" : @"Body",
              @"bucket" : @"Bucket",
              @"contentLength" : @"ContentLength",
              @"contentMD5" : @"ContentMD5",
-             @"expectedBucketOwner" : @"ExpectedBucketOwner",
              @"key" : @"Key",
              @"partNumber" : @"PartNumber",
              @"requestPayer" : @"RequestPayer",
@@ -9376,10 +7640,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3VersioningConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -9433,10 +7693,6 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSS3WebsiteConfiguration
-
-+ (BOOL)supportsSecureCoding {
-    return YES;
-}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{

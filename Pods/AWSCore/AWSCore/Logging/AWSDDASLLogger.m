@@ -1,6 +1,6 @@
 // Software License Agreement (BSD License)
 //
-// Copyright (c) 2010-2024, Deusty, LLC
+// Copyright (c) 2010-2016, Deusty, LLC
 // All rights reserved.
 //
 // Redistribution and use of this software in source and binary forms,
@@ -13,25 +13,16 @@
 //   to endorse or promote products derived from this software without specific
 //   prior written permission of Deusty, LLC.
 
-#import <TargetConditionals.h>
-
-#if !TARGET_OS_WATCH
+#import "AWSDDASLLogger.h"
+#import <asl.h>
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-#import <asl.h>
-
-#import "AWSDDASLLogger.h"
-
 const char* const kAWSDDASLKeyAWSDDLog = "AWSDDLog";
-const char* const kAWSDDASLAWSDDLogValue = "1";
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated"
-static AWSDDASLLogger *sharedInstance;
-#pragma clang diagnostic pop
+const char* const kAWSDDASLAWSDDLogValue = "1";
 
 @interface AWSDDASLLogger () {
     aslclient _client;
@@ -40,10 +31,9 @@ static AWSDDASLLogger *sharedInstance;
 @end
 
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation AWSDDASLLogger
-#pragma clang diagnostic pop
+
+static AWSDDASLLogger *sharedInstance;
 
 + (instancetype)sharedInstance {
     static dispatch_once_t AWSDDASLLoggerOnceToken;
@@ -70,20 +60,16 @@ static AWSDDASLLogger *sharedInstance;
     return self;
 }
 
-- (AWSDDLoggerName)loggerName {
-    return AWSDDLoggerNameASL;
-}
-
 - (void)logMessage:(AWSDDLogMessage *)logMessage {
     // Skip captured log messages
     if ([logMessage->_fileName isEqualToString:@"AWSDDASLLogCapture"]) {
         return;
     }
 
-    __auto_type message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
+    NSString * message = _logFormatter ? [_logFormatter formatLogMessage:logMessage] : logMessage->_message;
 
     if (message) {
-        __auto_type msg = [message UTF8String];
+        const char *msg = [message UTF8String];
 
         size_t aslLogLevel;
         switch (logMessage->_flag) {
@@ -100,11 +86,11 @@ static AWSDDASLLogger *sharedInstance;
         static char const *const level_strings[] = { "0", "1", "2", "3", "4", "5", "6", "7" };
 
         // NSLog uses the current euid to set the ASL_KEY_READ_UID.
-        const __auto_type readUID = geteuid();
+        uid_t const readUID = geteuid();
 
         char readUIDString[16];
 #ifndef NS_BLOCK_ASSERTIONS
-        __auto_type l = (size_t)snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
+        size_t l = snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
 #else
         snprintf(readUIDString, sizeof(readUIDString), "%d", readUID);
 #endif
@@ -114,7 +100,7 @@ static AWSDDASLLogger *sharedInstance;
         NSAssert(aslLogLevel < (sizeof(level_strings) / sizeof(level_strings[0])),
                  @"Unhandled ASL log level.");
 
-        __auto_type m = asl_new(ASL_TYPE_MSG);
+        aslmsg m = asl_new(ASL_TYPE_MSG);
         if (m != NULL) {
             if (asl_set(m, ASL_KEY_LEVEL, level_strings[aslLogLevel]) == 0 &&
                 asl_set(m, ASL_KEY_MSG, msg) == 0 &&
@@ -128,6 +114,8 @@ static AWSDDASLLogger *sharedInstance;
     }
 }
 
-@end
+- (NSString *)loggerName {
+    return @"cocoa.lumberjack.aslLogger";
+}
 
-#endif
+@end

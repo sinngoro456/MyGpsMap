@@ -116,7 +116,7 @@ static NSString *_defaultService;
 
 - (void)commonInit
 {
-    _accessibility = AWSUICKeyChainStoreAccessibilityAfterFirstUnlockThisDeviceOnly;
+    _accessibility = AWSUICKeyChainStoreAccessibilityAfterFirstUnlock;
 }
 
 #pragma mark -
@@ -511,13 +511,7 @@ static NSString *_defaultService;
     return [self setData:data forKey:key genericAttribute:nil label:label comment:comment error:error];
 }
 
-- (BOOL)setData:(NSData *)data forKey:(NSString *)key genericAttribute:(id)genericAttribute label:(NSString *)label comment:(NSString *)comment error:(NSError *__autoreleasing *)error {
-    @synchronized (self) {
-        return [self setDataNoLock: data forKey:key genericAttribute:genericAttribute label:label comment:comment error:error];
-    }
-}
-
-- (BOOL)setDataNoLock:(NSData *)data forKey:(NSString *)key genericAttribute:(id)genericAttribute label:(NSString *)label comment:(NSString *)comment error:(NSError *__autoreleasing *)error
+- (BOOL)setData:(NSData *)data forKey:(NSString *)key genericAttribute:(id)genericAttribute label:(NSString *)label comment:(NSString *)comment error:(NSError *__autoreleasing *)error
 {
     if (!key) {
         NSError *e = [self.class argumentError:NSLocalizedString(@"the key must not to be nil", nil)];
@@ -535,7 +529,11 @@ static NSString *_defaultService;
 #if TARGET_OS_IOS
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
-    query[(__bridge __strong id)kSecUseAuthenticationUI] = (__bridge id)kSecUseAuthenticationUIFail;
+    if (floor(NSFoundationVersionNumber) > floor(1144.17)) { // iOS 9+
+        query[(__bridge __strong id)kSecUseAuthenticationUI] = (__bridge id)kSecUseAuthenticationUIFail;
+    } else if (floor(NSFoundationVersionNumber) > floor(1047.25)) { // iOS 8+
+        query[(__bridge __strong id)kSecUseNoAuthenticationUI] = (__bridge id)kCFBooleanTrue;
+    }
 #pragma clang diagnostic pop
 #elif TARGET_OS_WATCH || TARGET_OS_TV
     query[(__bridge __strong id)kSecUseAuthenticationUI] = (__bridge id)kSecUseAuthenticationUIFail;
@@ -935,26 +933,6 @@ static NSString *_defaultService;
 
 #pragma mark -
 
-- (void)migrateToCurrentAccessibility {
-    NSArray *items = [self allItems];
-    for (NSDictionary *item in items) {
-        CFComparisonResult result = CFStringCompare((CFStringRef)item[@"accessibility"],
-                                                    [self accessibilityObject], 0);
-        if (result == kCFCompareEqualTo) {
-            continue;
-        }
-        NSString *key = item[@"key"];
-        NSObject *value = item[@"value"];
-        if ([value isKindOfClass: [NSString class]]) {
-            [self setString: (NSString *)value forKey:key];
-        } else if ([value isKindOfClass: [NSData class]]) {
-            [self setData: (NSData *)value forKey:key];
-        }
-    }
-}
-
-#pragma mark -
-
 - (void)setSynchronizable:(BOOL)synchronizable
 {
     _synchronizable = synchronizable;
@@ -1337,11 +1315,6 @@ static NSString *_defaultService;
     }
 }
 
-// The following keys are deprecated, but they still need to be supported:
-// - AWSUICKeyChainStoreAccessibilityAlways, kSecAttrAccessibleAlways,
-// - AWSUICKeyChainStoreAccessibilityAlwaysThisDeviceOnly, kSecAttrAccessibleAlwaysThisDeviceOnly
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (CFTypeRef)accessibilityObject
 {
     switch (_accessibility) {
@@ -1363,7 +1336,6 @@ static NSString *_defaultService;
             return nil;
     }
 }
-#pragma clang diagnostic pop
 
 + (NSError *)argumentError:(NSString *)message
 {
