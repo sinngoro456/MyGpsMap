@@ -63,7 +63,7 @@ class AppDelegateAdaptor: NSObject, UIApplicationDelegate {
     }
     
     private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
             // Taskを使って非同期関数を呼び出す
             Task {
                 await FriendManager.shared.loadFriendsFromDynamoDB()

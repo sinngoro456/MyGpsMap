@@ -201,6 +201,7 @@ struct MyPageView: View {
             }
             if let userId = UserSessionManager.shared.user_id {
                 await UserSessionManager.shared.login(userId: userId, token: nil)
+                await PinManager.shared.loadPins()
             }
         } else {
             // ログイン済み → ログアウト

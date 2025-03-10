@@ -149,6 +149,7 @@ class PinManager {
             self.clearFriendPins()
             self.addPins(loadedPins2) // 新しいピンを追加
             print("ピンが更新されました。合計ピン数: \(self.pins.count)")
+            self.printPins()
             return true // 更新が発生した場合はtrueを返す
         }catch {
             print("ピンのロード中にエラーが発生しました: \(error.localizedDescription)")
@@ -227,6 +228,7 @@ extension PinManager {
             print("Date: \(pin.date ?? Date())")
             print("Tags: \(pin.tags?.joined(separator: ", ") ?? "No Tags")")
             print("Images Count: \(pin.images.count)")
+            print("Images Presigned URL: \(pin.images_presigned_url ?? "No Presigned URL")")
             print("Visibility: \(pin.visibility ?? "No Visibility")\n\n")
         }
         print("----------------------------------")

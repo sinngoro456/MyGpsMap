@@ -33,18 +33,23 @@ class DynamoDBSave {
         
         // AWSのAPIをAlamofireで叩く
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
-            .responseData { response in
-                switch response.result {
-                case .success(let value):
-                    if let jsonResponse = try? JSONSerialization.jsonObject(with: value, options: []) as? [String: Any] {
-                        print("成功: \(jsonResponse)")
-                    } else {
-                        print("エラー: レスポンスの解析に失敗しました")
-                    }
-                case .failure(let error):
-                    print("エラー: \(error)")
+        .responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                if let jsonResponse = value as? [String: Any],
+                let bodyString = jsonResponse["body"] as? String,
+                let bodyData = bodyString.data(using: .utf8),
+                let body = try? JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any],
+                let presignedUrl = body["presigned_url"] as? String {
+                    print("presigned_urlを取得しました")
+                    
+                } else {
+                    print("エラー: レスポンスの解析に失敗しました")
                 }
+            case .failure(let error):
+                print("エラー: \(error)")
             }
+        }
     }
     
     func loadPinsfromDynamoDB() async throws -> ([Data_Pin], Date) {
@@ -61,6 +66,7 @@ class DynamoDBSave {
             "command": "get"
         ]
         
+        print("hi")
         return try await withCheckedThrowingContinuation { continuation in
             Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
                 .responseData { response in
@@ -96,7 +102,7 @@ class DynamoDBSave {
                                 pin.date = date
                                 pin.tags = pinData["tags"] as? [String] ?? []
                                 pin.visibility = pinData["visibility"] as? String
-                                
+
                                 // 色情報の処理
                                 if let colorString = pinData["color"] as? String,
                                    let colorData = colorString.data(using: .utf8),
@@ -163,6 +169,7 @@ class DynamoDBSave {
                                 pin.user_id = userId
                                 pin.title = pinData["title"] as? String
                                 pin.description = pinData["description"] as? String
+                                pin.images_presigned_url = pinData["images_presigned_url"] as? String
                                 pin.category = pinData["category"] as? String
                                 pin.date = date
                                 pin.tags = pinData["tags"] as? [String] ?? []

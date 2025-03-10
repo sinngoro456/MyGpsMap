@@ -14,7 +14,6 @@ class Data_Pin: Codable, Equatable {
         lhs.title == rhs.title &&
         lhs.description == rhs.description &&
         lhs.color == rhs.color &&
-        areImagesEqual(lhs.images, rhs.images) &&
         lhs.date == rhs.date &&
         lhs.category == rhs.category &&
         lhs.tags == rhs.tags &&
@@ -29,13 +28,14 @@ class Data_Pin: Codable, Equatable {
     var description: String?
     var color: UIColor?
     var images: [UIImage]
+    var images_presigned_url: String? = ""
     var date: Date?
     var category: String?
     var tags: [String]?
     var visibility: String?
 
     enum CodingKeys: String, CodingKey {
-        case user_id, pin_id, latitude, longitude, title, description, color, images, date, category, tags, visibility
+        case user_id, pin_id, latitude, longitude, title, description, color, images, images_presigned_url, date, category, tags, visibility
     }
 
     // UIColorをCodableにするためのカスタムエンコーディング
@@ -95,6 +95,7 @@ class Data_Pin: Codable, Equatable {
 
         try container.encodeIfPresent(title, forKey: .title)
         try container.encodeIfPresent(description, forKey: .description)
+        try container.encodeIfPresent(images_presigned_url, forKey: .images_presigned_url)
 
         // UIColorをエンコード
         if let color = color {
@@ -126,6 +127,7 @@ class Data_Pin: Codable, Equatable {
          description: String? = nil,
          color: UIColor? = .orange,
          images: [UIImage] = [],
+         images_presigned_url: String? = nil,
          date: Date? = nil,
          category: String? = nil,
          tags: [String]? = nil,
@@ -139,6 +141,7 @@ class Data_Pin: Codable, Equatable {
         self.description = description
         self.color = color ?? .orange
         self.images = images
+        self.images_presigned_url = images_presigned_url
         self.date = date
         self.category = category
         self.tags = tags
@@ -171,9 +174,9 @@ extension Data_Pin {
         dict["pin_id"] = pin_id
         dict["latitude"] = Int(latitude * 1e13)
         dict["longitude"] = Int(longitude * 1e13)
-        print(latitude)
         dict["title"] = title
         dict["description"] = description
+        dict["images_presigned_url"] = images_presigned_url
         
         if let color = color {
             var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
@@ -182,7 +185,7 @@ extension Data_Pin {
         }
         
         // imagesの有無に応じて要素数を設定
-        dict["images"] = images.count // imagesの要素数を整数で設定
+        dict["images"] = ""
         
         if let date = date {
             let formatter = ISO8601DateFormatter()
@@ -213,6 +216,7 @@ extension Data_Pin {
         pin_id = (dict["pin_id"] as! String)
         title = dict["title"] as? String
         description = dict["description"] as? String
+        images_presigned_url = dict["images_presigned_url"] as? String
         if let colorDict = dict["color"] as? [String: CGFloat] {
             color = UIColor(red: colorDict["red"] ?? 0,
                             green: colorDict["green"] ?? 0,
@@ -228,19 +232,6 @@ extension Data_Pin {
         category = dict["category"] as? String
         tags = dict["tags"] as? [String]
         visibility = dict["visibility"] as? String
-    }
-    
-    // 画像の内容を比較するメソッド
-    private static func areImagesEqual(_ images1: [UIImage], _ images2: [UIImage]) -> Bool {
-        guard images1.count == images2.count else { return false }
-        
-        for (index, image1) in images1.enumerated() {
-            let image2 = images2[index]
-            if image1.size != image2.size {
-                return false
-            }
-        }
-        return true
     }
 }
 extension Data_Pin: Identifiable {

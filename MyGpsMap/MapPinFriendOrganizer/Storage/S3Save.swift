@@ -5,13 +5,29 @@
 //  Created by 川渕悟郎 on 2024/12/31.
 //
 
+// {
+// 	"Version": "2012-10-17",
+// 	"Id": "Policy1734964358348",
+// 	"Statement": [
+// 		{
+// 			"Sid": "Stmt1734964351716",
+// 			"Effect": "Allow",
+// 			"Principal": "*",
+// 			"Action": "s3:*",
+// 			"Resource": "arn:aws:s3:::mygpsmapdb/*"
+// 		}
+// 	]
+// }
+
 import Foundation
 import AWSS3
 import UIKit
 
 class S3Save {
+    static let shared = S3Save() // シングルトンインスタンス
+    var presigned_url: String?
+
     let bucket = "mygpsmapdb"
-    
     // 指定された pin_id のリストの画像を S3 にアップロードする関数
     func saveImagesForPinToS3(pins: [Data_Pin]) {
         let transferUtility = AWSS3TransferUtility.default()
@@ -220,8 +236,7 @@ extension S3Save{
         }
     }
 
-
-    
+    // S3バケット内のオブジェクトのキーをリストする関数
     func listS3Items(user_id: String?, completion: @escaping ([String: [String]]) -> Void) {
         var result: [String: [String]] = [:]
 
