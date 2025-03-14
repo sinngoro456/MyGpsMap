@@ -106,7 +106,7 @@ struct MapView: View {
         .onAppear {
             locationManager.requestLocationPermission() // 位置情報の許可をリクエスト
         }
-        // sheetを定義：selectedPinDataに値がある場合だけ表示
+        // sheetを定義：editingPinに値がある場合だけ表示
         .sheet(item: $editingPin) { pinData in
             PinEditView(pinData: pinData)
         }

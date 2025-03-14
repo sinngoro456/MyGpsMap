@@ -76,7 +76,8 @@ struct PinEditView: View {
             }
             .navigationBarTitle("ピンを編集", displayMode: .inline)
             .navigationBarItems(
-                leading: Button("閉じる") {
+                leading: Button("削除") {
+                    deleteToPinData()
                     dismiss()
                 },
                 trailing: Button("保存") {
@@ -103,6 +104,11 @@ struct PinEditView: View {
         pinData.visibility = localIsPublic ? "public" : "private"
         pinData.images = localImages
         PinManager.shared.addPins([pinData])
+        PinManager.shared.saveAllPins()
+    }
+    
+    private func deleteToPinData() {
+        PinManager.shared.deletePins([pinData])
         PinManager.shared.saveAllPins()
     }
 }

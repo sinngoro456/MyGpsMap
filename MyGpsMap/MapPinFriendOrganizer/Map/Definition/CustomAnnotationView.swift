@@ -60,7 +60,11 @@ class CustomAnnotationView: MKAnnotationView {
         if let firstImage = pin.images.first {
             imageView.image = firstImage
         } else {
-            imageView.image = UIImage(systemName: "photo") // デフォルト画像
+            imageView.removeFromSuperview() // 画像がない場合は画像ビューを削除
+            let pinImage = UIImage(systemName: "mappin.circle.fill")?
+                .withTintColor(.red, renderingMode: .alwaysOriginal) // 赤色に変更
+                .withConfiguration(UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)) // サイズを大きくする
+            self.image = pinImage
         }
 
         // ピンのタイトルを設定

@@ -35,19 +35,16 @@ class DynamoDBSave {
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: defaultHeader)
         .responseJSON { response in
             switch response.result {
-            case .success(let value):
-                if let jsonResponse = value as? [String: Any],
-                let bodyString = jsonResponse["body"] as? String,
-                let bodyData = bodyString.data(using: .utf8),
-                let body = try? JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any],
-                let presignedUrl = body["presigned_url"] as? String {
-                    print("presigned_urlを取得しました")
-                    
+            case .success:
+                // レスポンスが成功した場合
+                if let statusCode = response.response?.statusCode, (200...299).contains(statusCode) {
+                    print("保存に成功しました")
                 } else {
-                    print("エラー: レスポンスの解析に失敗しました")
+                    print("保存に失敗しました: 無効なステータスコード")
                 }
             case .failure(let error):
-                print("エラー: \(error)")
+                // リクエストが失敗した場合
+                print("保存に失敗しました: \(error.localizedDescription)")
             }
         }
     }
@@ -105,8 +102,8 @@ class DynamoDBSave {
 
                                 // 色情報の処理
                                 if let colorString = pinData["color"] as? String,
-                                   let colorData = colorString.data(using: .utf8),
-                                   let colorDict = try? JSONSerialization.jsonObject(with: colorData, options: []) as? [String: CGFloat] {
+                                    let colorData = colorString.data(using: .utf8),
+                                    let colorDict = try? JSONSerialization.jsonObject(with: colorData, options: []) as? [String: CGFloat] {
                                     pin.color = UIColor(red: colorDict["red"] ?? 0,
                                                         green: colorDict["green"] ?? 0,
                                                         blue: colorDict["blue"] ?? 0,
@@ -146,18 +143,18 @@ class DynamoDBSave {
                     switch response.result {
                     case .success(let value):
                         if let jsonResponse = try? JSONSerialization.jsonObject(with: value, options: []) as? [String: Any],
-                           let bodyString = jsonResponse["body"] as? String,
-                           let bodyData = bodyString.data(using: .utf8),
-                           let body = try? JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any],
-                           let pinsData = body["pins"] as? [[String: Any]] {
+                            let bodyString = jsonResponse["body"] as? String,
+                            let bodyData = bodyString.data(using: .utf8),
+                            let body = try? JSONSerialization.jsonObject(with: bodyData, options: []) as? [String: Any],
+                            let pinsData = body["pins"] as? [[String: Any]] {
                             
                             let newPins = pinsData.compactMap { pinData -> Data_Pin? in
                                 guard let pinId = pinData["pin_id"] as? String,
-                                      let userId = pinData["user_id"] as? String,
-                                      let latitudeInt = pinData["latitude"] as? Int,
-                                      let longitudeInt = pinData["longitude"] as? Int,
-                                      let dateString = pinData["date"] as? String,
-                                      let date = ISO8601DateFormatter().date(from: dateString) else {
+                                        let userId = pinData["user_id"] as? String,
+                                        let latitudeInt = pinData["latitude"] as? Int,
+                                        let longitudeInt = pinData["longitude"] as? Int,
+                                        let dateString = pinData["date"] as? String,
+                                        let date = ISO8601DateFormatter().date(from: dateString) else {
                                     return nil
                                 }
                                 
@@ -177,8 +174,8 @@ class DynamoDBSave {
                                 
                                 // 色情報の処理
                                 if let colorString = pinData["color"] as? String,
-                                   let colorData = colorString.data(using: .utf8),
-                                   let colorDict = try? JSONSerialization.jsonObject(with: colorData, options: []) as? [String: CGFloat] {
+                                    let colorData = colorString.data(using: .utf8),
+                                    let colorDict = try? JSONSerialization.jsonObject(with: colorData, options: []) as? [String: CGFloat] {
                                     pin.color = UIColor(red: colorDict["red"] ?? 0,
                                                         green: colorDict["green"] ?? 0,
                                                         blue: colorDict["blue"] ?? 0,

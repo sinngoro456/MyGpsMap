@@ -12,6 +12,7 @@ class UserSessionManager {
     static let shared = UserSessionManager()
 
     @Published private(set) var user_id: String?
+    @Published private(set) var identity_id: String?
     @Published private(set) var cognitoToken: String?
     
     private var cancellables = Set<AnyCancellable>()
@@ -20,9 +21,12 @@ class UserSessionManager {
         setupUserIdObserver()
     }
     
-    func login(userId: String?,token: String?) async {
+    func login(userId: String?,identityId: String?,token: String?) async {
         user_id = userId
+        identity_id = identityId
         UserSessionManager.shared.cognitoToken = token
+        await PinManager.shared.loadPins()
+        await PinManager.shared.saveAllPins()
         await FriendManager.shared.loadFriendsFromDynamoDB()
     }
     
@@ -39,15 +43,17 @@ class UserSessionManager {
             .sink { [weak self] newUserId in
                 Task { [weak self] in
                     guard let self = self else { return }
-                    await self.userIdChanged(newUserId)
+                    await self.signInAction()
                 }
             }
             .store(in: &cancellables)
     }
     
-    private func userIdChanged(_ newUserId: String?) async {
+    private func signInAction() async {
         PinManager.shared.updatePinsWithNewUserId()
-        _ = await PinManager.shared.loadPins()
+        await PinManager.shared.loadPins()
+        await FriendManager.shared.loadFriendsFromDynamoDB()
+        await PinManager.shared.loadFriendsPinsDynamoDB()
     }
 }
 

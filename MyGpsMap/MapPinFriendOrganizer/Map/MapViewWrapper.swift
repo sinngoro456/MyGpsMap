@@ -68,13 +68,36 @@ struct MapViewWrapper: UIViewRepresentable {
 
     func addPins(pins: [Data_Pin], to mapView: MKMapView) {
         for pin in pins {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = pin.coordinate
-            annotation.title = pin.title
-
-            mapView.addAnnotation(annotation)
+            let annotation = Annotation(pin: pin)
+            mapView.addAnnotation(annotation as! MKAnnotation)
         }
     }
+    
+    // ピンを削除するメソッド
+    func deletePins(_ pinsToDelete: [Data_Pin], from mapView: MKMapView) {
+        let pinIDsToDelete = pinsToDelete.compactMap { $0.pin_id }
+
+        let annotationsToDelete = mapView.annotations.compactMap { annotation in
+            if let annotationView = annotation as? Annotation,
+                let pinID = annotationView.pin?.pin_id,
+                pinIDsToDelete.contains(pinID) {
+                return annotation
+            }
+            return nil
+        }
+
+        mapView.removeAnnotations(annotationsToDelete)
+    }
+//
+//    // 座標に基づいてピンを削除するメソッド
+//    func deletePins_coordinate(in region: MKCoordinateRegion, from mapView: MKMapView) {
+//        let annotationsToDelete = mapView.annotations.filter { annotation in
+//            let annotationCoordinate = annotation.coordinate
+//            return region.contains(annotationCoordinate)
+//        }
+//
+//        mapView.removeAnnotations(annotationsToDelete)
+//    }
 
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapViewWrapper
@@ -182,16 +205,10 @@ struct MapViewWrapper: UIViewRepresentable {
         }
 
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            guard let customAnnotationView = view as? CustomAnnotationView else { return }
-
-            if let pin_id = customAnnotationView.pin_id {
-                print("Selected Pin - Pin ID: \(pin_id)")
-
-                if let pin = PinManager.shared.getPin(pinID: pin_id) {
-                    self.parent.editingPin = pin
-                } else {
-                    print("Failed to get pin: Pin not found")
-                }
+            if let customAnnotationView = view as? CustomAnnotationView,
+            let pinID = customAnnotationView.pin_id,
+            let pin = PinManager.shared.getPin(pinID: pinID) {
+                parent.editingPin = pin
             }
         }
 
@@ -210,14 +227,10 @@ struct MapViewWrapper: UIViewRepresentable {
                 annotationView?.annotation = annotation
             }
 
-            if let pinAnnotation = annotation as? MKPointAnnotation,
-            let pin = PinManager.shared.pins.first(where: { $0.coordinate.latitude == pinAnnotation.coordinate.latitude && $0.coordinate.longitude == pinAnnotation.coordinate.longitude }) {
-                annotationView?.configure(with: pin)
-
-                if pin.images.isEmpty {
-                    let defaultAnnotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "defaultAnnotation")
-                    return defaultAnnotationView
-                }
+            if let annotationView = annotationView,
+            let annotation = annotation as? Annotation,
+            let pin = annotation.pin {
+                annotationView.configure(with: pin)
             }
 
             return annotationView

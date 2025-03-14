@@ -5,19 +5,44 @@
 //  Created by 川渕悟郎 on 2024/12/31.
 //
 
-// {
-// 	"Version": "2012-10-17",
-// 	"Id": "Policy1734964358348",
-// 	"Statement": [
-// 		{
-// 			"Sid": "Stmt1734964351716",
-// 			"Effect": "Allow",
-// 			"Principal": "*",
-// 			"Action": "s3:*",
-// 			"Resource": "arn:aws:s3:::mygpsmapdb/*"
-// 		}
-// 	]
-// }
+//{
+//	"Version": "2012-10-17",
+//	"Statement": [
+//		{
+//			"Sid": "AllowListBucket",
+//			"Effect": "Allow",
+//			"Principal": {
+//				"AWS": [
+//					"arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-e361e-authRole",
+//					"arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-e361e-unauthRole"
+//				]
+//			},
+//			"Action": "s3:ListBucket",
+//			"Resource": "arn:aws:s3:::mygpsmapdb",
+//			"Condition": {
+//				"StringLike": {
+//					"s3:prefix": "*"
+//				}
+//			}
+//		},
+//		{
+//			"Sid": "AllowUserSpecificActions",
+//			"Effect": "Allow",
+//			"Principal": {
+//				"AWS": [
+//					"arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-e361e-authRole",
+//					"arn:aws:iam::975050242324:role/amplify-mygpsmap-dev-e361e-unauthRole"
+//				]
+//			},
+//			"Action": [
+//				"s3:PutObject",
+//				"s3:GetObject",
+//				"s3:DeleteObject"
+//			],
+//			"Resource": "arn:aws:s3:::mygpsmapdb/*"
+//		}
+//	]
+//}
 
 import Foundation
 import AWSS3
@@ -30,6 +55,9 @@ class S3Save {
     let bucket = "mygpsmapdb"
     // 指定された pin_id のリストの画像を S3 にアップロードする関数
     func saveImagesForPinToS3(pins: [Data_Pin]) {
+        guard let identityId = UserSessionManager.shared.identity_id else {
+            return // identity_id が nil の場合、関数を終了
+        }
         let transferUtility = AWSS3TransferUtility.default()
         let expression = AWSS3TransferUtilityUploadExpression()
         expression.progressBlock = { (task, progress) in
@@ -44,7 +72,9 @@ class S3Save {
             for (index, image) in pin.images.enumerated() {
                 
                 if let pinId = pin.pin_id {
-                    let key = "\(UserSessionManager.shared.user_id ?? "None")/\(pinId)_\(index + 1).png" // ここでunwrappedPinIdを使用
+                    // let key = "\(UserSessionManager.shared.user_id ?? "None")/\(pinId)_\(index + 1).png" // ここでunwrappedPinIdを使用
+                    let key = "\(UserSessionManager.shared.identity_id ?? "None")/\(pinId)_\(index + 1).png"
+                    print(key)
                     // UIImage を PNG データに変換
                     guard let pngData = image.pngData() else {
                         print("UIImage を PNG データに変換できませんでした (Pin ID \(String(describing: pinId)), Image Index \(index))")
@@ -60,6 +90,8 @@ class S3Save {
                         expression: expression // PNG形式なのでcontentTypeはimage/png
                     ) { task, error in
                         if let error = error as! NSError? {
+                            print("key")
+                            print(key)
                             print("アップロードエラー (Pin ID \(String(describing: pinId)), Image Index \(index + 1)): \(error.localizedDescription)")
                             
                             // 詳細なエラー情報を出力
@@ -90,8 +122,11 @@ class S3Save {
     }
 
     func s3Clear() {
+        guard let identityId = UserSessionManager.shared.identity_id else {
+            return // identity_id が nil の場合、関数を終了
+        }
         print("Clear S3 Image")
-        listS3Items(user_id: UserSessionManager.shared.user_id) { result in
+        listS3Items(user_id: UserSessionManager.shared.identity_id) { result in
             if let listKey = result["list_key"] {
                 print("取得したキー:", listKey)
 
@@ -104,41 +139,12 @@ class S3Save {
             }
         }
     }
-    
-//    func s3UnnecessaryClear(donotClearPins: [Data_Pin]) {
-//        print("Clear unnecessary S3 Images")
-//        guard let userId = UserSessionManager.shared.user_id else {
-//            print("ユーザーIDが取得できません")
-//            return
-//        }
-//
-//        listS3Items(user_id: userId) { result in
-//            if let listKey = result["list_key"] {
-//                print("取得したキー:", listKey)
-//
-//                // 管理されているpin_idのリストを作成
-//                let managedPinIds = Set(donotClearPins.compactMap { $0.pin_id }.map { String($0) })
-//
-//                // S3のキーをフィルタリング
-//                let unnecessaryKeys = listKey.filter { key in
-//                    let components = key.components(separatedBy: "/")
-//                    guard components.count >= 2 else { return false }
-//                    let pinIdString = components[1].split(separator: "_").first.map(String.init) ?? ""
-//                    return !managedPinIds.contains(pinIdString)
-//                }
-//
-//                // 不要なキーを削除
-//                for key in unnecessaryKeys {
-//                    self.deleteObject(key: key)
-//                }
-//            } else {
-//                print("キーの取得に失敗しました。")
-//            }
-//        }
-//    }
 }
 extension S3Save{
     private func deleteObject(key: String) {
+        guard let identityId = UserSessionManager.shared.identity_id else {
+            return // identity_id が nil の場合、関数を終了
+        }
         let s3 = AWSS3.default()
         let deleteObjectRequest = AWSS3DeleteObjectRequest()!
         
@@ -156,61 +162,67 @@ extension S3Save{
     }
     
     func loadPinImagesFromS3(user_ids: [String], pins: [Data_Pin]) async -> [Data_Pin] {
-        // keysを並べ替える関数
-        func sortKeysForPins(s3Keys: [String], pins: [Data_Pin]) -> [[String]] {
-            var sortedKeys: [[String]] = Array(repeating: [], count: pins.count)
-            
-            for key in s3Keys {
-                if let userId = key.split(separator: "/").first,
-                   let pinId = key.split(separator: "/").dropFirst().first?.split(separator: "_").first,
-                   let index = pins.firstIndex(where: { $0.user_id == String(userId) && $0.pin_id == String(pinId) }) {
-                    sortedKeys[index].append(key)
-                }
-            }
-            
-            return sortedKeys
-        }
+        var updatedPins = pins
         
-        let transferUtility = AWSS3TransferUtility.default()
-        let updatedPins = pins // updatedPinsの初期化
-
-        // 非同期forループでユーザーIDを処理
         for userId in user_ids {
-            print("Fetching S3 items for user ID: \(userId)")
-
-            // 非同期でS3アイテムリストを取得
+            // S3アイテムリストを非同期で取得
             let s3Items = await listS3ItemsAsync(user_id: userId)
-
-            // keysを並べ替え
-            let sortedKeys = sortKeysForPins(s3Keys: s3Items["list_key"] as? [String] ?? [], pins: pins)
-
-            // pin_idのループ
-            for (index, _) in pins.enumerated() {
-                print("Processing pin with ID: \(String(describing: pins[index].pin_id))")
-
-                let keys = sortedKeys[index]
-                if !keys.isEmpty {
-                    print("Found \(keys.count) keys for user ID: \(userId) and pin ID: \(String(describing: pins[index].pin_id))")
-
+            let keys = s3Items["list_key"] as? [String] ?? []
+            
+            for (index, pin) in updatedPins.enumerated() {
+                // プリサインURLが存在する場合
+                if let presignedURL = pin.images_presigned_url, presignedURL.hasPrefix("http") {
+                    if let data = await downloadImageFromPresignedURL(presignedURL: presignedURL), 
+                    let image = UIImage(data: data) {
+                        updatedPins[index].images.append(image)
+                    }
+                } 
+                // プリサインURLが存在しない場合、S3から画像を取得
+                else {
                     for key in keys {
-                        print("Starting download for key: \(key)")
-
-                        // 非同期で画像をダウンロード
-                        if let data = await downloadImageDataAsync(transferUtility: transferUtility, key: key),
-                           let image = UIImage(data: data) {
-                            updatedPins[index].images.append(image)
-                            print("Successfully downloaded image for key: \(key)")
-                        } else {
-                            print("Failed to download or convert image for key: \(key)")
+                        if key.contains("\(userId)/\(pin.pin_id ?? "")") {
+                            if let data = await downloadImageDataAsync(transferUtility: AWSS3TransferUtility.default(), key: key), 
+                            let image = UIImage(data: data) {
+                                updatedPins[index].images.append(image)
+                            }
                         }
                     }
-                } else {
-                    print("No matching keys found for user ID: \(userId) and pin ID: \(String(describing: pins[index].pin_id))")
                 }
             }
         }
-
+        
         return updatedPins
+    }
+
+    func downloadImageFromPresignedURL(presignedURL: String) async -> Data? {
+        await withCheckedContinuation { continuation in
+            guard let url = URL(string: presignedURL) else {
+                print("Error: Invalid URL")
+                continuation.resume(returning: nil)
+                return
+            }
+            
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print("Error: Network request failed - \(error.localizedDescription)")
+                    continuation.resume(returning: nil)
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    print("Error: Invalid response")
+                    continuation.resume(returning: nil)
+                    return
+                }
+                
+                if httpResponse.statusCode == 200 {
+                    continuation.resume(returning: data)
+                } else {
+                    print("Error: Invalid status code - \(httpResponse.statusCode)")
+                    continuation.resume(returning: nil)
+                }
+            }.resume()
+        }
     }
 
     // 非同期関数でS3アイテムリストを取得
@@ -251,6 +263,7 @@ extension S3Save{
         let request = AWSS3ListObjectsV2Request()
         request?.bucket = bucket
         request?.prefix = "\(userId)/" // pin_idが指定されていない場合
+        print("\(userId)/")
 
         s3.listObjectsV2(request!) { (response, error) in
             if let error = error {

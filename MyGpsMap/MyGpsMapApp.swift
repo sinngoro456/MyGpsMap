@@ -50,6 +50,9 @@ class AppDelegateAdaptor: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         configureAmplify()
+//        // AWS SDKのデバッグログを有効化
+//                AWSDDLog.sharedInstance.logLevel = .verbose
+//                AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
         
         // Taskを使って非同期処理を呼ぶ
         Task {
@@ -63,7 +66,7 @@ class AppDelegateAdaptor: NSObject, UIApplicationDelegate {
     }
     
     private func startTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true) { _ in
             // Taskを使って非同期関数を呼び出す
             Task {
                 await FriendManager.shared.loadFriendsFromDynamoDB()

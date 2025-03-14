@@ -140,7 +140,7 @@ struct MyPageView: View {
                     .padding(.bottom, 16)
                 }
             }
-            .navigationTitle(Text(authService.isSignedIn ? "\(UserSessionManager.shared.user_id ?? "ユーザー名")" : "未ログイン"))
+            .navigationTitle(Text("\(UserSessionManager.shared.user_id ?? "未ログイン")"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 // タイトルをタップ可能にする
@@ -148,7 +148,7 @@ struct MyPageView: View {
                     Button(action: {
                         showLogoutButton.toggle()
                     }) {
-                        Text(authService.isSignedIn ? "\(UserSessionManager.shared.user_id ?? "ユーザー名")" : "未ログイン")
+                        Text("\(UserSessionManager.shared.user_id ?? "未ログイン")")
                             .font(.headline)
                             .foregroundColor(.primary)
                     }
@@ -199,9 +199,9 @@ struct MyPageView: View {
             Task {
                 await authService.signIn()
             }
-            if let userId = UserSessionManager.shared.user_id {
-                await UserSessionManager.shared.login(userId: userId, token: nil)
-                await PinManager.shared.loadPins()
+            if let userId = UserSessionManager.shared.user_id,
+            let identityId = UserSessionManager.shared.identity_id {
+                await UserSessionManager.shared.login(userId: userId, identityId: identityId, token: nil)
             }
         } else {
             // ログイン済み → ログアウト

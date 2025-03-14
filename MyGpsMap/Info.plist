@@ -11,5 +11,12 @@
     <string>このアプリは位置情報を使用して、地図上に現在地を表示します。</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>このアプリはバックグラウンドでも位置情報を使用します。</string>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+        <key>UISceneConfigurations</key>
+        <dict/>
+    </dict>
 </dict>
 </plist>

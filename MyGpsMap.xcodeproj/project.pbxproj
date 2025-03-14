@@ -30,6 +30,7 @@
 		CA68F1B82CAC23060060B8BB /* MyGpsMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */; };
 		CA68F1BA2CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */; };
 		CA68F1C82CAC25500060B8BB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA68F1C72CAC25500060B8BB /* MapKit.framework */; };
+		CA8409CA2D84070400FBCB25 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8409C92D84070400FBCB25 /* AnnotationView.swift */; };
 		CAB28B3A2D674EC200975D6F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B392D674EC200975D6F /* ContentView.swift */; };
 		CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */; };
 		CADB0BE82D0AA7C9001C175D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADB0BE72D0AA7C9001C175D /* AuthService.swift */; };
@@ -90,6 +91,7 @@
 		CA68F1B72CAC23060060B8BB /* MyGpsMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITests.swift; sourceTree = "<group>"; };
 		CA68F1B92CAC23060060B8BB /* MyGpsMapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CA68F1C72CAC25500060B8BB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		CA8409C92D84070400FBCB25 /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		CAB28B392D674EC200975D6F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CAB28B3F2D67601700975D6F /* MyGpsMapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGpsMapApp.swift; sourceTree = "<group>"; };
 		CADB0BE72D0AA7C9001C175D /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			children = (
 				CA3392922D6F3EF100F77832 /* iconForMapItem.swift */,
 				CAE89E012CB2F8FB001F9DA3 /* CustomAnnotationView.swift */,
+				CA8409C92D84070400FBCB25 /* AnnotationView.swift */,
 			);
 			path = Definition;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				CAB28B402D67601700975D6F /* MyGpsMapApp.swift in Sources */,
 				CAE18A812D2723AF006D59F2 /* Data_Friend.swift in Sources */,
 				CA5B7F7D2D68EAE500EC14AA /* ImagePicker.swift in Sources */,
+				CA8409CA2D84070400FBCB25 /* AnnotationView.swift in Sources */,
 				CAE82BFD2D14081D003620BF /* PinManager.swift in Sources */,
 				CAE89DFC2CB2F094001F9DA3 /* Data_Pin.swift in Sources */,
 				CA5B7F6E2D685A7700EC14AA /* MyPageView.swift in Sources */,

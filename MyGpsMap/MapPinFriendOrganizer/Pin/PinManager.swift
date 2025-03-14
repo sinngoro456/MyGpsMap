@@ -34,26 +34,40 @@ class PinManager {
             if pin.pin_id == "" {
                 pin.pin_id = UUID().uuidString
             }
-            deletePins([pin.coordinate])
+            let pins_To_Delete = getPin(pinID: pin.pin_id!)
+            if let pinToDelete = pins_To_Delete {
+                deletePins([pinToDelete])
+            }
             pins.append(pin)
         }
-        removeSameIdPins() // 重複IDの削除
         notifyPinUpdated(newPins)
         print("addPins")
     }
     
     // 指定されたピンをpinsに追加するメソッド
     func clearFriendPins() {
+        var pins_changed: [Data_Pin] = []
         for pin in pins {
-            // ユーザーIDが一致する場合にピンを削除
-            if (UserSessionManager.shared.user_id != nil && pin.user_id != UserSessionManager.shared.user_id) {
-                deletePins([pin.coordinate])
+            // ユーザーIDが一致しない場合にピンを削除
+            if let currentUserId = UserSessionManager.shared.user_id, pin.user_id != currentUserId {
+                deletePins_coordenate([pin.coordinate])
+                pins_changed.append(pin)
             }
         }
+        notifyPinUpdated(pins_changed)
     }
     
+    // ピンをpinsから削除するメソッド
+    func deletePins(_ pinsToDelete: [Data_Pin]) {
+        let pinIdsToRemove = pinsToDelete.compactMap { $0.pin_id }
+        pins.removeAll { pin in
+            pinIdsToRemove.contains(pin.pin_id!)
+        }
+        notifyPinUpdated(pinsToDelete)
+    }
+
     // 指定された座標のピンをpinsから削除するメソッド
-    func deletePins(_ coordinates: [CLLocationCoordinate2D]) {
+    private func deletePins_coordenate(_ coordinates: [CLLocationCoordinate2D]) {
         // 削除するpin_idを抽出
         let pinIdsToRemove = coordinates.compactMap { coordinate in
             pins.first { pin in
@@ -87,7 +101,7 @@ class PinManager {
         dynamoDBSave.savePinstoDynamoDB(pins: PinManager.shared.filteredPinsForCurrentUser(from: PinManager.shared.pins),writtenDateTime: currentDateTime)
     }
     
-    func loadPins() async -> Bool {
+    func loadPins() async {
         do {
             let (initialLoadedPins, writtenDateTimeDB) = try await DynamoDBSave().loadPinsfromDynamoDB()
             
@@ -97,7 +111,6 @@ class PinManager {
                 self.saveAllPins()
                 self.printPins()
                 print("ピンが更新されました。合計ピン数: \(self.pins.count)")
-                return true // 更新が発生した場合はtrueを返す
             } else {
                 print("データベースのデータが最新です。")
                 // ローカルデータが最新の場合、ポップアップで確認
@@ -106,7 +119,7 @@ class PinManager {
                         // UIWindowSceneを取得
                         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                             let topViewController = windowScene.windows.first?.rootViewController else {
-                            continuation.resume(returning: false)
+                            continuation.resume()
                             return
                         }
                         
@@ -120,14 +133,14 @@ class PinManager {
                                 self.addPins(updatedPins) // データベースから取得したピンで上書き
                                 self.saveAllPins()
                                 print("データベースのデータで上書きしました。")
-                                continuation.resume(returning: true)
+                                continuation.resume()
                             }
                         }))
                         
                         alert.addAction(UIAlertAction(title: "いいえ", style: .cancel, handler: { _ in
                             Task {
                                 self.saveAllPins()
-                                continuation.resume(returning: false)
+                                continuation.resume()
                             }
                         }))
                         
@@ -137,12 +150,11 @@ class PinManager {
             }
         } catch {
             print("ピンのロード中にエラーが発生しました: \(error.localizedDescription)")
-            return false // エラーが発生した場合もfalseを返す
         }
     }
 
     
-    func loadFriendsPinsDynamoDB() async -> Bool {
+    func loadFriendsPinsDynamoDB() async {
         do {
             let loadedPins = try await DynamoDBSave().loadFriendsPinsfromDynamoDB()
             let loadedPins2 = await S3Save().loadPinImagesFromS3(user_ids: FriendManager.shared.getFriendUserIds(friends_input: FriendManager.shared.friends),pins: loadedPins)
@@ -150,10 +162,8 @@ class PinManager {
             self.addPins(loadedPins2) // 新しいピンを追加
             print("ピンが更新されました。合計ピン数: \(self.pins.count)")
             self.printPins()
-            return true // 更新が発生した場合はtrueを返す
         }catch {
             print("ピンのロード中にエラーが発生しました: \(error.localizedDescription)")
-            return false // エラーが発生した場合もfalseを返す
         }
     }
 }
@@ -167,7 +177,6 @@ extension PinManager {
         return pins_input.filter { $0.user_id == myUserId || $0.user_id == nil }
     }
     
-    // 引数なしでフレンドのpinsを返す関数
     func getFriendPins(pins_input:[Data_Pin]) -> [Data_Pin] {
         let friendUserIds = FriendManager.shared.getFriendUserIds(friends_input: FriendManager.shared.friends)
         return pins_input.filter { pin in
