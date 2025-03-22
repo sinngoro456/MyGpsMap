@@ -5,7 +5,8 @@
 2.使用技術
 	Xcode, Swift(MK Map View, Swift UI), 	AWS(Cognito, Lambda, API Gateway, DynamoDB) 	(API GatewayはAppSyncに置換予定 : Pub Sub)
 3. 制作目的	
-	ツーリングの動機づけ・記録、AWSを使う4. 機能一覧 
+	ツーリングの動機づけ・記録、AWSを使う
+ 4. 機能一覧 
 	・ソーシャルログイン
 	・マップ機能
 	・ピンの作成・編集・保存(画像付き)
